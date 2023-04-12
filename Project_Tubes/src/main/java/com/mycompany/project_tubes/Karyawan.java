@@ -48,7 +48,7 @@ public class Karyawan extends User{
         this.totalGaji += tambahanGaji;
     }
     
-    public void infoGaji(int jumlah){
-        System.out.println("Total gaji anda sekarang adalah Rp." + this.totalGaji);
+    public int gettotalGaji(){
+        return totalGaji;
     }
 }
