@@ -21,10 +21,10 @@ public class Project_Tubes {
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
         
         // Username & Password Beberapa akun karyawan yang telah ada
-        Karyawan kw1 = new Karyawan("Fariz", "12345");
-        Karyawan kw2 = new Karyawan("Nurul", "12345");
-        Karyawan kw3 = new Karyawan("Raffa", "12345");
-        Karyawan kw4 = new Karyawan("Rihan", "12345");
+        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
+        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff");
+        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff");
+        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor");
         //Membuat ArrayList untuk menyimpan objek Karyawan
         ArrayList<Karyawan> kl = new ArrayList<>();
         kl.add(kw1);
@@ -46,38 +46,60 @@ public class Project_Tubes {
                 System.out.println("Login berhasil!");
                 System.out.println("Selamat datang, "+bk.username+"!");
                 
-                // Memberikan gaji ke karyawan
-                System.out.println("Saldo Badan Keuangan: "+bk.getSaldo());
-                System.out.println("Pilih karyawan untuk diberi gaji:");
-                System.out.println("1. " + kw1.username);
-                System.out.println("2. " + kw2.username);
-                System.out.println("3. " + kw3.username);
-                System.out.println("4. " + kw4.username);
-                
-                System.out.print("Pilihan: ");
-                int pilihan = input.nextInt();
-                System.out.print("Masukkan jumlah gaji: ");
-                int jumlahGaji = input.nextInt();
-                
-                switch (pilihan) {
-                case 1:
-                    bk.berikanGaji(kw1, jumlahGaji);
-                    break;
-                case 2:
-                    bk.berikanGaji(kw2, jumlahGaji);
-                    break;
-                case 3:
-                    bk.berikanGaji(kw3, jumlahGaji);
-                    break;
-                case 4:
-                    bk.berikanGaji(kw4, jumlahGaji);
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid.");
-                    break;
-                }
-                // Cek saldo setelah gaji
-                System.out.println("Saldo BadanKeuangan: " + bk.getSaldo());
+                int pilihanMenu;
+                do {
+                    // Tampilkan menu pilihan
+                    System.out.println("Menu Badan Keuangan:");
+                    System.out.println("1. Lihat saldo");
+                    System.out.println("2. Melihat data karyawan");
+                    System.out.println("3. Memilih karyawan untuk diberi gaji");
+                    System.out.println("0. Keluar");
+                    System.out.print("Pilihan: ");
+                    pilihanMenu = input.nextInt();
+                    
+                    switch (pilihanMenu){
+                        case 1:
+                            System.out.println("Saldo: "+bk.getSaldo());
+                            break;
+                        case 2:
+                            System.out.println("Data karyawan:");
+                            System.out.println(kw1.username + ", " + kw1.getJabatan() + ", Gaji jabatan: " + kw1.getGaji());
+                            System.out.println(kw2.username + ", " + kw2.getJabatan() + ", Gaji jabatan: " + kw2.getGaji());
+                            System.out.println(kw3.username + ", " + kw3.getJabatan() + ", Gaji jabatan: " + kw3.getGaji());
+                            System.out.println(kw4.username + ", " + kw4.getJabatan() + ", Gaji jabatan: " + kw4.getGaji());
+                            break;
+                        case 3:
+                            System.out.println("Pilih karyawan untuk diberi gaji:");
+                            System.out.println("1. " + kw1.username);
+                            System.out.println("2. " + kw2.username);
+                            System.out.println("3. " + kw3.username);
+                            System.out.println("4. " + kw4.username);
+                            
+                            System.out.print("Pilihan: ");
+                            int pilihan = input.nextInt();
+                            System.out.print("Masukkan jumlah gaji: ");
+                            int jumlahGaji = input.nextInt();
+                            
+                            switch (pilihan) {
+                                case 1:
+                                    bk.berikanGaji(kw1, jumlahGaji);
+                                    break;
+                                case 2:
+                                    bk.berikanGaji(kw2, jumlahGaji);
+                                    break;
+                                case 3:
+                                    bk.berikanGaji(kw3, jumlahGaji);
+                                    break;
+                                case 4:
+                                    bk.berikanGaji(kw4, jumlahGaji);
+                                    break;
+                                default:
+                                    System.out.println("Pilihan tidak valid.");
+                                    break;
+                            }
+                    }
+                } while(pilihanMenu != 0);
+
             }
             else{
                 System.out.println("Login gagal!");
