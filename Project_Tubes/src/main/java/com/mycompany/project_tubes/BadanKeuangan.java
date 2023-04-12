@@ -9,8 +9,25 @@ package com.mycompany.project_tubes;
  * @author RH
  */
 public class BadanKeuangan extends User {
-    public BadanKeuangan(String username, String password){
+    private int saldo;
+    
+    public BadanKeuangan(String username, String password, int saldo){
         super(username, password);
+        this.saldo = saldo;
+    }
+
+    public int getSaldo() {
+        return saldo;
     }
     
+   public void berikanGaji(Karyawan karyawan, int jumlah){
+       if(saldo >= jumlah ){
+           karyawan.tambahGaji(jumlah);
+           saldo -= jumlah;
+           System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);
+       }
+       else{
+           System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
+       }
+   }
 }
