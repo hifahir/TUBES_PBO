@@ -11,13 +11,20 @@ package com.mycompany.project_tubes;
 public class Karyawan extends User{
     private int gaji;
     
-    public Karyawan(String username, String password, int gaji){
+    public Karyawan(String username, String password){
         super(username, password);
-        this.gaji = gaji;
+        this.gaji = 0;
+    }
+
+    public int getGaji() {
+        return gaji;
+    }
+    
+    public void tambahGaji(int tambahanGaji){
+        gaji += tambahanGaji;
     }
     
     public void infoGaji(int jumlah){
-        gaji += jumlah;
         System.out.println("Gaji anda sekarang adalah Rp." + gaji);
     }
 }
