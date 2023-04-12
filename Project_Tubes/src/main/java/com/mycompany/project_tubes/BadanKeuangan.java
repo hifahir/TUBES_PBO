@@ -20,14 +20,19 @@ public class BadanKeuangan extends User {
         return saldo;
     }
     
-   public void berikanGaji(Karyawan karyawan, int jumlah){
-       if(saldo >= jumlah ){
-           karyawan.tambahGaji(jumlah);
-           saldo -= jumlah;
-           System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);
-       }
-       else{
-           System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
-       }
-   }
+    public void berikanGaji(Karyawan karyawan, int jumlah){
+        int gaji = karyawan.getGaji();
+        if(saldo >= jumlah ){
+            if (jumlah <= gaji){
+                saldo -= jumlah;
+                karyawan.tambahGaji(jumlah);
+                System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);
+            }else{
+                System.out.println("Gaji gagal diberikan kepada "+karyawan.username+". jumlah gaji melebihi dari jumlah gaji yang seharusnya diberikan");
+            }
+        }
+        else{
+            System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
+        }
+    }
 }
