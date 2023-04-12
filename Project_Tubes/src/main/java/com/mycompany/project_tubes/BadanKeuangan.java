@@ -31,4 +31,3 @@ public class BadanKeuangan extends User {
        }
    }
 }
-

@@ -17,6 +17,9 @@ public class Project_Tubes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         
+        // Username & Password akun BadanKeuangan
+        BadanKeuangan bk = new BadanKeuangan("admin", "12345");
+        
         // Username & Password Beberapa akun karyawan yang telah ada
         Karyawan kw1 = new Karyawan("Fariz", "12345");
         Karyawan kw2 = new Karyawan("Nurul", "12345");
@@ -28,7 +31,7 @@ public class Project_Tubes {
         kl.add(kw2);
         kl.add(kw3);
         kl.add(kw4);
-        
+
         // Username & Password akun BadanKeuangan
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000);  
         
@@ -82,8 +85,7 @@ public class Project_Tubes {
             else{
                 System.out.println("Login gagal!");
             }
-        
-        
+
         // Akun 2 / Karyawan
         } else if (akun == 2){
             boolean loginKaryawan = false;
