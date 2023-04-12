@@ -57,7 +57,7 @@ public class Project_Tubes {
 
                     int pilihanMenu;
                     do {
-                        // Tampilkan menu pilihan
+                        // Tampilkan menu pilihan Badan Keuangan
                         System.out.println("Menu Badan Keuangan:");
                         System.out.println("1. Lihat saldo");
                         System.out.println("2. Melihat data karyawan");
@@ -134,12 +134,45 @@ public class Project_Tubes {
                 for (Karyawan karyawan : kl){
                     if (karyawan.Login(uname, ps)){
                         loginKaryawan = true;
-                        break;
-                    }
+                        System.out.println("Login karyawan berhasil!");
+                        System.out.println("\nSelamat datang, "+karyawan.username+"!");
+                        int pilihanMenu;
+                        
+                        do {
+                            // Tampilkan Menu Pilihan Karyawan
+                            System.out.println("Menu Karyawan:");
+                            System.out.println("1. Lihat data anda");
+                            System.out.println("2. Melihat informasi gaji");
+                            System.out.println("3. Mencetak informasi gaji");
+                            System.out.println("0. Keluar");
+                            System.out.print("Pilihan: ");
+                            pilihanMenu = input.nextInt();
+                            
+                            switch (pilihanMenu){
+                                case 1:
+                                    System.out.println("\nData Anda:");
+                                    System.out.println("Nama: "+karyawan.username);
+                                    System.out.println("Jabatan: "+karyawan.getJabatan()+"\n");
+                                    break;
+                                case 2:
+                                    System.out.println("\nInformasi Gaji Anda:");
+                                    System.out.println("Gaji per-bulan: "+karyawan.getGaji());
+                                    System.out.println("Gaji yang telah diterima: "+karyawan.gettotalGaji()+"\n");
+                                    break;
+                                case 3:
+                                    System.out.println("\nNtar\n");
+                                    break;
+                                case 0:
+                                    System.out.println("Anda keluar dari sistem Karyawan.");
+                                    System.out.println("Anda akan dikembalikan ke program utama.\n");
+                                    break;
+                                default:
+                                    System.out.println("Pilihan tidak valid.");
+                            }
+                        }while (pilihanMenu != 0);
+                    }                     
                 }
-                if (loginKaryawan){
-                    System.out.println("Login karyawan berhasil!");
-                }else{
+                if (!loginKaryawan){
                     System.out.println("Login karyawan gagal!");
                     System.out.println("Anda akan dikembalikan ke program utama.\n");
                 }
