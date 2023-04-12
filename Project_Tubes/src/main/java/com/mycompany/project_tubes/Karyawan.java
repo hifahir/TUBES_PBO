@@ -8,6 +8,8 @@ package com.mycompany.project_tubes;
  *
  * @author RH
  */
-public class Karyawan {
-    
+public class Karyawan extends User{
+    public Karyawan(String username, String password){
+        super(username, password);
+    }
 }

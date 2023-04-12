@@ -8,12 +8,17 @@ package com.mycompany.project_tubes;
  *
  * @author RH
  */
-public class User implements AccountSelect {
-    private String accSelect;
+public class User implements Login {
+    protected String username;
+    protected String password;
     
+    public User (String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     @Override
-    public void AccountSelect(String accSelect) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean Login(String username, String password) {
+        return username.equals(this.username) && password.equals(this.password);
     }
 }

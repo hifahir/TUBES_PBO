@@ -8,6 +8,6 @@ package com.mycompany.project_tubes;
  *
  * @author RH
  */
-public interface AccountSelect {
-    public void AccountSelect(String accSelect);
+public interface Login {
+    public boolean Login(String username, String password);
 }
