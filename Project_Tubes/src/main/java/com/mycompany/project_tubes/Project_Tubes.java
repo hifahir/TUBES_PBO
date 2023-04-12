@@ -18,7 +18,7 @@ public class Project_Tubes {
         Scanner input = new Scanner(System.in);
         
         // Username & Password akun BadanKeuangan
-        BadanKeuangan bk = new BadanKeuangan("admin", "12345");
+        BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
         
         // Username & Password Beberapa akun karyawan yang telah ada
         Karyawan kw1 = new Karyawan("Fariz", "12345");
@@ -30,10 +30,7 @@ public class Project_Tubes {
         kl.add(kw1);
         kl.add(kw2);
         kl.add(kw3);
-        kl.add(kw4);
-
-        // Username & Password akun BadanKeuangan
-        BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000);  
+        kl.add(kw4);  
         
         System.out.println("Pilih akun (1 = BadanKeuangan, 2 = Karyawan): ");
         int akun = input.nextInt();
