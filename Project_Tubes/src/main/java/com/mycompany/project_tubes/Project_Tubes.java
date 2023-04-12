@@ -9,6 +9,7 @@ package com.mycompany.project_tubes;
  * @author putra
  */
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Project_Tubes {
@@ -16,15 +17,21 @@ public class Project_Tubes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         
-        // Username & Password BadanKeuangan
-        // Username = admin
-        // Password = 12345
+        // Username & Password akun BadanKeuangan
         BadanKeuangan bk = new BadanKeuangan("admin", "12345");
         
-        // Username & Password Karyawan
-        // Username = karyu
-        // Password = 12345
-        Karyawan kw = new Karyawan("karyu", "12345");
+        // Username & Password Beberapa akun karyawan yang telah ada
+        Karyawan kw1 = new Karyawan("Fariz", "12345");
+        Karyawan kw2 = new Karyawan("Nurul", "12345");
+        Karyawan kw3 = new Karyawan("Raffa", "12345");
+        Karyawan kw4 = new Karyawan("Rihan", "12345");
+        //Membuat ArrayList untuk menyimpan objek Karyawan
+        ArrayList<Karyawan> kl = new ArrayList<>();
+        kl.add(kw1);
+        kl.add(kw2);
+        kl.add(kw3);
+        kl.add(kw4);
+        
         
         System.out.println("Pilih akun (1 = BadanKeuangan, 2 = Karyawan): ");
         int akun = input.nextInt();
@@ -41,14 +48,20 @@ public class Project_Tubes {
             }
             
         } else if (akun == 2){
+            boolean loginKaryawan = false;
             System.out.println("Masukkan username Karyawan: ");
             String uname = input.next();
             System.out.println("Masukkan password Karyawan: ");
             String ps = input.next();
-            if (kw.Login(uname, ps)){
-                System.out.println("Login karyawan berhasil!");
+            for (Karyawan karyawan : kl){
+                if (karyawan.Login(uname, ps)){
+                    loginKaryawan = true;
+                    break;
+                }
             }
-            else{
+            if (loginKaryawan){
+                System.out.println("Login karyawan berhasil!");
+            }else{
                 System.out.println("Login karyawan gagal!");
             }
         }
