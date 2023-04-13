@@ -11,17 +11,25 @@ package com.mycompany.project_tubes;
 public class Karyawan extends User{
     private int gaji;
     private String jabatan;
-    private int totalGaji;
+    private int gajiDidapatkan;
+    private int jumlahLembur;
+    private int gajiPerluDibayar;
     
-    public Karyawan(String username, String password, String jabatan){
+    public Karyawan(String username, String password, String jabatan, int jumlahLembur){
         super(username, password);
         this.jabatan = jabatan;
         setGaji(jabatan);
-        this.totalGaji = 0;
+        this.gajiDidapatkan = 0;
+        this.gajiPerluDibayar = 0;
+        this.jumlahLembur = jumlahLembur;
     }
 
     public String getJabatan(){
         return jabatan;
+    }
+    
+    public int jumlahLembur(){
+        return jumlahLembur;
     }
     
     public void setGaji(String jabatan){
@@ -45,10 +53,16 @@ public class Karyawan extends User{
     }
     
     public void tambahGaji(int tambahanGaji){
-        this.totalGaji += tambahanGaji;
+        this.gajiDidapatkan += tambahanGaji;
     }
     
-    public int gettotalGaji(){
-        return totalGaji;
+    public int getgajiDidapatkan(){
+        return gajiDidapatkan;
     }
+
+    public int getGajiPerluDibayar() {
+        gajiPerluDibayar = gaji + jumlahLembur()*125000;
+        return gajiPerluDibayar;
+    }
+
 }
