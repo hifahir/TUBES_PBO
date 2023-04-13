@@ -75,6 +75,7 @@ public class Project_Tubes {
                                 System.out.println("\nData karyawan:");
                                 System.out.print("Masukkan username karyawan: ");
                                 String inputUKar = input.next();
+                                boolean ditemukan = false;
                                 for (Karyawan karyawan : kl) {
                                     if (inputUKar.equals(karyawan.username)){
                                         System.out.println(karyawan.username + ", " + karyawan.getJabatan() + ", Gaji jabatan: " + karyawan.getGaji());
@@ -82,10 +83,11 @@ public class Project_Tubes {
                                         System.out.println("Bonus karyawan (tiap lembur * Rp. 125000): "+(karyawan.jumlahLembur()*125000));
                                         System.out.println("Gaji yang belum dibayarkan adalah: "+(karyawan.getGajiPerluDibayar() - karyawan.getgajiDidapatkan()));
                                         System.out.println("");
-                                        break;
-                                    }else{
-                                        System.out.println("Username tidak ada/salah.");
+                                        ditemukan = true;
                                     }
+                                }
+                                if (!ditemukan){
+                                    System.out.println("Username tidak ada/salah.\n");
                                 }
                                 break;
                             case 3:
