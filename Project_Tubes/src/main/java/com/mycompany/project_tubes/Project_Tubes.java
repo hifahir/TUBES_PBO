@@ -179,6 +179,7 @@ public class Project_Tubes {
                                 case 2:
                                     System.out.println("\nInformasi Gaji Anda:");
                                     System.out.println("Gaji per-bulan: "+karyawan.getGaji());
+                                    System.out.println("Bonus: "+(karyawan.jumlahLembur()*125000));
                                     System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan()+"\n");
                                     break;
                                 case 0:
