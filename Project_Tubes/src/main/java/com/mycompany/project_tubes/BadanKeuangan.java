@@ -23,7 +23,7 @@ public class BadanKeuangan extends User {
     public void berikanGaji(Karyawan karyawan, int jumlah){
         int gaji = karyawan.getGaji();
         if(saldo >= jumlah ){
-            if (jumlah <= gaji){
+            if (jumlah <= (gaji+karyawan.jumlahLembur()*125000)){
                 saldo -= jumlah;
                 karyawan.tambahGaji(jumlah);
                 System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);

@@ -21,10 +21,10 @@ public class Project_Tubes {
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
         
         // Username & Password Beberapa akun karyawan yang telah ada
-        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
-        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff");
-        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff");
-        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor");
+        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager", 5);
+        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff", 6);
+        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff", 7);
+        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor", 8);
         //Membuat ArrayList untuk menyimpan objek Karyawan
         ArrayList<Karyawan> kl = new ArrayList<>();
         kl.add(kw1);
@@ -62,6 +62,7 @@ public class Project_Tubes {
                         System.out.println("1. Lihat saldo");
                         System.out.println("2. Melihat data karyawan");
                         System.out.println("3. Memilih karyawan untuk diberi gaji");
+                        System.out.println("4. Cetak laporan gaji perusahaan");
                         System.out.println("0. Keluar");
                         System.out.print("Pilihan: ");
                         pilihanMenu = input.nextInt();
@@ -72,11 +73,20 @@ public class Project_Tubes {
                                 break;
                             case 2:
                                 System.out.println("\nData karyawan:");
-                                System.out.println(kw1.username + ", " + kw1.getJabatan() + ", Gaji jabatan: " + kw1.getGaji());
-                                System.out.println(kw2.username + ", " + kw2.getJabatan() + ", Gaji jabatan: " + kw2.getGaji());
-                                System.out.println(kw3.username + ", " + kw3.getJabatan() + ", Gaji jabatan: " + kw3.getGaji());
-                                System.out.println(kw4.username + ", " + kw4.getJabatan() + ", Gaji jabatan: " + kw4.getGaji());
-                                System.out.println("");
+                                System.out.print("Masukkan username karyawan: ");
+                                String inputUKar = input.next();
+                                for (Karyawan karyawan : kl) {
+                                    if (inputUKar.equals(karyawan.username)){
+                                        System.out.println(karyawan.username + ", " + karyawan.getJabatan() + ", Gaji jabatan: " + karyawan.getGaji());
+                                        System.out.println("Lembur karyawan: "+karyawan.jumlahLembur());
+                                        System.out.println("Bonus karyawan (tiap lembur * Rp. 125000): "+(karyawan.jumlahLembur()*125000));
+                                        System.out.println("Gaji yang belum dibayarkan adalah: "+(karyawan.getGajiPerluDibayar() - karyawan.getgajiDidapatkan()));
+                                        System.out.println("");
+                                        break;
+                                    }else{
+                                        System.out.println("Username tidak ada/salah.");
+                                    }
+                                }
                                 break;
                             case 3:
                                 System.out.println("\nPilih karyawan untuk diberi gaji:");
@@ -108,6 +118,17 @@ public class Project_Tubes {
                                         continue;
                                 }
                                 System.out.println("");
+                                break;
+                            case 4:
+                                System.out.println("\nLAPORAN GAJI PERUSAHAAN");
+                                int i = 1;
+                                for (Karyawan karyawan : kl){
+                                    System.out.println(i+". Karyawan: "+karyawan.username);
+                                    System.out.println("Gaji yang telah dibayarkan: "+karyawan.getgajiDidapatkan());
+                                    System.out.println("Gaji yang belum dibayarkan: "+(karyawan.getGajiPerluDibayar()-karyawan.getgajiDidapatkan()));
+                                    System.out.println("");
+                                    ++i;
+                                }
                                 break;
                             case 0:
                                 System.out.println("Anda keluar dari sistem Badan Keuangan.");
@@ -143,7 +164,6 @@ public class Project_Tubes {
                             System.out.println("Menu Karyawan:");
                             System.out.println("1. Lihat data anda");
                             System.out.println("2. Melihat informasi gaji");
-                            System.out.println("3. Mencetak informasi gaji");
                             System.out.println("0. Keluar");
                             System.out.print("Pilihan: ");
                             pilihanMenu = input.nextInt();
@@ -157,10 +177,7 @@ public class Project_Tubes {
                                 case 2:
                                     System.out.println("\nInformasi Gaji Anda:");
                                     System.out.println("Gaji per-bulan: "+karyawan.getGaji());
-                                    System.out.println("Gaji yang telah diterima: "+karyawan.gettotalGaji()+"\n");
-                                    break;
-                                case 3:
-                                    System.out.println("\nNtar\n");
+                                    System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan()+"\n");
                                     break;
                                 case 0:
                                     System.out.println("Anda keluar dari sistem Karyawan.");
