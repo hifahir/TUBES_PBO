@@ -12,24 +12,54 @@ public class Karyawan extends User{
     private int gaji;
     private String jabatan;
     private int gajiDidapatkan;
-    private int jumlahLembur;
-    private int gajiPerluDibayar;
+    private int waktuLembur;
+    private boolean bisaLembur;
+    private int upahLembur;
+    private double pajak;
+    private int pajakTerbayarkan;
     
-    public Karyawan(String username, String password, String jabatan, int jumlahLembur){
+    public Karyawan(String username, String password, String jabatan){
         super(username, password);
         this.jabatan = jabatan;
         setGaji(jabatan);
         this.gajiDidapatkan = 0;
-        this.gajiPerluDibayar = 0;
-        this.jumlahLembur = jumlahLembur;
+        this.waktuLembur = 0;
+        this.bisaLembur = jabatan.equals("Staff");
     }
 
     public String getJabatan(){
         return jabatan;
     }
     
-    public int jumlahLembur(){
-        return jumlahLembur;
+    public boolean getbisaLembur() {
+        return bisaLembur;
+    }
+    
+    public void inputWaktuLembur(LemburSystem lemburSystem, String kode, int waktuLembur) {
+        if (lemburSystem.getKodeLembur().contains(kode)) {
+            // periksa apakah kode lembur sudah pernah digunakan sebelumnya
+            if (!lemburSystem.isKodeLemburUsed(kode)) {
+                lemburSystem.addUsedKodeLembur(kode);
+                tambahWaktuLembur(1); // tambahkan waktu lembur karyawan
+                System.out.println("Waktu lembur telah ditambahkan");
+            } else {
+                System.out.println("Kode lembur sudah pernah digunakan sebelumnya");
+            }
+        } else {
+            System.out.println("Kode lembur tidak ditemukan");
+        }
+    }
+    
+    public void tambahWaktuLembur(int waktu){
+        this.waktuLembur += waktu;
+    }
+    
+    public int jumlahWaktuLembur(){
+        return waktuLembur;
+    }
+    
+    public void tambahUpahLembur(int upahLembur){
+        this.upahLembur += upahLembur;
     }
     
     public void setGaji(String jabatan){
@@ -60,9 +90,18 @@ public class Karyawan extends User{
         return gajiDidapatkan;
     }
 
-    public int getGajiPerluDibayar() {
-        gajiPerluDibayar = gaji + jumlahLembur()*125000;
-        return gajiPerluDibayar;
+    public double getPajak() {
+        return pajak;
+    }
+
+    public int getPajakTerbayarkan() {
+        return pajakTerbayarkan;
+    }
+    
+    public int potonganPajak(int jumlah) {
+        double pajakGaji = jumlah * pajak;
+        pajakTerbayarkan += (int) pajakGaji; // tambahkan nilai pajak yang dipotong ke atribut pajakDipotong
+        return (int) pajakGaji;
     }
 
 }

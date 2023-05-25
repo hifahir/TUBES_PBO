@@ -20,19 +20,56 @@ public class BadanKeuangan extends User {
         return saldo;
     }
     
+    public void isiKodeLembur(LemburSystem lemburSystem, String kode) {
+        lemburSystem.tambahKodeLembur(kode);
+    }
+    
+    public void printKodeLembur(LemburSystem lemburSystem) {
+        System.out.println("Kode Lembur: " + lemburSystem.getKodeLembur().toString());
+    }
+
+    public void printUsedKodeLembur(LemburSystem lemburSystem) {
+        System.out.println("Kode Lembur yang telah digunakan: ");
+        for (String kode : lemburSystem.getUsedKodeLembur()) {
+            System.out.println(kode);
+        }
+    }
+    
     public void berikanGaji(Karyawan karyawan, int jumlah){
         int gaji = karyawan.getGaji();
         if(saldo >= jumlah ){
-            if (jumlah <= (gaji+karyawan.jumlahLembur()*125000)){
+            if (jumlah <= (gaji)){
                 saldo -= jumlah;
-                karyawan.tambahGaji(jumlah);
-                System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);
+                int pajak = karyawan.potonganPajak(jumlah); // hitung pajak dan tambahkan ke method potonganPajak
+                karyawan.tambahGaji(jumlah-pajak);
+                System.out.println("Gaji sebesar " + (jumlah - pajak) + " telah diberikan ke " + karyawan.username);
+                System.out.println("Pajak yang terbayarkan adalah "+pajak);
             }else{
                 System.out.println("Gaji gagal diberikan kepada "+karyawan.username+". jumlah gaji melebihi dari jumlah gaji yang seharusnya diberikan");
             }
         }
         else{
             System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
+        }
+    }  
+    
+    public void berikanUangLembur(Karyawan karyawan, int jumlah){
+        int jamLembur = karyawan.jumlahWaktuLembur();
+        int hargaLembur = 150000;
+        int total = jamLembur * hargaLembur;
+        
+        if (karyawan.getbisaLembur()){
+            if (saldo >= total){
+                saldo -= total;
+                int pajak = karyawan.potonganPajak(total);
+                karyawan.tambahUpahLembur(total-pajak);
+                System.out.println("Upah uang lembur sebesar "+(total-pajak)+" telah diberikan ke "+karyawan.username);
+                System.out.println("Pajak yang terbayarkan adalah "+pajak);
+            }else{
+                System.out.println("Upah lembur gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
+            }
+        }else{
+            System.out.println("Karyawan tidak memenuhi syarat lembur");
         }
     }
 }

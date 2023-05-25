@@ -9,22 +9,26 @@ package com.mycompany.project_tubes;
  * @author putra
  */
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Project_Tubes {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         
+        //LemburSystem
+        LemburSystem ls = new LemburSystem();
+        ls.tambahKodeLembur("KL001");
+        ls.tambahKodeLembur("KL002");
+        
         // Username & Password akun BadanKeuangan
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
         
         // Username & Password Beberapa akun karyawan yang telah ada
-        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager", 5);
-        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff", 6);
-        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff", 7);
-        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor", 8);
+        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
+        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff");
+        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff");
+        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor");
         //Membuat ArrayList untuk menyimpan objek Karyawan
         ArrayList<Karyawan> kl = new ArrayList<>();
         kl.add(kw1);
@@ -79,9 +83,6 @@ public class Project_Tubes {
                                 for (Karyawan karyawan : kl) {
                                     if (inputUKar.equals(karyawan.username)){
                                         System.out.println(karyawan.username + ", " + karyawan.getJabatan() + ", Gaji jabatan: " + karyawan.getGaji());
-                                        System.out.println("Lembur karyawan: "+karyawan.jumlahLembur());
-                                        System.out.println("Bonus karyawan (tiap lembur * Rp. 125000): "+(karyawan.jumlahLembur()*125000));
-                                        System.out.println("Gaji yang belum dibayarkan adalah: "+(karyawan.getGajiPerluDibayar() - karyawan.getgajiDidapatkan()));
                                         System.out.println("");
                                         ditemukan = true;
                                     }
@@ -127,7 +128,6 @@ public class Project_Tubes {
                                 for (Karyawan karyawan : kl){
                                     System.out.println(i+". Karyawan: "+karyawan.username);
                                     System.out.println("Gaji yang telah dibayarkan: "+karyawan.getgajiDidapatkan());
-                                    System.out.println("Gaji yang belum dibayarkan: "+(karyawan.getGajiPerluDibayar()-karyawan.getgajiDidapatkan()));
                                     System.out.println("");
                                     ++i;
                                 }
@@ -166,6 +166,7 @@ public class Project_Tubes {
                             System.out.println("Menu Karyawan:");
                             System.out.println("1. Lihat data anda");
                             System.out.println("2. Melihat informasi gaji");
+                            System.out.println("3. Ajukan lembur");
                             System.out.println("0. Keluar");
                             System.out.print("Pilihan: ");
                             pilihanMenu = input.nextInt();
@@ -179,9 +180,21 @@ public class Project_Tubes {
                                 case 2:
                                     System.out.println("\nInformasi Gaji Anda:");
                                     System.out.println("Gaji per-bulan: "+karyawan.getGaji());
-                                    System.out.println("Bonus: "+(karyawan.jumlahLembur()*125000));
                                     System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan()+"\n");
                                     break;
+                                case 3:
+                                    System.out.println("\nPengajuan waktu lembur yang telah dilakukan:");
+                                    if (karyawan.getbisaLembur()){
+                                        System.out.println("Input kode lembur");
+                                        String kode = input.next();
+                                        System.out.println("Input waktu lembur (dalam satuan jam)");
+                                        int waktuLembur = input.nextInt();
+                                        karyawan.inputWaktuLembur(ls, kode, waktuLembur);
+                                        break;
+                                    }else{
+                                        System.out.println("Anda tidak memenuhi syarat untuk mengajukan waktu lembur\n");
+                                        break;
+                                    }   
                                 case 0:
                                     System.out.println("Anda keluar dari sistem Karyawan.");
                                     System.out.println("Anda akan dikembalikan ke program utama.\n");
