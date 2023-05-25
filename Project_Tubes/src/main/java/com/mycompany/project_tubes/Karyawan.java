@@ -60,9 +60,10 @@ public class Karyawan extends User{
         return gajiDidapatkan;
     }
 
-    public int getGajiPerluDibayar() {
-        gajiPerluDibayar = gaji + jumlahLembur()*125000;
-        return gajiPerluDibayar;
-    }
+   public int getGajiPerluDibayar(int bulan) {
+    int totalLembur = jumlahLembur() * 125000;
+    int gajiPerluDibayar = gaji + totalLembur;
+    return gajiPerluDibayar;
+}
 
 }

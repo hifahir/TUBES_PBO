@@ -15,194 +15,54 @@ import java.util.Scanner;
 public class Project_Tubes {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        
-        // Username & Password akun BadanKeuangan
-        BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
-        
-        // Username & Password Beberapa akun karyawan yang telah ada
-        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager", 5);
-        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff", 6);
-        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff", 7);
-        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor", 8);
-        //Membuat ArrayList untuk menyimpan objek Karyawan
-        ArrayList<Karyawan> kl = new ArrayList<>();
-        kl.add(kw1);
-        kl.add(kw2);
-        kl.add(kw3);
-        kl.add(kw4);
-        
-        int mainMenu;
-        
-        do {
-            // Tampilkan menu pilihan
-            System.out.println("Selamat datang di program ini.");
-            System.out.println("Menu:");
-            System.out.println("1. Login akun Badan Keuangan");
-            System.out.println("2. Login akun Karyawan");
-            System.out.println("3. End program");
-            System.out.print("Pilihan: ");
-            mainMenu = input.nextInt();
-            
-            // Jika akun Badan Keuangan
-            if (mainMenu == 1){
-                System.out.println("Masukkan username Badan Keuangan: ");
-                String uname = input.next();
-                System.out.println("Masukkan password Badan Keuangan: ");
-                String ps = input.next();
-                if (bk.Login(uname, ps)){
-                    //Kalau login berhasil, akan memperlihatkan menu untuk BadanKeuangan
-                    System.out.println("Login berhasil!\n");
-                    System.out.println("Selamat datang, "+bk.username+"!\n");
+        Scanner scanner = new Scanner(System.in);
 
-                    int pilihanMenu;
-                    do {
-                        // Tampilkan menu pilihan Badan Keuangan
-                        System.out.println("Menu Badan Keuangan:");
-                        System.out.println("1. Lihat saldo");
-                        System.out.println("2. Melihat data karyawan");
-                        System.out.println("3. Memilih karyawan untuk diberi gaji");
-                        System.out.println("4. Cetak laporan gaji perusahaan");
-                        System.out.println("0. Keluar");
-                        System.out.print("Pilihan: ");
-                        pilihanMenu = input.nextInt();
+        // Membuat objek BadanKeuangan
+        BadanKeuangan badanKeuangan = new BadanKeuangan("nama_pengguna", "kata_sandi", 100000000);
 
-                        switch (pilihanMenu){
-                            case 1:
-                                System.out.println("Saldo badan keuangan: "+bk.getSaldo()+"\n");
-                                break;
-                            case 2:
-                                System.out.println("\nData karyawan:");
-                                System.out.print("Masukkan username karyawan: ");
-                                String inputUKar = input.next();
-                                boolean ditemukan = false;
-                                for (Karyawan karyawan : kl) {
-                                    if (inputUKar.equals(karyawan.username)){
-                                        System.out.println(karyawan.username + ", " + karyawan.getJabatan() + ", Gaji jabatan: " + karyawan.getGaji());
-                                        System.out.println("Lembur karyawan: "+karyawan.jumlahLembur());
-                                        System.out.println("Bonus karyawan (tiap lembur * Rp. 125000): "+(karyawan.jumlahLembur()*125000));
-                                        System.out.println("Gaji yang belum dibayarkan adalah: "+(karyawan.getGajiPerluDibayar() - karyawan.getgajiDidapatkan()));
-                                        System.out.println("");
-                                        ditemukan = true;
-                                    }
-                                }
-                                if (!ditemukan){
-                                    System.out.println("Username tidak ada/salah.\n");
-                                }
-                                break;
-                            case 3:
-                                System.out.println("\nPilih karyawan untuk diberi gaji:");
-                                System.out.println("1. " + kw1.username);
-                                System.out.println("2. " + kw2.username);
-                                System.out.println("3. " + kw3.username);
-                                System.out.println("4. " + kw4.username);
+        // Membuat objek Karyawan
+        Karyawan karyawan1 = new Karyawan("karyawan1", "kata_sandi1", "Manager", 2);
+        Karyawan karyawan2 = new Karyawan("karyawan2", "kata_sandi2", "Supervisor", 3);
+        Karyawan karyawan3 = new Karyawan("karyawan3", "kata_sandi3", "Staff", 1);
 
-                                System.out.print("Pilihan: ");
-                                int pilihan = input.nextInt();
-                                System.out.print("Masukkan jumlah gaji: ");
-                                int jumlahGaji = input.nextInt();
+        // Menambahkan karyawan ke BadanKeuangan
+        badanKeuangan.tambahKaryawan(karyawan1);
+        badanKeuangan.tambahKaryawan(karyawan2);
+        badanKeuangan.tambahKaryawan(karyawan3);
 
-                                switch (pilihan) {
-                                    case 1:
-                                        bk.berikanGaji(kw1, jumlahGaji);
-                                        break;
-                                    case 2:
-                                        bk.berikanGaji(kw2, jumlahGaji);
-                                        break;
-                                    case 3:
-                                        bk.berikanGaji(kw3, jumlahGaji);
-                                        break;
-                                    case 4:
-                                        bk.berikanGaji(kw4, jumlahGaji);
-                                        break;
-                                    default:
-                                        System.out.println("Pilihan tidak valid.");
-                                        continue;
-                                }
-                                System.out.println("");
-                                break;
-                            case 4:
-                                System.out.println("\nLAPORAN GAJI PERUSAHAAN");
-                                int i = 1;
-                                for (Karyawan karyawan : kl){
-                                    System.out.println(i+". Karyawan: "+karyawan.username);
-                                    System.out.println("Gaji yang telah dibayarkan: "+karyawan.getgajiDidapatkan());
-                                    System.out.println("Gaji yang belum dibayarkan: "+(karyawan.getGajiPerluDibayar()-karyawan.getgajiDidapatkan()));
-                                    System.out.println("");
-                                    ++i;
-                                }
-                                break;
-                            case 0:
-                                System.out.println("Anda keluar dari sistem Badan Keuangan.");
-                                System.out.println("Anda akan dikembalikan ke program utama.\n");
-                                break;
-                            default:
-                                System.out.println("Pilihan tidak valid.");
-                        }
-                    } while(pilihanMenu != 0);
+        // Meminta input bulan dari pengguna
+       System.out.print("Masukkan jumlah bulan: ");
+        int jumlahBulan = scanner.nextInt();
 
-                }
-                else{
-                    System.out.println("Login gagal!");
-                    System.out.println("Anda akan dikembalikan ke program utama.\n");
-                }
+        int[] bulan = new int[jumlahBulan];
+        for (int i = 0; i < jumlahBulan; i++) {
+            System.out.print("Masukkan bulan ke-" + (i + 1) + ": ");
+            int inputBulan = scanner.nextInt();
 
-            // Akun 2 / Karyawan
-            } else if (mainMenu == 2){
-                boolean loginKaryawan = false;
-                System.out.println("\nMasukkan username Karyawan: ");
-                String uname = input.next();
-                System.out.println("Masukkan password Karyawan: ");
-                String ps = input.next();
-                for (Karyawan karyawan : kl){
-                    if (karyawan.Login(uname, ps)){
-                        loginKaryawan = true;
-                        System.out.println("Login karyawan berhasil!");
-                        System.out.println("\nSelamat datang, "+karyawan.username+"!");
-                        int pilihanMenu;
-                        
-                        do {
-                            // Tampilkan Menu Pilihan Karyawan
-                            System.out.println("Menu Karyawan:");
-                            System.out.println("1. Lihat data anda");
-                            System.out.println("2. Melihat informasi gaji");
-                            System.out.println("0. Keluar");
-                            System.out.print("Pilihan: ");
-                            pilihanMenu = input.nextInt();
-                            
-                            switch (pilihanMenu){
-                                case 1:
-                                    System.out.println("\nData Anda:");
-                                    System.out.println("Nama: "+karyawan.username);
-                                    System.out.println("Jabatan: "+karyawan.getJabatan()+"\n");
-                                    break;
-                                case 2:
-                                    System.out.println("\nInformasi Gaji Anda:");
-                                    System.out.println("Gaji per-bulan: "+karyawan.getGaji());
-                                    System.out.println("Bonus: "+(karyawan.jumlahLembur()*125000));
-                                    System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan()+"\n");
-                                    break;
-                                case 0:
-                                    System.out.println("Anda keluar dari sistem Karyawan.");
-                                    System.out.println("Anda akan dikembalikan ke program utama.\n");
-                                    break;
-                                default:
-                                    System.out.println("Pilihan tidak valid.");
-                            }
-                        }while (pilihanMenu != 0);
-                    }                     
-                }
-                if (!loginKaryawan){
-                    System.out.println("Login karyawan gagal!");
-                    System.out.println("Anda akan dikembalikan ke program utama.\n");
-                }
-            } else if (mainMenu == 3){
-                System.out.println("Terima kasih telah menggunakan program ini.");
-                break;
+            // Validasi bulan
+            if (inputBulan >= 1 && inputBulan <= 12) {
+                bulan[i] = inputBulan;
             } else {
-                System.out.println("Pilihan tidak valid.");
-                break;
+                System.out.println("Bulan yang dimasukkan tidak valid.");
+                i--; // Mengulangi input untuk bulan yang tidak valid
             }
-        } while (mainMenu != 0);
+        }
+
+        // Menambahkan gaji karyawan untuk setiap bulan yang dimasukkan
+        for (Karyawan karyawan : badanKeuangan.getKaryawanList()) {
+            for (int i = 0; i < jumlahBulan; i++) {
+                System.out.print("Masukkan gaji untuk bulan " + bulan[i] + " (Karyawan: " + karyawan.getUsername() + "): ");
+                int tambahanGaji = scanner.nextInt();
+                badanKeuangan.berikanGaji(karyawan, tambahanGaji);
+            }
+        }
+
+        // Memanggil method infoGajiBulanTahun untuk bulan yang dimasukkan dan tahun 2023
+        badanKeuangan.infoGajiBulanTahun(bulan, 2023);
+
+        scanner.close();
     }
+        
+        
+
 }
