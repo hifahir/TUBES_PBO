@@ -36,11 +36,30 @@ public class Project_Tubes {
         kl.add(kw3);
         kl.add(kw4);
         
+        //Bulan & tahun awal
+        int bulan = 1;
+        int tahun = 2023;
+        
         int mainMenu;
         
         do {
             // Tampilkan menu pilihan
             System.out.println("Selamat datang di program ini.");
+            System.out.print("Sekarang adalah bulan ");
+            switch (bulan){
+                case 1 -> System.out.print("Januari, tahun "+tahun+"\n");
+                case 2 -> System.out.print("Februari, tahun "+tahun+"\n");
+                case 3 -> System.out.print("Maret, tahun "+tahun+"\n");
+                case 4 -> System.out.print("April, tahun "+tahun+"\n");
+                case 5 -> System.out.print("Mei, tahun "+tahun+"\n");
+                case 6 -> System.out.print("Juni, tahun "+tahun+"\n");
+                case 7 -> System.out.print("Juli, tahun "+tahun+"\n");
+                case 8 -> System.out.print("Agustus, tahun "+tahun+"\n");
+                case 9 -> System.out.print("September, tahun "+tahun+"\n");
+                case 10 -> System.out.print("Oktober, tahun "+tahun+"\n");
+                case 11 -> System.out.print("November, tahun "+tahun+"\n");
+                case 12 -> System.out.print("Desember, tahun "+tahun+"\n");
+            }
             System.out.println("Menu:");
             System.out.println("1. Login akun Badan Keuangan");
             System.out.println("2. Login akun Karyawan");
@@ -68,6 +87,7 @@ public class Project_Tubes {
                         System.out.println("3. Transfer gaji");
                         System.out.println("4. Transfer upah lembur");
                         System.out.println("5. Cetak laporan gaji perusahaan");
+                        System.out.println("6. Setting waktu");
                         System.out.println("0. Keluar");
                         System.out.print("Pilihan: ");
                         pilihanMenu = input.nextInt();
@@ -110,7 +130,7 @@ public class Project_Tubes {
                                     System.out.println("2. Tidak");
                                     int pilih = input.nextInt();
                                     if(pilih == 1){
-                                        bk.berikanGaji(kselect);
+                                        bk.berikanGaji(kselect, bulan, tahun);
                                     }else{
                                         System.out.println("Pembayaran dibatalkan.");
                                     }
@@ -132,9 +152,11 @@ public class Project_Tubes {
                                 }
 
                                 if (kselectUpah != null) {
-                                    System.out.print("Masukkan jumlah upah lembur: ");
-                                    int jumlahUpah = input.nextInt();
-                                    bk.berikanUangLembur(kselectUpah, jumlahUpah);
+                                    if (kselectUpah.getbisaLembur()){
+                                        bk.berikanUangLembur(kselectUpah, bulan, tahun);
+                                    }else{
+                                        System.out.println("Karyawan tidak memenuhi syarat untuk lembur");
+                                    }
                                 } else {
                                     System.out.println("Karyawan dengan username tersebut tidak ditemukan.");
                                 }
@@ -150,6 +172,13 @@ public class Project_Tubes {
                                     System.out.println("");
                                     ++i;
                                 }
+                                break;
+                            case 6:
+                                System.out.println("\nSetting Waktu");
+                                System.out.print("Input Bulan (1-12 untuk Januari-Desember): ");
+                                bulan = input.nextInt();
+                                System.out.print("Input Tahun: ");
+                                tahun = input.nextInt();
                                 break;
                             case 0:
                                 System.out.println("Anda keluar dari sistem Badan Keuangan.");
@@ -198,13 +227,17 @@ public class Project_Tubes {
                                     break;
                                 case 2:
                                     System.out.println("\nInformasi Gaji Anda:");
-                                    System.out.println("Gaji per-bulan: "+karyawan.getGaji());
-                                    System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan());
-                                    if (karyawan.getbisaLembur()){
-                                        System.out.println("Lama lembur yang telah dilakukan: "+karyawan.jumlahWaktuLembur());
-                                        System.out.println("Upah lembur yang telah diterima: "+karyawan.getUpahLembur());
+                                    System.out.print("Input bulan: ");
+                                    bulan = input.nextInt();
+                                    System.out.print("Input tahun: ");
+                                    tahun = input.nextInt();
+                                    String key = bulan + "-" +tahun;
+                                    if (karyawan.gajiWaktuItu != null && karyawan.gajiWaktuItu.containsKey(key)) {
+                                        int gaji = karyawan.gajiWaktuItu.get(key);
+                                        System.out.println("Gaji pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username + " adalah " + gaji);
+                                    } else {
+                                        System.out.println("Belum ada data gaji pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username);
                                     }
-                                    System.out.println("Pajak yang telah dibayarkan: "+karyawan.getPajakTerbayarkan()+"\n");
                                     break;
                                 case 3:
                                     System.out.println("\nPengajuan waktu lembur yang telah dilakukan:");

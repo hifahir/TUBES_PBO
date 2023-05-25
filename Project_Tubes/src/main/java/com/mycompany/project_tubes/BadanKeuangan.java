@@ -4,6 +4,8 @@
  */
 package com.mycompany.project_tubes;
 
+import java.util.*;
+
 /**
  *
  * @author RH
@@ -20,14 +22,13 @@ public class BadanKeuangan extends User {
         return saldo;
     }
     
+    // Untuk mengurus Lembur
     public void isiKodeLembur(LemburSystem lemburSystem, String kode) {
         lemburSystem.tambahKodeLembur(kode);
     }
-    
     public void printKodeLembur(LemburSystem lemburSystem) {
         System.out.println("Kode Lembur: " + lemburSystem.getKodeLembur().toString());
     }
-
     public void printUsedKodeLembur(LemburSystem lemburSystem) {
         System.out.println("Kode Lembur yang telah digunakan: ");
         for (String kode : lemburSystem.getUsedKodeLembur()) {
@@ -35,36 +36,47 @@ public class BadanKeuangan extends User {
         }
     }
     
-    public void berikanGaji(Karyawan karyawan){
-        int gaji = karyawan.getGaji();
-        if(saldo >= gaji ){
-            saldo -= gaji;
-            int pajak = karyawan.potonganPajak(gaji); // hitung pajak dan tambahkan ke method potonganPajak
-            karyawan.tambahGaji(gaji-pajak);
-            System.out.println("Gaji sebesar " + (gaji - pajak) + " telah diberikan ke " + karyawan.username);
-            System.out.println("Pajak yang terbayarkan adalah "+pajak);
-        }
-        else{
-            System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
-        }
-    }  
     
-    public void berikanUangLembur(Karyawan karyawan, int jumlah){
+
+    public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
+        int gaji = karyawan.getGaji();
+        if (saldo >= gaji) {
+            String key = bulan + "-" + tahun;
+            if (karyawan.getGajiWaktuItu() != null && karyawan.getGajiWaktuItu().containsKey(key)) {
+                System.out.println("Gaji pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username + " sudah diberikan sebelumnya");
+            } else {
+                saldo -= gaji;
+                int pajak = karyawan.potonganPajak(gaji);
+                karyawan.tambahGaji(gaji - pajak);
+                if (karyawan.getGajiWaktuItu() == null) {
+                    karyawan.setGajiWaktuItu(new HashMap<>());
+                }
+                karyawan.getGajiWaktuItu().put(key, gaji - pajak);
+                System.out.println("Gaji sebesar " + (gaji - pajak) + " telah diberikan ke " + karyawan.username + " pada bulan " + bulan + " tahun " + tahun);
+                System.out.println("Pajak yang terbayarkan adalah " + pajak);
+            }
+        } else {
+            System.out.println("Gaji gagal diberikan kepada " + karyawan.username + ". Saldo tidak mencukupi");
+        }
+    }
+    
+    // Untuk mengurus upah lembur
+    public void berikanUangLembur(Karyawan karyawan, int bulan, int tahun){
         int jamLembur = karyawan.jumlahWaktuLembur();
         int hargaLembur = 150000;
         int total = jamLembur * hargaLembur;
         
-        if (karyawan.getbisaLembur() && jamLembur != 0){
-            if (saldo >= total){
+        if (karyawan.getbisaLembur() && jamLembur != 0) {
+            if (saldo >= total) {
                 saldo -= total;
-                int pajak = karyawan.potonganPajak(total);
-                karyawan.tambahUpahLembur(total-pajak);
-                System.out.println("Upah uang lembur sebesar "+(total-pajak)+" telah diberikan ke "+karyawan.username);
-                System.out.println("Pajak yang terbayarkan adalah "+pajak);
-            }else{
-                System.out.println("Upah lembur gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
+                int pajak = karyawan.potonganPajak((int) total);
+                karyawan.tambahUpahLembur((int) total - pajak);
+                System.out.println("Upah uang lembur sebesar " + (total - pajak) + " telah diberikan ke " + karyawan.username);
+                System.out.println("Pajak yang terbayarkan adalah " + pajak);
+            } else {
+                System.out.println("Upah lembur gagal diberikan kepada " + karyawan.username + ". Saldo tidak mencukupi");
             }
-        }else{
+        } else {
             System.out.println("Karyawan tidak memenuhi syarat lembur");
         }
     }

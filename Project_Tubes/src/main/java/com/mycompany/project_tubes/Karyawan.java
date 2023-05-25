@@ -4,6 +4,8 @@
  */
 package com.mycompany.project_tubes;
 
+import java.util.*;
+
 /**
  *
  * @author RH
@@ -17,6 +19,7 @@ public class Karyawan extends User{
     private int upahLembur;
     private double pajak;
     private int pajakTerbayarkan;
+    public Map<String, Integer> gajiWaktuItu;
     
     public Karyawan(String username, String password, String jabatan){
         super(username, password);
@@ -35,6 +38,15 @@ public class Karyawan extends User{
     public boolean getbisaLembur() {
         return bisaLembur;
     }
+    
+    public Map<String, Integer> getGajiWaktuItu() {
+        return gajiWaktuItu;
+    }
+    
+    public void setGajiWaktuItu(Map<String, Integer> gajiWaktuItu) {
+        this.gajiWaktuItu = gajiWaktuItu;
+    }
+
     
     public void inputWaktuLembur(LemburSystem lemburSystem, String kode, int waktuLembur) {
         if (lemburSystem.getKodeLembur().contains(kode)) {
@@ -109,5 +121,5 @@ public class Karyawan extends User{
         pajakTerbayarkan += (int) pajakGaji; // tambahkan nilai pajak yang dipotong ke atribut pajakDipotong
         return (int) pajakGaji;
     }
-
+    
 }
