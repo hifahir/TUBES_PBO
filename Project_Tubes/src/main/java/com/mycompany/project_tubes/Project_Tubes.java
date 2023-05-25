@@ -65,8 +65,9 @@ public class Project_Tubes {
                         System.out.println("Menu Badan Keuangan:");
                         System.out.println("1. Lihat saldo");
                         System.out.println("2. Melihat data karyawan");
-                        System.out.println("3. Memilih karyawan untuk diberi gaji");
-                        System.out.println("4. Cetak laporan gaji perusahaan");
+                        System.out.println("3. Transfer gaji");
+                        System.out.println("4. Transfer upah lembur");
+                        System.out.println("5. Cetak laporan gaji perusahaan");
                         System.out.println("0. Keluar");
                         System.out.print("Pilihan: ");
                         pilihanMenu = input.nextInt();
@@ -92,37 +93,55 @@ public class Project_Tubes {
                                 }
                                 break;
                             case 3:
-                                System.out.println("\nPilih karyawan untuk diberi gaji:");
-                                System.out.println("1. " + kw1.username);
-                                System.out.println("2. " + kw2.username);
-                                System.out.println("3. " + kw3.username);
-                                System.out.println("4. " + kw4.username);
+                                System.out.println("\nMasukkan username karyawan untuk diberi gaji:");
+                                String usernamegaji = input.next();
+                                Karyawan kselect = null;
 
-                                System.out.print("Pilihan: ");
-                                int pilihan = input.nextInt();
-                                System.out.print("Masukkan jumlah gaji: ");
-                                int jumlahGaji = input.nextInt();
+                                for (Karyawan k : kl) {
+                                    if (k.username.equals(usernamegaji)) {
+                                        kselect = k;
+                                        break;
+                                    }
+                                }
 
-                                switch (pilihan) {
-                                    case 1:
-                                        bk.berikanGaji(kw1, jumlahGaji);
-                                        break;
-                                    case 2:
-                                        bk.berikanGaji(kw2, jumlahGaji);
-                                        break;
-                                    case 3:
-                                        bk.berikanGaji(kw3, jumlahGaji);
-                                        break;
-                                    case 4:
-                                        bk.berikanGaji(kw4, jumlahGaji);
-                                        break;
-                                    default:
-                                        System.out.println("Pilihan tidak valid.");
-                                        continue;
+                                if (kselect != null) {
+                                    System.out.println("Gaji yang perlu dibayarkan adalah sebesar "+kselect.getGaji()+". Bayar?");
+                                    System.out.println("1. Ya");
+                                    System.out.println("2. Tidak");
+                                    int pilih = input.nextInt();
+                                    if(pilih == 1){
+                                        bk.berikanGaji(kselect);
+                                    }else{
+                                        System.out.println("Pembayaran dibatalkan.");
+                                    }
+                                } else {
+                                    System.out.println("Karyawan dengan username tersebut tidak ditemukan.");
                                 }
                                 System.out.println("");
                                 break;
                             case 4:
+                                System.out.println("\nMasukkan username karyawan untuk diberi upah lembur:");
+                                String username = input.next();
+                                Karyawan kselectUpah = null;
+
+                                for (Karyawan k : kl) {
+                                    if (k.username.equals(username)) {
+                                        kselectUpah = k;
+                                        break;
+                                    }
+                                }
+
+                                if (kselectUpah != null) {
+                                    System.out.print("Masukkan jumlah upah lembur: ");
+                                    int jumlahUpah = input.nextInt();
+                                    bk.berikanUangLembur(kselectUpah, jumlahUpah);
+                                } else {
+                                    System.out.println("Karyawan dengan username tersebut tidak ditemukan.");
+                                }
+           
+                                System.out.println("");
+                                break;
+                            case 5:
                                 System.out.println("\nLAPORAN GAJI PERUSAHAAN");
                                 int i = 1;
                                 for (Karyawan karyawan : kl){
@@ -180,7 +199,12 @@ public class Project_Tubes {
                                 case 2:
                                     System.out.println("\nInformasi Gaji Anda:");
                                     System.out.println("Gaji per-bulan: "+karyawan.getGaji());
-                                    System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan()+"\n");
+                                    System.out.println("Gaji yang telah diterima: "+karyawan.getgajiDidapatkan());
+                                    if (karyawan.getbisaLembur()){
+                                        System.out.println("Lama lembur yang telah dilakukan: "+karyawan.jumlahWaktuLembur());
+                                        System.out.println("Upah lembur yang telah diterima: "+karyawan.getUpahLembur());
+                                    }
+                                    System.out.println("Pajak yang telah dibayarkan: "+karyawan.getPajakTerbayarkan()+"\n");
                                     break;
                                 case 3:
                                     System.out.println("\nPengajuan waktu lembur yang telah dilakukan:");

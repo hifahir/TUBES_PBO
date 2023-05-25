@@ -25,6 +25,7 @@ public class Karyawan extends User{
         this.gajiDidapatkan = 0;
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
+        this.pajak = 0.05;
     }
 
     public String getJabatan(){
@@ -61,6 +62,11 @@ public class Karyawan extends User{
     public void tambahUpahLembur(int upahLembur){
         this.upahLembur += upahLembur;
     }
+
+    public int getUpahLembur() {
+        return upahLembur;
+    }
+
     
     public void setGaji(String jabatan){
         switch(jabatan){

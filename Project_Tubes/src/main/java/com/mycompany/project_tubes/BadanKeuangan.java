@@ -35,18 +35,14 @@ public class BadanKeuangan extends User {
         }
     }
     
-    public void berikanGaji(Karyawan karyawan, int jumlah){
+    public void berikanGaji(Karyawan karyawan){
         int gaji = karyawan.getGaji();
-        if(saldo >= jumlah ){
-            if (jumlah <= (gaji)){
-                saldo -= jumlah;
-                int pajak = karyawan.potonganPajak(jumlah); // hitung pajak dan tambahkan ke method potonganPajak
-                karyawan.tambahGaji(jumlah-pajak);
-                System.out.println("Gaji sebesar " + (jumlah - pajak) + " telah diberikan ke " + karyawan.username);
-                System.out.println("Pajak yang terbayarkan adalah "+pajak);
-            }else{
-                System.out.println("Gaji gagal diberikan kepada "+karyawan.username+". jumlah gaji melebihi dari jumlah gaji yang seharusnya diberikan");
-            }
+        if(saldo >= gaji ){
+            saldo -= gaji;
+            int pajak = karyawan.potonganPajak(gaji); // hitung pajak dan tambahkan ke method potonganPajak
+            karyawan.tambahGaji(gaji-pajak);
+            System.out.println("Gaji sebesar " + (gaji - pajak) + " telah diberikan ke " + karyawan.username);
+            System.out.println("Pajak yang terbayarkan adalah "+pajak);
         }
         else{
             System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
@@ -58,7 +54,7 @@ public class BadanKeuangan extends User {
         int hargaLembur = 150000;
         int total = jamLembur * hargaLembur;
         
-        if (karyawan.getbisaLembur()){
+        if (karyawan.getbisaLembur() && jamLembur != 0){
             if (saldo >= total){
                 saldo -= total;
                 int pajak = karyawan.potonganPajak(total);
