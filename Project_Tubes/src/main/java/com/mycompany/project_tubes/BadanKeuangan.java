@@ -20,7 +20,6 @@ public class BadanKeuangan extends User {
         return saldo;
     }
     
-<<<<<<< HEAD
     public void isiKodeLembur(LemburSystem lemburSystem, String kode) {
         lemburSystem.tambahKodeLembur(kode);
     }
@@ -70,16 +69,3 @@ public class BadanKeuangan extends User {
         }
     }
 }
-=======
-   public void berikanGaji(Karyawan karyawan, int jumlah){
-       if(saldo >= jumlah ){
-           karyawan.tambahGaji(jumlah);
-           saldo -= jumlah;
-           System.out.println("Gaji sebesar " + jumlah + " telah diberikan ke " + karyawan.username);
-       }
-       else{
-           System.out.println("Gaji gagal diberikan kepada "+ karyawan.username +". Saldo tidak mencukupi");
-       }
-   }
-}
->>>>>>> a2e014e78cf0759097c9756a13314acd7303a428

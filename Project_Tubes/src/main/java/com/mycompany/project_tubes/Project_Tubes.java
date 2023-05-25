@@ -17,6 +17,7 @@ public class Project_Tubes {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         LocalDateTime tanggal = LocalDateTime.now();
+        VerifikasiSystem verifikasi = new VerifikasiSystem();
         
         //LemburSystem
         LemburSystem ls = new LemburSystem();
@@ -25,9 +26,6 @@ public class Project_Tubes {
         
         // Username & Password akun BadanKeuangan
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
-        
-        // Username & Password akun BadanKeuangan
-        BadanKeuangan bk = new BadanKeuangan("admin", "12345");
         
         // Username & Password Beberapa akun karyawan yang telah ada
         Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
@@ -40,14 +38,8 @@ public class Project_Tubes {
         kl.add(kw2);
         kl.add(kw3);
         kl.add(kw4);
-<<<<<<< HEAD
         
         int mainMenu;
-=======
-
-        // Username & Password akun BadanKeuangan
-        BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000);  
->>>>>>> a2e014e78cf0759097c9756a13314acd7303a428
         
         do {
             // Tampilkan menu pilihan
@@ -176,6 +168,7 @@ public class Project_Tubes {
                                         System.out.println("Tanggal: " + tanggal);
                                         System.out.println("Gaji: " + (karyawan.getGaji() - karyawan.getPajakTerbayarkan()));
                                         System.out.println("Pajak: " + karyawan.getPajakTerbayarkan());
+                                        System.out.println("Kode: " + verifikasi.generateKodeVerifikasi());
                                         System.out.println("=====================================");
                                         found = true;
                                     }
@@ -194,30 +187,9 @@ public class Project_Tubes {
                     } while(pilihanMenu != 0);
 
                 }
-<<<<<<< HEAD
                 else{
                     System.out.println("Login gagal!");
                     System.out.println("Anda akan dikembalikan ke program utama.\n");
-=======
-                // Cek saldo setelah gaji
-                System.out.println("Saldo BadanKeuangan: " + bk.getSaldo());
-            }
-            else{
-                System.out.println("Login gagal!");
-            }
-
-        // Akun 2 / Karyawan
-        } else if (akun == 2){
-            boolean loginKaryawan = false;
-            System.out.println("Masukkan username Karyawan: ");
-            String uname = input.next();
-            System.out.println("Masukkan password Karyawan: ");
-            String ps = input.next();
-            for (Karyawan karyawan : kl){
-                if (karyawan.Login(uname, ps)){
-                    loginKaryawan = true;
-                    break;
->>>>>>> a2e014e78cf0759097c9756a13314acd7303a428
                 }
 
             // Akun 2 / Karyawan
