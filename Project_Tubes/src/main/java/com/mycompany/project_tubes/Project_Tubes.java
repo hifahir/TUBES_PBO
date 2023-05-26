@@ -153,7 +153,15 @@ public class Project_Tubes {
 
                                 if (kselectUpah != null) {
                                     if (kselectUpah.getbisaLembur()){
-                                        bk.berikanUangLembur(kselectUpah, bulan, tahun);
+                                        System.out.println("Waktu yang diajukan adalah: "+kselectUpah.getWaktuLembur()+" jam, setuju?");
+                                        System.out.println("1. Ya");
+                                        System.out.println("2. Tidak");
+                                        int setuju = input.nextInt();
+                                        if (setuju == 1){
+                                            bk.berikanUangLembur(kselectUpah, bulan, tahun);
+                                        }else{
+                                            System.out.println("Pembayaran dibatalkan.");
+                                        }
                                     }else{
                                         System.out.println("Karyawan tidak memenuhi syarat untuk lembur");
                                     }
@@ -235,9 +243,21 @@ public class Project_Tubes {
                                     if (karyawan.gajiWaktuItu != null && karyawan.gajiWaktuItu.containsKey(key)) {
                                         int gaji = karyawan.gajiWaktuItu.get(key);
                                         System.out.println("Gaji pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username + " adalah " + gaji);
+                                        if (karyawan.pajakWaktuItu != null && karyawan.pajakWaktuItu.containsKey(key)) {
+                                            int pajak = karyawan.pajakWaktuItu.get(key);
+                                            System.out.println("Pajak pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username + " adalah " + pajak);
+                                        } else {
+                                            System.out.println("Belum ada data pajak pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username);
+                                        }
                                     } else {
                                         System.out.println("Belum ada data gaji pada bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username);
                                     }
+                                    System.out.println("Total gaji yang telah didapatkan: "+karyawan.getGajiDidapatkan());
+                                    if (karyawan.getbisaLembur()){
+                                        System.out.println("Total waktu lembur: "+karyawan.getWaktuLemburDone());
+                                        System.out.println("Total upah lembur yang telah didapatkan: "+karyawan.getUpahLembur());
+                                    }
+                                    System.out.println("Total pajak yang telah dibayarkan: "+karyawan.getPajakTerbayarkan());
                                     break;
                                 case 3:
                                     System.out.println("\nPengajuan waktu lembur yang telah dilakukan:");

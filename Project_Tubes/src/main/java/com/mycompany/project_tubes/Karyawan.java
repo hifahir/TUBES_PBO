@@ -15,11 +15,13 @@ public class Karyawan extends User{
     private String jabatan;
     private int gajiDidapatkan;
     private int waktuLembur;
+    private int waktuLemburDone;
     private boolean bisaLembur;
     private int upahLembur;
     private double pajak;
     private int pajakTerbayarkan;
     public Map<String, Integer> gajiWaktuItu;
+    public Map<String, Integer> pajakWaktuItu;
     
     public Karyawan(String username, String password, String jabatan){
         super(username, password);
@@ -46,6 +48,14 @@ public class Karyawan extends User{
     public void setGajiWaktuItu(Map<String, Integer> gajiWaktuItu) {
         this.gajiWaktuItu = gajiWaktuItu;
     }
+    
+    public Map<String, Integer> getPajakWaktuItu() {
+        return pajakWaktuItu;
+    }
+    
+    public void setPajakWaktuItu(Map<String, Integer> pajakWaktuItu) {
+        this.pajakWaktuItu = pajakWaktuItu;
+    }
 
     
     public void inputWaktuLembur(LemburSystem lemburSystem, String kode, int waktuLembur) {
@@ -53,7 +63,7 @@ public class Karyawan extends User{
             // periksa apakah kode lembur sudah pernah digunakan sebelumnya
             if (!lemburSystem.isKodeLemburUsed(kode)) {
                 lemburSystem.addUsedKodeLembur(kode);
-                tambahWaktuLembur(1); // tambahkan waktu lembur karyawan
+                tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan
                 System.out.println("Waktu lembur telah ditambahkan");
             } else {
                 System.out.println("Kode lembur sudah pernah digunakan sebelumnya");
@@ -63,12 +73,20 @@ public class Karyawan extends User{
         }
     }
     
-    public void tambahWaktuLembur(int waktu){
-        this.waktuLembur += waktu;
+    public void tambahWaktuLembur(int waktuLembur){
+        this.waktuLembur += waktuLembur;
     }
     
-    public int jumlahWaktuLembur(){
-        return waktuLembur;
+    public void resetWaktuLembur(){
+        this.waktuLembur = 0;
+    }
+
+    public int getWaktuLemburDone() {
+        return waktuLemburDone;
+    }
+    
+    public void tambahWaktuLemburDone(int waktuLemburDone){
+        this.waktuLemburDone += waktuLemburDone;
     }
     
     public void tambahUpahLembur(int upahLembur){
@@ -77,6 +95,14 @@ public class Karyawan extends User{
 
     public int getUpahLembur() {
         return upahLembur;
+    }
+
+    public int getGajiDidapatkan() {
+        return gajiDidapatkan;
+    }
+
+    public int getWaktuLembur() {
+        return waktuLembur;
     }
 
     

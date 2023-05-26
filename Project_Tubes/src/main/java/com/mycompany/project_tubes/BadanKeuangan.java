@@ -52,6 +52,10 @@ public class BadanKeuangan extends User {
                     karyawan.setGajiWaktuItu(new HashMap<>());
                 }
                 karyawan.getGajiWaktuItu().put(key, gaji - pajak);
+                if (karyawan.getPajakWaktuItu() == null) { // tambahan untuk membuat objek Map pajakWaktuItu jika belum ada
+                    karyawan.setPajakWaktuItu(new HashMap<>());
+                }
+                karyawan.getPajakWaktuItu().put(key, pajak); // tambahan untuk menyimpan nilai pajak pada objek Karyawan
                 System.out.println("Gaji sebesar " + (gaji - pajak) + " telah diberikan ke " + karyawan.username + " pada bulan " + bulan + " tahun " + tahun);
                 System.out.println("Pajak yang terbayarkan adalah " + pajak);
             }
@@ -59,10 +63,11 @@ public class BadanKeuangan extends User {
             System.out.println("Gaji gagal diberikan kepada " + karyawan.username + ". Saldo tidak mencukupi");
         }
     }
+
     
     // Untuk mengurus upah lembur
     public void berikanUangLembur(Karyawan karyawan, int bulan, int tahun){
-        int jamLembur = karyawan.jumlahWaktuLembur();
+        int jamLembur = karyawan.getWaktuLembur();
         int hargaLembur = 150000;
         int total = jamLembur * hargaLembur;
         
@@ -71,6 +76,8 @@ public class BadanKeuangan extends User {
                 saldo -= total;
                 int pajak = karyawan.potonganPajak((int) total);
                 karyawan.tambahUpahLembur((int) total - pajak);
+                karyawan.tambahWaktuLemburDone(jamLembur);
+                karyawan.resetWaktuLembur();
                 System.out.println("Upah uang lembur sebesar " + (total - pajak) + " telah diberikan ke " + karyawan.username);
                 System.out.println("Pajak yang terbayarkan adalah " + pajak);
             } else {
