@@ -24,6 +24,9 @@ public class Project_Tubes {
         // Username & Password akun BadanKeuangan
         BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
         
+        // Username & Password sistem Verifikasi
+        VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345",bk.getSaldo());
+        
         // Username & Password Beberapa akun karyawan yang telah ada
         Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
         Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff");
@@ -131,6 +134,7 @@ public class Project_Tubes {
                                     int pilih = input.nextInt();
                                     if(pilih == 1){
                                         bk.berikanGaji(kselect, bulan, tahun);
+                                        vs.verifikasi(kselect, bulan, tahun);
                                     }else{
                                         System.out.println("Pembayaran dibatalkan.");
                                     }

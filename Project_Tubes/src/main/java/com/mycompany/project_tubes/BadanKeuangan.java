@@ -87,4 +87,8 @@ public class BadanKeuangan extends User {
             System.out.println("Karyawan tidak memenuhi syarat lembur");
         }
     }
+    
+    public void verifikasi(){
+        
+    }
 }
