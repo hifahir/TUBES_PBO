@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.project_tubes;
+package BackendSystemPackage;
 
 import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,8 +21,10 @@ public class Karyawan extends User{
     private int upahLembur;
     private double pajak;
     private int pajakTerbayarkan;
+    public int upahLemburWaktuItu;
     public Map<String, Integer> gajiWaktuItu;
     public Map<String, Integer> pajakWaktuItu;
+    public Map<String, Integer> lemburWaktuItu;
     
     public Karyawan(String username, String password, String jabatan){
         super(username, password);
@@ -31,6 +34,10 @@ public class Karyawan extends User{
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
         this.pajak = 0.05;
+    }
+    
+    public String getUsername(){
+        return username;
     }
 
     public String getJabatan(){
@@ -57,6 +64,13 @@ public class Karyawan extends User{
         this.pajakWaktuItu = pajakWaktuItu;
     }
 
+    public Map<String, Integer> getLemburWaktuItu() {
+        return lemburWaktuItu;
+    }
+
+    public void setLemburWaktuItu(Map<String, Integer> lemburWaktuItu) {
+        this.lemburWaktuItu = lemburWaktuItu;
+    }
     
     public void inputWaktuLembur(LemburSystem lemburSystem, String kode, int waktuLembur) {
         if (lemburSystem.getKodeLembur().contains(kode)) {
@@ -64,12 +78,12 @@ public class Karyawan extends User{
             if (!lemburSystem.isKodeLemburUsed(kode)) {
                 lemburSystem.addUsedKodeLembur(kode);
                 tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan
-                System.out.println("Waktu lembur telah ditambahkan");
+                JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                System.out.println("Kode lembur sudah pernah digunakan sebelumnya");
+                JOptionPane.showMessageDialog(null, "Kode lembur sudah pernah digunakan sebelumnya", "Peringatan", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            System.out.println("Kode lembur tidak ditemukan");
+            JOptionPane.showMessageDialog(null, "Kode lembur tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
