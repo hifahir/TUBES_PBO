@@ -23,4 +23,6 @@ public class User implements Login {
     public boolean Login(String username, String password) {
         return username.equals(this.username) && password.equals(this.password);
     }
+    
+    public User(){}
 }

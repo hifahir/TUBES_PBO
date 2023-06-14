@@ -11,19 +11,13 @@ import java.util.*;
  * @author RH
  */
 public class LemburSystem {
-    private List<String> kodeLembur;
-    private Set<String> usedKodeLembur;
+    private String kodeLembur;
+    private String usedKodeLembur;
 
     public LemburSystem() {
-        this.kodeLembur = new ArrayList<>();
-        this.usedKodeLembur = new HashSet<>();
     }
 
-    public void tambahKodeLembur(String kode) {
-        kodeLembur.add(kode);
-    }
-
-    public List<String> getKodeLembur() {
+    public String getKodeLembur() {
         return kodeLembur;
     }
 
@@ -31,11 +25,7 @@ public class LemburSystem {
         return usedKodeLembur.contains(kode);
     }
 
-    public void addUsedKodeLembur(String kode) {
-        usedKodeLembur.add(kode);
-    }
-
-    public Set<String> getUsedKodeLembur() {
+    public String getUsedKodeLembur() {
         return usedKodeLembur;
     }
 }

@@ -20,10 +20,10 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private Karyawan karyawan;
     private Karyawan karyawanDitemukan;
     private VerifikasiSystem verifikasiSystem;
-    private LemburSystem lemburSystem;
     private ArrayList<Karyawan> karyawanList;
     private AplikasiController aplikasiController;
     private SimpanListener simpan;
+    
     private int hari;
     private int bulan;
     private int tahun;
@@ -108,10 +108,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     
     public void setVerifikasiSystem(VerifikasiSystem verifikasiSystem) {
         this.verifikasiSystem = verifikasiSystem;
-    }
-
-    public void setLemburSystem(LemburSystem lemburSystem) {
-        this.lemburSystem = lemburSystem;
     }
     
     public void setTanggal(int hari, int bulan, int tahun){
@@ -204,12 +200,11 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                             "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton9){
-            String kodeLembur = jTextField2.getText();
             String waktuLembur = jTextField5.getText();
             if (karyawanDitemukan.getbisaLembur()){
-                if (kodeLembur != null && waktuLembur != null){
+                if (waktuLembur != null){
                     int waktuLemburParse = Integer.parseInt(waktuLembur);
-                    karyawanDitemukan.inputWaktuLembur(lemburSystem, kodeLembur, waktuLemburParse);
+                    karyawanDitemukan.inputWaktuLembur(waktuLemburParse);
                 }else{
                     JOptionPane.showMessageDialog(this, "Input Error",
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -281,8 +276,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jButton7 = new javax.swing.JButton();
         tab3 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
@@ -297,7 +290,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jLabel25 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(747, 452));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
@@ -361,6 +353,11 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jLabel5.setText("Password:");
 
         jButton6.setText("Login");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("jLabel6");
 
@@ -498,11 +495,15 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
 
         jLabel30.setText("Transfer Gaji");
 
-        jLabel12.setText("Input kode lembur:");
-
         jButton9.setText("Submit");
 
         jLabel13.setText("Input waktu lembur:");
+
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout tab3Layout = new javax.swing.GroupLayout(tab3);
         tab3.setLayout(tab3Layout);
@@ -514,35 +515,27 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                         .addGap(180, 180, 180)
                         .addComponent(jLabel30))
                     .addGroup(tab3Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(tab3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(tab3Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton9)
-                            .addGroup(tab3Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5)))))
-                .addContainerGap(188, Short.MAX_VALUE))
+                        .addGap(153, 153, 153)
+                        .addComponent(jButton9))
+                    .addGroup(tab3Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel13)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         tab3Layout.setVerticalGroup(
             tab3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab3Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jLabel30)
-                .addGap(40, 40, 40)
+                .addGap(48, 48, 48)
                 .addGroup(tab3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(tab3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addGap(39, 39, 39)
                 .addComponent(jButton9)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addContainerGap(278, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab3", tab3);
@@ -611,6 +604,14 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -660,7 +661,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -685,7 +685,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;

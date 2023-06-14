@@ -25,6 +25,26 @@ public class Karyawan extends User{
     public Map<String, Integer> gajiWaktuItu;
     public Map<String, Integer> pajakWaktuItu;
     public Map<String, Integer> lemburWaktuItu;
+
+    public String getPassword() {
+        return password;
+    }
+    
+    public Karyawan(){
+    
+    }
+
+    public void setGaji(int gaji) {
+        this.gaji = gaji;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
     public Karyawan(String username, String password, String jabatan){
         super(username, password);
@@ -34,6 +54,18 @@ public class Karyawan extends User{
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
         this.pajak = 0.05;
+    }
+
+    public void setBisaLembur(boolean bisaLembur) {
+        this.bisaLembur = bisaLembur;
+    }
+
+    public void setJabatan(String jabatan) {
+        this.jabatan = jabatan;
+    }
+
+    public void setPajak(double pajak) {
+        this.pajak = pajak;
     }
     
     public String getUsername(){
@@ -72,19 +104,9 @@ public class Karyawan extends User{
         this.lemburWaktuItu = lemburWaktuItu;
     }
     
-    public void inputWaktuLembur(LemburSystem lemburSystem, String kode, int waktuLembur) {
-        if (lemburSystem.getKodeLembur().contains(kode)) {
-            // periksa apakah kode lembur sudah pernah digunakan sebelumnya
-            if (!lemburSystem.isKodeLemburUsed(kode)) {
-                lemburSystem.addUsedKodeLembur(kode);
-                tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan
-                JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Kode lembur sudah pernah digunakan sebelumnya", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Kode lembur tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    public void inputWaktuLembur(int waktuLembur) {
+        tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan
+        JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void tambahWaktuLembur(int waktuLembur){

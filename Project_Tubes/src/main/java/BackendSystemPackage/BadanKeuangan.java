@@ -26,19 +26,14 @@ public class BadanKeuangan extends User {
     public int getSaldo() {
         return saldo;
     }
+
+    public String getPassword() {
+        return password;
+    }
     
     // Untuk mengurus Lembur
-    public void isiKodeLembur(LemburSystem lemburSystem, String kode) {
-        lemburSystem.tambahKodeLembur(kode);
-    }
     public void printKodeLembur(LemburSystem lemburSystem) {
         System.out.println("Kode Lembur: " + lemburSystem.getKodeLembur().toString());
-    }
-    public void printUsedKodeLembur(LemburSystem lemburSystem) {
-        System.out.println("Kode Lembur yang telah digunakan: ");
-        for (String kode : lemburSystem.getUsedKodeLembur()) {
-            System.out.println(kode);
-        }
     }
 
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {

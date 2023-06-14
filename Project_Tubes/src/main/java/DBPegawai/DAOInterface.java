@@ -1,13 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package DBPegawai;
-
-/**
- *
- * @author putra
- */
+import java.util.List;
+import BackendSystemPackage.Karyawan;
+import BackendSystemPackage.BadanKeuangan;
+import java.util.ArrayList;
 public interface DAOInterface {
-    
+    public void updateAdmin(BadanKeuangan keuangan);
+    public ArrayList<Karyawan> getAllKaryawan();
+    public void insertGaji(Karyawan karyawan, int bulan, int tahun);
+    public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun);
 }

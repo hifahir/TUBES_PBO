@@ -10,6 +10,7 @@ import UIPackage.AplikasiController;
 import BackendSystemPackage.BadanKeuangan;
 import BackendSystemPackage.Karyawan;
 import BackendSystemPackage.VerifikasiSystem;
+import DBPegawai.DAOInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -30,6 +31,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private int hari;
     private int bulan;
     private int tahun;
+    private DAOInterface dao;
     
     /**
      * Creates new form MenuBadanKeuanganFrame
@@ -239,7 +241,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             simpan.simpanOpsiMenuBadanKeuangan(7);
         } else if (e.getSource() == jButton8) {
             simpan.simpanOpsiMenuBadanKeuangan(8);
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            List<Karyawan> karyawanList = dao.getAllKaryawan();
             String username = jTextField1.getText();
             boolean ditemukan = false;
             Karyawan karyawanDitemukan = null;
@@ -262,7 +264,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == jButton9){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField2.getText();
             boolean ditemukan = false;
@@ -288,7 +290,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton10){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField2.getText();
             Karyawan karyawanDitemukan = null;
@@ -309,7 +311,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             jButton10.setVisible(false);
             jButton11.setVisible(false);
         }else if (e.getSource() == jButton12){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField3.getText();
             boolean ditemukan = false;
@@ -341,7 +343,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton13){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField3.getText();
             Karyawan karyawanDitemukan = null;
@@ -362,7 +364,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             jButton13.setVisible(false);
             jButton14.setVisible(false);
         }else if (e.getSource() == jButton15){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField4.getText();
             String inputBulan = jTextField6.getText();
@@ -386,7 +388,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton16){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField4.getText();
             String inputHari = jTextField5.getText();
@@ -412,7 +414,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton17){
-            ArrayList<Karyawan> karyawanList = aplikasiController.getKaryawanList();
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
             String username = jTextField4.getText();
             String inputTahun = jTextField8.getText();

@@ -8,6 +8,7 @@ import BackendSystemPackage.BadanKeuangan;
 import BackendSystemPackage.Karyawan;
 import BackendSystemPackage.LemburSystem;
 import BackendSystemPackage.VerifikasiSystem;
+import DBPegawai.DAOInterface;
 import java.util.*;
 
 /**
@@ -19,7 +20,6 @@ public class AplikasiController implements SimpanListener{
     private Karyawan karyawan;
     private ArrayList<Karyawan> karyawanList;
     private VerifikasiSystem verifikasiSystem;
-    private LemburSystem lemburSystem;
     private LoginFrame loginFrame;
     private LoginBadanKeuanganFrame loginBadanKeuanganFrame;
     private MenuBadanKeuanganFrame menuBadanKeuanganFrame;
@@ -28,6 +28,7 @@ public class AplikasiController implements SimpanListener{
     private int hari;
     private int bulan;
     private int tahun;
+    private DAOInterface gajiDAO;
     
     public AplikasiController(){
         
@@ -40,21 +41,20 @@ public class AplikasiController implements SimpanListener{
     public void setVerifikasiSystem(VerifikasiSystem verifikasiSystem){
         this.verifikasiSystem = verifikasiSystem;
     }
-
-    public void setLemburSystem(LemburSystem lemburSystem) {
-        this.lemburSystem = lemburSystem;
-    }
     
-    public ArrayList<Karyawan> getKaryawanList() {
-        return karyawanList;
-    }
+//    public ArrayList<Karyawan> getKaryawanList() {
+//        return karyawanList;
+//    }
     
     public void setKaryawan(Karyawan karyawan) {
         this.karyawan = karyawan;
     }
 
     public void setKaryawanList(ArrayList<Karyawan> karyawanList) {
+        
         this.karyawanList = karyawanList;
+        this.karyawanList = gajiDAO.getAllKaryawan();
+        
     }
     
     public void showDefaultView(int hari, int bulan, int tahun){
@@ -93,7 +93,6 @@ public class AplikasiController implements SimpanListener{
         menuKaryawanFrame.setVerifikasiSystem(verifikasiSystem);
         menuKaryawanFrame.setKaryawanList(karyawanList);
         menuKaryawanFrame.setKaryawan(karyawan);
-        menuKaryawanFrame.setLemburSystem(lemburSystem);
         menuKaryawanFrame.setLocationRelativeTo(null);
         
         loginFrame.setVisible(true);
@@ -157,4 +156,5 @@ public class AplikasiController implements SimpanListener{
             menuKaryawanFrame.setTanggal(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
         }
     }
+    
 }
