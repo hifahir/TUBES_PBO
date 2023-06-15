@@ -4,6 +4,7 @@
  */
 package BackendSystemPackage;
 
+import DBPegawai.PegawaiDAO;
 import javax.swing.*;
 
 /**
@@ -20,6 +21,7 @@ public class VerifikasiSystem extends BadanKeuangan{
     private int lembur;
     private double pajak;
     private boolean verifikasiAda;
+    private PegawaiDAO dao;
 
     public boolean isVerifikasiAda() {
         return verifikasiAda;
@@ -31,41 +33,46 @@ public class VerifikasiSystem extends BadanKeuangan{
     
     public void verifikasiGaji(Karyawan karyawan, int bulan, int tahun) {
         String key = bulan + "-" + tahun;
-        if (karyawan.getGajiWaktuItu() != null && karyawan.getGajiWaktuItu().containsKey(key)) {
-            nama = karyawan.username;
+        boolean bulanTahunExists = dao.isBulanTahunExists(karyawan.getUsername(), key);
+
+        if (bulanTahunExists) {
+            nama = karyawan.getUsername();
             this.bulan = bulan;
             this.tahun = tahun;
             gaji = karyawan.getGaji();
             pajak = karyawan.getPajak();
             verifikasiAda = true;
-            
         } else {
             JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
-                    + bulan + " tahun " + tahun + " untuk " + karyawan.username 
-                    + " tidak ada/belum dibayarkan!"
-                    ,"Error", JOptionPane.ERROR_MESSAGE);
+                    + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
+                    + " tidak ada/belum dibayarkan!",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             verifikasiAda = false;
         }
     }
+
     
-    public void verifikasiLembur(Karyawan karyawan, int hari, int bulan, int tahun){
+    public void verifikasiLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
         String key = hari + "-" + bulan + "-" + tahun;
-        if (karyawan.getLemburWaktuItu() != null && karyawan.getLemburWaktuItu().containsKey(key)) {
-            nama = karyawan.username;
+
+        boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan.getUsername(), key);
+        if (lemburDiberikanSebelumnya) {
+            nama = karyawan.getUsername();
             this.hari = hari;
             this.bulan = bulan;
             this.tahun = tahun;
             lembur = karyawan.upahLemburWaktuItu;
-            pajak = karyawan.getPajak();
+            pajak = karyawan.getPajakWaktuItu();
             verifikasiAda = true;
         } else {
-            JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal " 
-                    + hari + " " + bulan + " " + tahun + " untuk " + karyawan.username 
-                    + " tidak ada/belum dibayarkan!"
-                    ,"Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal "
+                    + hari + " " + bulan + " " + tahun + " untuk " + karyawan.getUsername()
+                    + " tidak ada/belum dibayarkan!",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             verifikasiAda = false;
         }
     }
+
 
     public String getNama() {
         return nama;
