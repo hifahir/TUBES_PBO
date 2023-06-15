@@ -17,7 +17,7 @@ public class PegawaiDAO implements DAOInterface{
     ArrayList<BadanKeuangan> listKeuangan;
     
     public void updateAdmin(BadanKeuangan keuangan, int pengurangan) {
-        String sql = "UPDATE kotak SET saldo = saldo - ? WHERE username = ?";
+        String sql = "UPDATE badan_keuangan SET saldo = saldo - ? WHERE username = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             statement.setInt(1, pengurangan);
             statement.setString(2, keuangan.getUsername());
