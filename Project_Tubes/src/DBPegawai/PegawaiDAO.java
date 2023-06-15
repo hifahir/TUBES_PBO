@@ -30,8 +30,6 @@ public class PegawaiDAO implements DAOInterface{
         }
     }
 
-
-
     @Override
     public ArrayList<Karyawan> getAllKaryawan() {
         listKaryawan = new ArrayList<>();
@@ -61,6 +59,7 @@ public class PegawaiDAO implements DAOInterface{
         return listKaryawan;
     }
     
+    @Override
     public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak) {
         String sql = "INSERT INTO transaksigaji (gajiWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
@@ -78,7 +77,7 @@ public class PegawaiDAO implements DAOInterface{
         }
     }
 
-    
+    @Override
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
         String sql = "INSERT INTO transaksilembur (lemburWaktuItu, pajakWaktuItu, haribulantahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
@@ -96,6 +95,7 @@ public class PegawaiDAO implements DAOInterface{
         }
     }
     
+    @Override
     public ArrayList<BadanKeuangan> getAllKeuangan(){
         listKeuangan = new ArrayList<>();
         Statement statement;
@@ -121,6 +121,7 @@ public class PegawaiDAO implements DAOInterface{
         return listKeuangan;
     }
 
+    @Override
     public boolean isBulanTahunExists(Karyawan karyawan, String bulanTahun) {
         String sql = "SELECT COUNT(*) FROM transaksigaji WHERE username = ? AND bulanTahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
@@ -138,6 +139,7 @@ public class PegawaiDAO implements DAOInterface{
         return false;
     }
 
+    @Override
     public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun) {
         String sql = "SELECT COUNT(*) FROM transaksilembur WHERE username = ? AND haribulantahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {

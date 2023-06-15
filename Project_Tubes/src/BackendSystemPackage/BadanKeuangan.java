@@ -62,6 +62,7 @@ public class BadanKeuangan extends User {
     }
 
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
+        BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0); // Assuming there's only one BadanKeuangan object in the list
         int gaji = karyawan.getGaji();
         int pajak = karyawan.potonganPajak(gaji);
         String key = bulan + "-" + tahun;
@@ -71,7 +72,7 @@ public class BadanKeuangan extends User {
             karyawan.tambahGaji(gaji - pajak);
 
             dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
-            dao.updateAdmin(this.keuangan, gaji);
+            dao.updateAdmin(badanKeuangan, gaji);
 
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 
@@ -79,9 +80,6 @@ public class BadanKeuangan extends User {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
-
     
     // Untuk mengurus upah lembur
 
