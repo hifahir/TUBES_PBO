@@ -34,17 +34,7 @@ public class Project_Tubes {
 
         VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345",saldo);
         // Username & Password Beberapa akun karyawan yang telah ada
-        Karyawan kw1 = new Karyawan("Fariz", "12345", "Manager");
-        Karyawan kw2 = new Karyawan("Nurul", "12345", "Staff");
-        Karyawan kw3 = new Karyawan("Raffa", "12345", "Staff");
-        Karyawan kw4 = new Karyawan("Rihan", "12345", "Supervisor");
-        
-        //Membuat ArrayList untuk menyimpan objek Karyawan
-        ArrayList<Karyawan> kl = new ArrayList<>();
-        kl.add(kw1);
-        kl.add(kw2);
-        kl.add(kw3);
-        kl.add(kw4);
+        ArrayList<Karyawan> kw = dao.getAllKaryawan();
         
         //Bulan & tahun awal
         int hari = 1;
@@ -52,8 +42,14 @@ public class Project_Tubes {
         int tahun = 2023;
         
         AplikasiController aplikasiController = new AplikasiController();
-        aplikasiController.setBadanKeuangan(bk);
-        aplikasiController.setKaryawanList(kl);
+        if (!bk.isEmpty()) { // Check if the list is not empty
+            BadanKeuangan firstBadanKeuangan = bk.get(0);
+            aplikasiController.setBadanKeuangan(firstBadanKeuangan);
+        } else {
+            System.out.println("Error");
+        }
+        
+        aplikasiController.setKaryawanList(kw);
         aplikasiController.setVerifikasiSystem(vs);
         aplikasiController.showDefaultView(hari, bulan, tahun);
         
