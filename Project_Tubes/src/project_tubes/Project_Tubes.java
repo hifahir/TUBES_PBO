@@ -33,6 +33,7 @@ public class Project_Tubes {
         int tahun = 2023;
         
         AplikasiController aplikasiController = new AplikasiController();
+        aplikasiController.setDao(dao);
         if (!bk.isEmpty()) { // Check if the list is not empty
             BadanKeuangan firstBadanKeuangan = bk.get(0);
             aplikasiController.setBadanKeuangan(firstBadanKeuangan);
@@ -45,7 +46,6 @@ public class Project_Tubes {
         }
         
         aplikasiController.setVerifikasiSystem(vs);
-        aplikasiController.setDao(dao);
         aplikasiController.showDefaultView(hari, bulan, tahun);
 
     }
