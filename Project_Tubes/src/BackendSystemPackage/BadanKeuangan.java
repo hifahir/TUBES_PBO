@@ -70,8 +70,8 @@ public class BadanKeuangan extends User {
             saldo -= gaji;
             karyawan.tambahGaji(gaji - pajak);
 
-            dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
-            dao.updateAdmin(this.keuangan, gaji);
+            this.dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
+            this.dao.updateAdmin(this.keuangan, gaji);
 
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 
