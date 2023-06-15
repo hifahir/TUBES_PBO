@@ -309,7 +309,10 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 }
             }
             
-            badanKeuangan.berikanGaji(karyawanDitemukan, getBulan(), getTahun());
+            int bulanGaji = getBulan();
+            int tahunGaji = getTahun();
+            
+            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji);
             
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
