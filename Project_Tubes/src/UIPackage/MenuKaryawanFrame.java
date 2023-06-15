@@ -146,8 +146,9 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         } else if (e.getSource() == jButton4) {
             jTabbedPane1.setSelectedComponent(tab4); 
         } else if (e.getSource() == jButton6){
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             karyawanDitemukan = null;
-            for (Karyawan karyawan : getKaryawanList()) {
+            for (Karyawan karyawan : karyawanList) {
                 if (karyawan.Login(username, password)) {
                     karyawanDitemukan = karyawan;
                     break;
@@ -183,11 +184,12 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton7){
+            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             String inputHari = jTextField10.getText();
             String inputBulan = jTextField3.getText();
             String inputTahun = jTextField4.getText();
             
-            if (karyawanDitemukan.getbisaLembur()){
+            if (dao.isBisaLembur(karyawanDitemukan)){
                 if (username != null && inputBulan != null && inputTahun != null){
                     int hariParse = Integer.parseInt(inputHari);
                     int bulanParse = Integer.parseInt(inputBulan);
@@ -206,7 +208,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
             }
         }else if (e.getSource() == jButton9){
             String waktuLembur = jTextField5.getText();
-            if (karyawanDitemukan.getbisaLembur()){
+            if (dao.isBisaLembur(karyawanDitemukan)){
                 if (waktuLembur != null){
                     int waktuLemburParse = Integer.parseInt(waktuLembur);
                     karyawanDitemukan.inputWaktuLembur(waktuLemburParse);

@@ -68,6 +68,7 @@ public class AplikasiController implements SimpanListener{
         loginFrame.setLocationRelativeTo(null);
         
         badanKeuangan.setDao(dao);
+        karyawan.setDao(dao);
         
         loginBadanKeuanganFrame = new LoginBadanKeuanganFrame();
         loginBadanKeuanganFrame.setBadanKeuangan(badanKeuangan);

@@ -106,11 +106,17 @@ public class Karyawan extends User{
     public int getLemburWaktuItu() {
         return lemburWaktuItu;
     }
-    
-    
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+
+    public void setWaktuLembur(int waktuLembur) {
+        this.waktuLembur = waktuLembur;
+    }
     
     public void inputWaktuLembur(int waktuLembur) {
-        tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan
+        dao.updateWaktuLembur(this, waktuLembur);
         JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
     }
     

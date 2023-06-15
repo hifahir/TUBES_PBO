@@ -46,6 +46,7 @@ public class PegawaiDAO implements DAOInterface{
                 karyawan.setGaji(result.getInt(4));
                 karyawan.setBisaLembur(result.getBoolean(5));
                 karyawan.setPajak(result.getDouble(6));
+                karyawan.setWaktuLembur(result.getInt(7));
                 listKaryawan.add(karyawan);
             }
             statement.close();
@@ -92,6 +93,21 @@ public class PegawaiDAO implements DAOInterface{
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void updateWaktuLembur(Karyawan karyawan, int jamLembur) {
+        String sql = "UPDATE karyawan SET waktuLembur = ? WHERE username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setInt(1, jamLembur);
+            statement.setString(2, karyawan.getUsername());
+            statement.executeUpdate();
+
+            // Update the saldo of the BadanKeuangan object
+            karyawan.setWaktuLembur(jamLembur);
+        } catch (SQLException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
         }
     }
     
