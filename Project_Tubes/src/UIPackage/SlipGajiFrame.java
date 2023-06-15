@@ -64,6 +64,7 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
     public void setSlipLembur(){
         int bulan = verifikasiSystem.getBulan();;
         jLabel2.setText("Nama: "+verifikasiSystem.getNama());
+        jLabel1.setText("SLIP LEMBUR KARYAWAN");
         switch (bulan){
             case 1 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Januari, tahun "+verifikasiSystem.getTahun());
             case 2 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Februari, tahun "+verifikasiSystem.getTahun());

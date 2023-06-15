@@ -223,8 +223,8 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
             }
         }else if (e.getSource() == jButton18){
             String inputHari = jTextField9.getText();
-            String inputBulan = jTextField10.getText();
-            String inputTahun = jTextField11.getText();
+            String inputBulan = jTextField11.getText();
+            String inputTahun = jTextField12.getText();
             
             int hariParse = Integer.parseInt(inputHari);
             int bulanParse = Integer.parseInt(inputBulan);
