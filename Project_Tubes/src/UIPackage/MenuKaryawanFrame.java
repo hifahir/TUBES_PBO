@@ -38,6 +38,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         this.hari = hari;
         this.bulan = bulan;
         this.tahun = tahun;
+        this.dao = new PegawaiDAO();
         setTanggal(hari, bulan, tahun);
         
         jLabel1.setVisible(false);
