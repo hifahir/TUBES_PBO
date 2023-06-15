@@ -67,20 +67,26 @@ public class BadanKeuangan extends User {
         BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);
         
         String key = bulan + "-" + tahun;
+        boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan, key);
 
         if (saldo >= gaji) {
-            saldo -= gaji;
-            karyawan.tambahGaji(gaji - pajak);
+            if (lemburDiberikanSebelumnya) {
+                JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal bulan " + bulan + " tahun " + tahun 
+                        + " untuk " + karyawan.getUsername() + " sudah diberikan sebelumnya",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            } else{
+                saldo -= gaji;
+                karyawan.tambahGaji(gaji - pajak);
 
-            dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
-            dao.updateAdmin(badanKeuangan, gaji);
-            JOptionPane.showMessageDialog(null, "Gaji sebesar Rp. " + (gaji - pajak) 
-                        + " dengan pajak Rp. " + pajak + " telah diberikan ke " + karyawan.username 
-                        + " pada bulan " + bulan + " tahun " 
-                        + tahun
-                        , "Informasi"
-                        , JOptionPane.INFORMATION_MESSAGE);
-
+                dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
+                dao.updateAdmin(badanKeuangan, gaji);
+                JOptionPane.showMessageDialog(null, "Gaji sebesar Rp. " + (gaji - pajak) 
+                            + " dengan pajak Rp. " + pajak + " telah diberikan ke " + karyawan.username 
+                            + " pada bulan " + bulan + " tahun " 
+                            + tahun
+                            , "Informasi"
+                            , JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 
                     + karyawan.getUsername() + ". Saldo tidak mencukupi",
