@@ -128,12 +128,12 @@ public class AplikasiController implements SimpanListener{
             slipGajiFrame.setSlipLembur();
             slipGajiFrame.setVisible(true);
         } else if (opsi == 18){
-            loginFrame.setTanggalText(menuBadanKeuanganFrame.getHari(), menuBadanKeuanganFrame.getBulan(), menuBadanKeuanganFrame.getTahun());
-            menuBadanKeuanganFrame.setTanggalBadanKeuangan(menuBadanKeuanganFrame.getHari(), menuBadanKeuanganFrame.getBulan(), menuBadanKeuanganFrame.getTahun());
-            menuKaryawanFrame.setHari(menuBadanKeuanganFrame.getHari());
-            menuKaryawanFrame.setBulan(menuBadanKeuanganFrame.getBulan());
-            menuKaryawanFrame.setTahun(menuBadanKeuanganFrame.getTahun());
-            menuKaryawanFrame.setTanggalKaryawan(menuKaryawanFrame.getHari(), menuKaryawanFrame.getHari(), menuKaryawanFrame.getHari());
+            int h = menuBadanKeuanganFrame.getHari();
+            int b = menuBadanKeuanganFrame.getBulan();
+            int t = menuBadanKeuanganFrame.getTahun();
+            loginFrame.setTanggalText(h, b, t);
+            menuBadanKeuanganFrame.setTanggalBadanKeuangan(h, b, t);
+            menuKaryawanFrame.setTanggalKaryawan(h, b, t);
         }
     }
 
@@ -150,12 +150,12 @@ public class AplikasiController implements SimpanListener{
             menuKaryawanFrame.setVisible(false);
             loginFrame.setVisible(true);
         } else if (opsi == 18){
-            loginFrame.setTanggalText(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
-            menuKaryawanFrame.setTanggalKaryawan(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
-            menuBadanKeuanganFrame.setHari(menuKaryawanFrame.getHari());
-            menuBadanKeuanganFrame.setBulan(menuKaryawanFrame.getBulan());
-            menuBadanKeuanganFrame.setTahun(menuKaryawanFrame.getTahun());
-            menuBadanKeuanganFrame.setTanggalBadanKeuangan(menuKaryawanFrame.getHari(), menuKaryawanFrame.getHari(), menuKaryawanFrame.getHari());
+            int h = menuKaryawanFrame.getHari();
+            int b = menuKaryawanFrame.getBulan();
+            int t = menuKaryawanFrame.getTahun();
+            loginFrame.setTanggalText(h, b, t);
+            menuKaryawanFrame.setTanggalKaryawan(h, b, t);
+            menuBadanKeuanganFrame.setTanggalBadanKeuangan(h, b, t);
         }
     }
     
