@@ -11,4 +11,5 @@ public interface DAOInterface {
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun);
     public boolean isBulanTahunExists(Karyawan karyawan, String bulanTahun);
     public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun);
+    public boolean isBisaLembur(Karyawan karyawan);
 }

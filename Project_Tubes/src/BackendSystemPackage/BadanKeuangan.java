@@ -100,41 +100,45 @@ public class BadanKeuangan extends User {
         int jamLembur = karyawan.getWaktuLembur();
         int hargaLembur = 150000;
         int total = jamLembur * hargaLembur;
+        BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);
 
         String key = hari + "-" + bulan + "-" + tahun;
 
         boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan, key);
+        boolean bisaLembur = dao.isBisaLembur(karyawan);
         if (lemburDiberikanSebelumnya) {
             JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal " 
                     + hari + " bulan " + bulan + " tahun " + tahun 
                     + " untuk " + karyawan.getUsername() + " sudah diberikan sebelumnya",
                     "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (saldo >= total) {
-                saldo -= total;
-                int pajak = karyawan.potonganPajak(total);
-                karyawan.tambahUpahLembur(total - pajak);
-                karyawan.upahLemburWaktuItu = total - pajak;
-                karyawan.tambahWaktuLemburDone(jamLembur);
-                karyawan.resetWaktuLembur();
+            if (bisaLembur){
+                if (saldo >= total) {
+                    saldo -= total;
+                    int pajak = karyawan.potonganPajak(total);
+                    karyawan.tambahUpahLembur(total - pajak);
+                    karyawan.upahLemburWaktuItu = total - pajak;
+                    karyawan.tambahWaktuLemburDone(jamLembur);
+                    karyawan.resetWaktuLembur();
 
-                JOptionPane.showMessageDialog(null, "Upah uang lembur sebesar Rp. " 
-                        + (total - pajak) 
-                        + " dengan potongan pajak yang dibayarkan sebesar Rp. "
-                        + pajak + " telah diberikan ke " 
-                        + karyawan.getUsername()
-                        + " pada tanggal " + hari + " bulan " + bulan + " tahun " + tahun,
-                        "Informasi", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Upah lembur gagal diberikan kepada " 
-                        + karyawan.getUsername() + ". Saldo tidak mencukupi",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                    dao.insertLembur(karyawan, hari, bulan, tahun);
+                    dao.updateAdmin(badanKeuangan, total);
+
+                    JOptionPane.showMessageDialog(null, "Upah uang lembur sebesar Rp. " 
+                            + (total - pajak) 
+                            + " dengan potongan pajak yang dibayarkan sebesar Rp. "
+                            + pajak + " telah diberikan ke " 
+                            + karyawan.getUsername()
+                            + " pada tanggal " + hari + " bulan " + bulan + " tahun " + tahun,
+                            "Informasi", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Upah lembur gagal diberikan kepada " 
+                            + karyawan.getUsername() + ". Saldo tidak mencukupi",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
-        dao.insertLembur(karyawan, hari, bulan, tahun);
-        dao.updateAdmin(this.keuangan, total);
     }
-
-
 }

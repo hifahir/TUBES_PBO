@@ -157,5 +157,22 @@ public class PegawaiDAO implements DAOInterface{
         return false;
     }
 
+    @Override
+    public boolean isBisaLembur(Karyawan karyawan) {
+        String sql = "SELECT COUNT(*) FROM karyawan WHERE username = ? AND bisalembur = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, karyawan.getUsername());
+            statement.setBoolean(2, karyawan.getbisaLembur());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

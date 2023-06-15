@@ -63,21 +63,29 @@ public class VerifikasiSystem extends BadanKeuangan{
         String key = hari + "-" + bulan + "-" + tahun;
 
         boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan, key);
-        if (lemburDiberikanSebelumnya) {
-            nama = karyawan.getUsername();
-            this.hari = hari;
-            this.bulan = bulan;
-            this.tahun = tahun;
-            lembur = karyawan.upahLemburWaktuItu;
-            pajak = karyawan.getPajakWaktuItu();
-            verifikasiAda = true;
-        } else {
-            JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal "
-                    + hari + " " + bulan + " " + tahun + " untuk " + karyawan.getUsername()
-                    + " tidak ada/belum dibayarkan!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        boolean bisaLembur = dao.isBisaLembur(karyawan);
+        if (bisaLembur){
+            if (lemburDiberikanSebelumnya) {
+                nama = karyawan.getUsername();
+                this.hari = hari;
+                this.bulan = bulan;
+                this.tahun = tahun;
+                lembur = karyawan.upahLemburWaktuItu;
+                pajak = karyawan.getPajakWaktuItu();
+                verifikasiAda = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal "
+                        + hari + " " + bulan + " " + tahun + " untuk " + karyawan.getUsername()
+                        + " tidak ada/belum dibayarkan!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                verifikasiAda = false;
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Karyawan tidak bisa lembur",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             verifikasiAda = false;
         }
+        
     }
 
 

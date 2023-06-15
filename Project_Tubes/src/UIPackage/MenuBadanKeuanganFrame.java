@@ -352,21 +352,24 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }else{
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else if (e.getSource() == jButton13){
+        }else if (e.getSource() == jButton13) {
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-            
+
             String username = jTextField3.getText();
             Karyawan karyawanDitemukan = null;
-            
-            for (Karyawan karyawan : karyawanList){
+
+            for (Karyawan karyawan : karyawanList) {
                 if (username.equals(karyawan.getUsername())) {
                     karyawanDitemukan = karyawan;
                     break;
                 }
             }
-            
-            badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun());
-            updateSaldoLabel();
+
+            if (karyawanDitemukan != null) {
+                badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun());
+            } else {
+                JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }else if (e.getSource() == jButton14){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel16.setVisible(false);
