@@ -7,7 +7,7 @@ public interface DAOInterface {
     public void updateAdmin(BadanKeuangan keuangan, int pengurangan);
     public ArrayList<Karyawan> getAllKaryawan();
     public ArrayList<BadanKeuangan> getAllKeuangan();
-    public void insertGaji(Karyawan karyawan, int bulan, int tahun);
+    public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak);
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun);
     public boolean isBulanTahunExists(Karyawan karyawan, String bulanTahun);
     public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun);
