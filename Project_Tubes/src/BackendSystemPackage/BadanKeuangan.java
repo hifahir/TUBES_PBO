@@ -96,7 +96,7 @@ public class BadanKeuangan extends User {
     // Untuk mengurus upah lembur
 
     public void berikanUangLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
-        int jamLembur = karyawan.getWaktuLembur();
+        int jamLembur = dao.getWaktuLembur(karyawan);
         int hargaLembur = 150000;
         int total = jamLembur * hargaLembur;
         BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);

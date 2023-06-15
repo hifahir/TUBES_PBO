@@ -212,6 +212,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                 if (waktuLembur != null){
                     int waktuLemburParse = Integer.parseInt(waktuLembur);
                     dao.updateWaktuLembur(karyawanDitemukan, waktuLemburParse);
+                    JOptionPane.showMessageDialog(this, "Pengajuan berhasil!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     JOptionPane.showMessageDialog(this, "Input Error",
                             "Error", JOptionPane.ERROR_MESSAGE);

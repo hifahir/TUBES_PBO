@@ -190,5 +190,22 @@ public class PegawaiDAO implements DAOInterface{
         }
         return false;
     }
+    
+    @Override
+    public int getWaktuLembur(Karyawan karyawan) {
+        String sql = "SELECT waktuLembur FROM karyawan WHERE username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, karyawan.getUsername());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("waktuLembur");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Default value if no result is found or an error occurs
+    }
+
 
 }

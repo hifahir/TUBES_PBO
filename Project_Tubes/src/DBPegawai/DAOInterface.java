@@ -13,4 +13,5 @@ public interface DAOInterface {
     public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun);
     public boolean isBisaLembur(Karyawan karyawan);
     public void updateWaktuLembur(Karyawan karyawan, int jamLembur);
+    public int getWaktuLembur(Karyawan karyawan);
 }
