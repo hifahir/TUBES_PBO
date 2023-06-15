@@ -49,6 +49,12 @@ public class BadanKeuangan extends User {
     public String getPassword() {
         return password;
     }
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+    
+    
     
     // Untuk mengurus Lembur
     public void printKodeLembur(LemburSystem lemburSystem) {

@@ -84,6 +84,7 @@ public class AplikasiController implements SimpanListener{
         menuBadanKeuanganFrame.addSimpanListener(this);
         menuBadanKeuanganFrame.setLocationRelativeTo(null);
         menuBadanKeuanganFrame.setAplikasiController(this);
+        menuBadanKeuanganFrame.setDao(dao);
         
         menuKaryawanFrame = new MenuKaryawanFrame(hari, bulan, tahun);
         menuKaryawanFrame.setHari(hari);
@@ -94,6 +95,7 @@ public class AplikasiController implements SimpanListener{
         menuKaryawanFrame.setKaryawanList(karyawanList);
         menuKaryawanFrame.setKaryawan(karyawan);
         menuKaryawanFrame.setLocationRelativeTo(null);
+        menuKaryawanFrame.setDao(dao);
         
         loginFrame.setVisible(true);
     }

@@ -118,6 +118,10 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     public int getTahun() {
         return tahun;
     }
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
     
     
     

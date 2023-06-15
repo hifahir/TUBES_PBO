@@ -7,6 +7,7 @@ package UIPackage;
 import BackendSystemPackage.Karyawan;
 import BackendSystemPackage.LemburSystem;
 import BackendSystemPackage.VerifikasiSystem;
+import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private ArrayList<Karyawan> karyawanList;
     private AplikasiController aplikasiController;
     private SimpanListener simpan;
+    private PegawaiDAO dao;
     
     private int hari;
     private int bulan;
@@ -79,8 +81,11 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     public int getTahun() {
         return tahun;
     }
-    
-    
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+
     
     public void setKaryawan(Karyawan karyawan) {
         this.karyawan = karyawan;

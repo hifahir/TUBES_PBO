@@ -31,6 +31,12 @@ public class VerifikasiSystem extends BadanKeuangan{
         super(username, password, saldo);
         this.dao = new PegawaiDAO();
     }
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+    
+    
     
     public void verifikasiGaji(Karyawan karyawan, int bulan, int tahun) {
         String key = bulan + "-" + tahun;
