@@ -5,31 +5,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class DBConnector {
-    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/pegawai";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
-
     private static Connection connection;
-
-    private DBConnector() {
-    }
-
-    public static Connection getConnection() {
-        if (connection == null) {
+    public static Connection getConnection() throws SQLException{
+        if (connection == null){
             try {
-                Class.forName(JDBC_DRIVER);
-                connection = DriverManager.getConnection(DB_URL, 
-                                                        USERNAME, 
-                                                        PASSWORD);
-                connection.setTransactionIsolation(
-                        Connection.TRANSACTION_SERIALIZABLE);
-                connection.setAutoCommit(false);
-            } catch (ClassNotFoundException | SQLException e) {
-                System.out.println("Terjadi Kesalahan Koneksi MySQL: " + 
-                                    e.getMessage());
-                e.printStackTrace();
-            }
+                Class.forName("com.mysql.cj.jdbc.Driver");
+               connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pegawai","root","");
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(DBConnector.class.getName()).log(Level.SEVERE, null, ex);
+            } 
         }
         return connection;
     }
