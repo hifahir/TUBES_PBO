@@ -9,8 +9,8 @@ public interface DAOInterface {
     public ArrayList<BadanKeuangan> getAllKeuangan();
     public void insertGaji(Karyawan karyawan, int bulan, int tahun);
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun);
-    public boolean isGajiDiberikan(String username, String bulanTahun);
-    public boolean isLemburDiberikan(String username, String key);
-    public boolean isBulanTahunExists(String username, String bulanTahun);
-    public boolean isHariBulanTahunExists(String username, String haribulanTahun);
+    public boolean isGajiDiberikan(Karyawan karyawan, String bulanTahun);
+    public boolean isLemburDiberikan(Karyawan karyawan, String key);
+    public boolean isBulanTahunExists(Karyawan karyawan, String bulanTahun);
+    public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun);
 }

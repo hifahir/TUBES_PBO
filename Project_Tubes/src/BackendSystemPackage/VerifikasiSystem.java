@@ -34,7 +34,7 @@ public class VerifikasiSystem extends BadanKeuangan{
     
     public void verifikasiGaji(Karyawan karyawan, int bulan, int tahun) {
         String key = bulan + "-" + tahun;
-        boolean bulanTahunExists = dao.isBulanTahunExists(karyawan.getUsername(), key);
+        boolean bulanTahunExists = dao.isBulanTahunExists(karyawan, key);
 
         if (bulanTahunExists) {
             nama = karyawan.getUsername();
@@ -56,7 +56,7 @@ public class VerifikasiSystem extends BadanKeuangan{
     public void verifikasiLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
         String key = hari + "-" + bulan + "-" + tahun;
 
-        boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan.getUsername(), key);
+        boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan, key);
         if (lemburDiberikanSebelumnya) {
             nama = karyawan.getUsername();
             this.hari = hari;

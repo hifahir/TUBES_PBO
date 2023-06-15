@@ -121,10 +121,10 @@ public class PegawaiDAO implements DAOInterface{
         return listKeuangan;
     }
     
-    public boolean isGajiDiberikan(String username, String bulanTahun) {
+    public boolean isGajiDiberikan(Karyawan karyawan, String bulanTahun) {
         String sql = "SELECT COUNT(*) FROM transaksigaji WHERE username = ? AND bulanTahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, username);
+            statement.setString(1, karyawan.getUsername());
             statement.setString(2, bulanTahun);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -137,10 +137,10 @@ public class PegawaiDAO implements DAOInterface{
         return false;
     }
 
-    public boolean isLemburDiberikan(String username, String key) {
+    public boolean isLemburDiberikan(Karyawan karyawan, String key) {
         String sql = "SELECT COUNT(*) FROM transaksilembur WHERE username = ? AND haribulantahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, username);
+            statement.setString(1, karyawan.getUsername());
             statement.setString(2, key);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -154,11 +154,11 @@ public class PegawaiDAO implements DAOInterface{
         }
         return false;
     }
-    
-    public boolean isBulanTahunExists(String username, String bulanTahun) {
+
+    public boolean isBulanTahunExists(Karyawan karyawan, String bulanTahun) {
         String sql = "SELECT COUNT(*) FROM transaksigaji WHERE username = ? AND bulanTahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, username);
+            statement.setString(1, karyawan.getUsername());
             statement.setString(2, bulanTahun);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -172,10 +172,10 @@ public class PegawaiDAO implements DAOInterface{
         return false;
     }
 
-    public boolean isHariBulanTahunExists(String username, String haribulanTahun) {
+    public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun) {
         String sql = "SELECT COUNT(*) FROM transaksilembur WHERE username = ? AND haribulantahun = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, username);
+            statement.setString(1, karyawan.getUsername());
             statement.setString(2, haribulanTahun);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -188,5 +188,6 @@ public class PegawaiDAO implements DAOInterface{
         }
         return false;
     }
+
 
 }

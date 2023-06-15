@@ -60,7 +60,7 @@ public class BadanKeuangan extends User {
         if (saldo >= gaji) {
             String key = bulan + "-" + tahun;
 
-            boolean gajiDiberikanSebelumnya = dao.isGajiDiberikan(karyawan.getUsername(), key);
+            boolean gajiDiberikanSebelumnya = dao.isGajiDiberikan(karyawan, key);
             if (gajiDiberikanSebelumnya) {
                 JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
                         + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
@@ -81,6 +81,7 @@ public class BadanKeuangan extends User {
         dao.updateAdmin(this.keuangan, gaji);
     }
 
+
     
     // Untuk mengurus upah lembur
 
@@ -91,7 +92,7 @@ public class BadanKeuangan extends User {
 
         String key = hari + "-" + bulan + "-" + tahun;
 
-        boolean lemburDiberikanSebelumnya = dao.isLemburDiberikan(karyawan.getUsername(), key);
+        boolean lemburDiberikanSebelumnya = dao.isLemburDiberikan(karyawan, key);
         if (lemburDiberikanSebelumnya) {
             JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal " 
                     + hari + " bulan " + bulan + " tahun " + tahun 
@@ -123,5 +124,6 @@ public class BadanKeuangan extends User {
         dao.insertLembur(karyawan, hari, bulan, tahun);
         dao.updateAdmin(this.keuangan, total);
     }
+
 
 }
