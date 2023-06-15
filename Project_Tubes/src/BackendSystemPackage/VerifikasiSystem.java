@@ -69,8 +69,8 @@ public class VerifikasiSystem extends BadanKeuangan{
                 this.hari = hari;
                 this.bulan = bulan;
                 this.tahun = tahun;
-                int lembur = dao.getLemburWaktuItu(karyawan, hari, bulan, tahun);
-                int pajak = dao.getPajakWaktuItu(karyawan, hari, bulan, tahun);
+                lembur = dao.getLemburWaktuItu(karyawan, hari, bulan, tahun);
+                pajak = dao.getPajakWaktuItu(karyawan, hari, bulan, tahun);
                 verifikasiAda = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal "
