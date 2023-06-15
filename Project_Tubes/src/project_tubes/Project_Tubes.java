@@ -10,7 +10,6 @@ package project_tubes;
  */
 
 import BackendSystemPackage.VerifikasiSystem;
-import BackendSystemPackage.LemburSystem;
 import BackendSystemPackage.Karyawan;
 import BackendSystemPackage.BadanKeuangan;
 import UIPackage.AplikasiController;

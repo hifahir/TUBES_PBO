@@ -54,12 +54,6 @@ public class BadanKeuangan extends User {
         this.dao = dao;
     }
     
-    
-    
-    // Untuk mengurus Lembur
-    public void printKodeLembur(LemburSystem lemburSystem) {
-        System.out.println("Kode Lembur: " + lemburSystem.getKodeLembur().toString());
-    }
 
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
         int gaji = karyawan.getGaji();

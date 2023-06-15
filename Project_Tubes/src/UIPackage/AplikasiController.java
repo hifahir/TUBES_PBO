@@ -6,7 +6,6 @@ package UIPackage;
 
 import BackendSystemPackage.BadanKeuangan;
 import BackendSystemPackage.Karyawan;
-import BackendSystemPackage.LemburSystem;
 import BackendSystemPackage.VerifikasiSystem;
 import DBPegawai.DAOInterface;
 import DBPegawai.PegawaiDAO;

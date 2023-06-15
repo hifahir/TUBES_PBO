@@ -188,7 +188,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 
                 jLabel10.setText("Jabatan                : "+jabatan);
                 jLabel11.setText("Gaji dari jabatan : Rp. "+String.format("%.2f",gaji));
-                //simpan.updateSaldo();
             }else{
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -235,7 +234,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             int bulanGaji = getBulan();
             int tahunGaji = getTahun();
             
-            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji);   
+            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji); 
+            updateSaldoLabel();
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel13.setVisible(false);
@@ -293,6 +293,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 int total = jamLembur * hargaLembur;
                 int pajak = karyawan.potonganPajak(total);
                 badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun(), total, pajak);
+                updateSaldoLabel();
             } else {
                 JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
             }

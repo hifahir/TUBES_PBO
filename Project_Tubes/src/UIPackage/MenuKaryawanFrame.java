@@ -5,7 +5,6 @@
 package UIPackage;
 
 import BackendSystemPackage.Karyawan;
-import BackendSystemPackage.LemburSystem;
 import BackendSystemPackage.VerifikasiSystem;
 import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
