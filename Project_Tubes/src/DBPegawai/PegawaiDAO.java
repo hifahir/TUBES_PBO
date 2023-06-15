@@ -61,23 +61,23 @@ public class PegawaiDAO implements DAOInterface{
         return listKaryawan;
     }
     
-    public void insertGaji(Karyawan karyawan, int bulan, int tahun) {
+    public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak) {
         String sql = "INSERT INTO transaksigaji (gajiWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            // Mengambil data gaji dan pajak dari objek Karyawan
             String key = bulan + "-" + tahun;
-            
-            statement.setInt(1, karyawan.getGajiWaktuItu());
-            statement.setInt(2, karyawan.getPajakWaktuItu());
+
+            statement.setInt(1, gaji);
+            statement.setInt(2, pajak);
             statement.setString(3, key);
             statement.setString(4, karyawan.getUsername());
-            
+
             statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
         String sql = "INSERT INTO transaksilembur (lemburWaktuItu, pajakWaktuItu, haribulantahun, username) VALUES (?, ?, ?, ?)";

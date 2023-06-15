@@ -63,28 +63,23 @@ public class BadanKeuangan extends User {
 
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
         int gaji = karyawan.getGaji();
+        int pajak = karyawan.potonganPajak(gaji);
         String key = bulan + "-" + tahun;
-        boolean gajiDiberikanSebelumnya = dao.isBulanTahunExists(karyawan, key);
+
         if (saldo >= gaji) {
-            if (gajiDiberikanSebelumnya) {
-                JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
-                        + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
-                        + " sudah diberikan sebelumnya",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                saldo -= gaji;
-                int pajak = karyawan.potonganPajak(gaji);
-                karyawan.tambahGaji(gaji - pajak);
-            }
+            saldo -= gaji;
+            karyawan.tambahGaji(gaji - pajak);
+
+            dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
+            dao.updateAdmin(this.keuangan, gaji);
+
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 
                     + karyawan.getUsername() + ". Saldo tidak mencukupi",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        dao.insertGaji(karyawan, bulan, tahun);
-        dao.updateAdmin(this.keuangan, gaji);
     }
+
 
 
     
