@@ -79,22 +79,23 @@ public class PegawaiDAO implements DAOInterface{
     }
 
     @Override
-    public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
+    public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun, int harga, int pajak) {
         String sql = "INSERT INTO transaksilembur (lemburWaktuItu, pajakWaktuItu, haribulantahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             // Mengambil data upah lembur dan pajak dari objek Karyawan
             String key = hari + "-" + bulan + "-" + tahun;
-            
-            statement.setInt(1, karyawan.getLemburWaktuItu());
-            statement.setInt(2, karyawan.getPajakWaktuItu());
+
+            statement.setInt(1, harga); // Use the 'harga' parameter
+            statement.setInt(2, pajak); // Use the 'pajak' parameter
             statement.setString(3, key);
-            statement.setString(4,karyawan.getUsername());
-            
+            statement.setString(4, karyawan.getUsername());
+
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     
     @Override
     public void updateWaktuLembur(Karyawan karyawan, int jamLembur) {

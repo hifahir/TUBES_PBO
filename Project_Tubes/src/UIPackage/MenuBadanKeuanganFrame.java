@@ -366,7 +366,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
 
             if (karyawanDitemukan != null) {
-                int jamLembur = dao.getWaktuLembur(karyawan);
+                int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
                 int hargaLembur = 150000;
                 int total = jamLembur * hargaLembur;
                 int pajak = karyawan.potonganPajak(total);

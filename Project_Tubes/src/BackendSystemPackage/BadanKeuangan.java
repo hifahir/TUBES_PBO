@@ -113,7 +113,7 @@ public class BadanKeuangan extends User {
                 if (saldo >= harga) {
                     saldo -= harga;
 
-                    dao.insertLembur(karyawan, hari, bulan, tahun);
+                    dao.insertLembur(karyawan, hari, bulan, tahun, harga, pajak);
                     dao.updateAdmin(badanKeuangan, harga);
                     dao.updateWaktuLembur(karyawan, 0);
 
