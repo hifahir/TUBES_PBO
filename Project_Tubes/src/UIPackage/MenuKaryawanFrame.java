@@ -71,18 +71,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         this.hari = hari;
     }
 
-    public int getHari() {
-        return hari;
-    }
-
-    public int getBulan() {
-        return bulan;
-    }
-
-    public int getTahun() {
-        return tahun;
-    }
-
     public void setDao(PegawaiDAO dao) {
         this.dao = dao;
     }
@@ -118,19 +106,31 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     
     public void setTanggalKaryawan(int hari, int bulan, int tahun){
         switch (this.bulan){
-            case 1 -> jLabel2.setText(this.hari+", Januari, tahun "+this.tahun);
-            case 2 -> jLabel2.setText(this.hari+", Februari, tahun "+this.tahun);
-            case 3 -> jLabel2.setText(this.hari+", Maret, tahun "+this.tahun);
-            case 4 -> jLabel2.setText(this.hari+", April, tahun "+this.tahun);
-            case 5 -> jLabel2.setText(this.hari+", Mei, tahun "+this.tahun);
-            case 6 -> jLabel2.setText(this.hari+", Juni, tahun "+this.tahun);
-            case 7 -> jLabel2.setText(this.hari+", Juli, tahun "+this.tahun);
-            case 8 -> jLabel2.setText(this.hari+", Agustus, tahun "+this.tahun);
-            case 9 -> jLabel2.setText(this.hari+", September, tahun "+this.tahun);
-            case 10 -> jLabel2.setText(this.hari+", Oktober, tahun "+this.tahun);
-            case 11 -> jLabel2.setText(this.hari+", November, tahun "+this.tahun);
-            case 12 -> jLabel2.setText(this.hari+", Desember, tahun "+this.tahun);
+            case 1 -> jLabel2.setText(this.hari+", Januari, tahun "+tahun);
+            case 2 -> jLabel2.setText(this.hari+", Februari, tahun "+tahun);
+            case 3 -> jLabel2.setText(this.hari+", Maret, tahun "+tahun);
+            case 4 -> jLabel2.setText(this.hari+", April, tahun "+tahun);
+            case 5 -> jLabel2.setText(this.hari+", Mei, tahun "+tahun);
+            case 6 -> jLabel2.setText(this.hari+", Juni, tahun "+tahun);
+            case 7 -> jLabel2.setText(this.hari+", Juli, tahun "+tahun);
+            case 8 -> jLabel2.setText(this.hari+", Agustus, tahun "+tahun);
+            case 9 -> jLabel2.setText(this.hari+", September, tahun "+tahun);
+            case 10 -> jLabel2.setText(this.hari+", Oktober, tahun "+tahun);
+            case 11 -> jLabel2.setText(this.hari+", November, tahun "+tahun);
+            case 12 -> jLabel2.setText(this.hari+", Desember, tahun "+tahun);
         }
+    }
+    
+    public int getHari() {
+        return hari;
+    }
+
+    public int getBulan() {
+        return bulan;
+    }
+
+    public int getTahun() {
+        return tahun;
     }
     
     @Override
