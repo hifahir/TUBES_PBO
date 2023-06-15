@@ -19,7 +19,6 @@ import java.util.*;
 public class AplikasiController implements SimpanListener{
     private BadanKeuangan badanKeuangan;
     private Karyawan karyawan;
-    private ArrayList<Karyawan> karyawanList;
     private VerifikasiSystem verifikasiSystem;
     private LoginFrame loginFrame;
     private LoginBadanKeuanganFrame loginBadanKeuanganFrame;
@@ -43,23 +42,13 @@ public class AplikasiController implements SimpanListener{
         this.verifikasiSystem = verifikasiSystem;
     }
     
-//    public ArrayList<Karyawan> getKaryawanList() {
-//        return karyawanList;
-//    }
-    
     public void setKaryawan(Karyawan karyawan) {
         this.karyawan = karyawan;
-    }
-
-    public void setKaryawanList(ArrayList<Karyawan> karyawanList) {
-        this.karyawanList = karyawanList;
     }
 
     public void setDao(PegawaiDAO dao) {
         this.dao = dao;
     }
-    
-    
     
     public void showDefaultView(int hari, int bulan, int tahun){
         loginFrame = new LoginFrame();
@@ -68,9 +57,7 @@ public class AplikasiController implements SimpanListener{
         loginFrame.setLocationRelativeTo(null);
         
         badanKeuangan.setDao(dao);
-        for (Karyawan karyawanD : karyawanList){
-            karyawanD.setDao(dao);
-        }
+        karyawan.setDao(dao);
         
         loginBadanKeuanganFrame = new LoginBadanKeuanganFrame();
         loginBadanKeuanganFrame.setBadanKeuangan(badanKeuangan);
@@ -89,7 +76,6 @@ public class AplikasiController implements SimpanListener{
         menuBadanKeuanganFrame.setBadanKeuangan(badanKeuangan);
         menuBadanKeuanganFrame.setKaryawan(karyawan);
         menuBadanKeuanganFrame.setVerifikasiSystem(verifikasiSystem);
-        menuBadanKeuanganFrame.setKaryawanList(karyawanList);
         menuBadanKeuanganFrame.addSimpanListener(this);
         menuBadanKeuanganFrame.setLocationRelativeTo(null);
         menuBadanKeuanganFrame.setAplikasiController(this);
@@ -102,7 +88,6 @@ public class AplikasiController implements SimpanListener{
         menuKaryawanFrame.setDao(dao);
         menuKaryawanFrame.addSimpanListener(this);
         menuKaryawanFrame.setVerifikasiSystem(verifikasiSystem);
-        menuKaryawanFrame.setKaryawanList(karyawanList);
         menuKaryawanFrame.setKaryawan(karyawan);
         menuKaryawanFrame.setLocationRelativeTo(null);
         
@@ -167,10 +152,5 @@ public class AplikasiController implements SimpanListener{
             menuKaryawanFrame.setTanggal(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
         }
     }
-    
-//    public void updateSaldo(){
-//        dao.updateAdmin(this.badanKeuangan);
-//        this.menuBadanKeuanganFrame.getjLabel8().setText(String.valueOf(this.badanKeuangan.getSaldo()));
-//    }
     
 }

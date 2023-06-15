@@ -40,7 +40,10 @@ public class Project_Tubes {
             System.out.println("Error");
         }
         
-        aplikasiController.setKaryawanList(kw);
+        for (Karyawan karyawan : kw) {
+            aplikasiController.setKaryawan(karyawan);
+        }
+        
         aplikasiController.setVerifikasiSystem(vs);
         aplikasiController.setDao(dao);
         aplikasiController.showDefaultView(hari, bulan, tahun);
