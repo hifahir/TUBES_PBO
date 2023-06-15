@@ -244,22 +244,26 @@ public class PegawaiDAO implements DAOInterface{
         return 0;
     }
     
-    public ArrayList<Object[]> getTransaksiGajiByYear(int year) {
+    public ArrayList<Object[]> getTransaksiGajiByYear(String bulanTahun) {
         ArrayList<Object[]> transaksiGajiList = new ArrayList<>();
-        String sql = "SELECT * FROM transaksigaji WHERE YEAR(dateColumn) = ?";
+        String sql = "SELECT * FROM transaksigaji WHERE bulanTahun LIKE ?";
 
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setInt(1, year);
+            statement.setString(1, "%-" + bulanTahun);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                String bulanTahunValue = resultSet.getString("bulanTahun");
+                String[] parts = bulanTahunValue.split("-");
+                String tahun = parts[1];
+
                 // Assuming the columns in the transaksigaji table are of type String,
                 // modify the following line accordingly based on the actual column types
                 Object[] rowData = {
-                    resultSet.getString("column1"),
-                    resultSet.getString("column2"),
-                    resultSet.getString("column3"),
-                    resultSet.getString("column4")
+                    resultSet.getString("gajiWaktuItu"),
+                    resultSet.getString("pajakWaktuItu"),
+                    resultSet.getString("bulanTahun"),
+                    resultSet.getString("username")
                 };
 
                 transaksiGajiList.add(rowData);
@@ -270,6 +274,7 @@ public class PegawaiDAO implements DAOInterface{
 
         return transaksiGajiList;
     }
+
 
 
 }

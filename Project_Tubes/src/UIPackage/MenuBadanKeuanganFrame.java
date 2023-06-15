@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -350,28 +351,35 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Cetak tidak berhasil, pastikan inputan ada, berupa integer dan bulan nilainya 1-12",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else if (e.getSource() == jButton17){
-            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-            
-            String username = jTextField4.getText();
+        }else if (e.getSource() == jButton17) {
             String inputTahun = jTextField8.getText();
-            Karyawan karyawanDitemukan = null;
-            
-            for (Karyawan karyawan : karyawanList){
-                if (username.equals(karyawan.getUsername())) {
-                    karyawanDitemukan = karyawan;
-                    break;
+            int tahun;
+
+            try {
+
+                // Retrieve data from the transaksigaji table based on the year
+                ArrayList<Object[]> transaksiGajiList = dao.getTransaksiGajiByYear(inputTahun);
+
+                // Create a DefaultTableModel to hold the table data
+                DefaultTableModel tableModel = new DefaultTableModel();
+
+                // Add columns to the table model
+                tableModel.addColumn("Column 1");
+                tableModel.addColumn("Column 2");
+                tableModel.addColumn("Column 3");
+                tableModel.addColumn("Column 4");
+
+                // Populate rows in the table model with data from the transaksiGajiList
+                for (Object[] rowData : transaksiGajiList) {
+                    tableModel.addRow(rowData);
                 }
+
+                // Set the table model for jTable1
+                jTable1.setModel(tableModel);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
-            if (karyawanDitemukan != null) {
-                int tahun;
-                try {
-                    tahun = Integer.parseInt(inputTahun);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }   
         }else if (e.getSource() == jButton18){
             String inputHari = jTextField9.getText();
             String inputBulan = jTextField10.getText();
