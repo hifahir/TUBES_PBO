@@ -11,6 +11,8 @@ import DBPegawai.DAOInterface;
 import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -90,21 +92,10 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.hari = hari;
     }
     
-    public void setTanggalBadanKeuangan(int hari, int bulan, int tahun){
-        switch (this.bulan){
-            case 1 -> jLabel28.setText(this.hari+", Januari, tahun "+this.tahun);
-            case 2 -> jLabel28.setText(this.hari+", Februari, tahun "+this.tahun);
-            case 3 -> jLabel28.setText(this.hari+", Maret, tahun "+this.tahun);
-            case 4 -> jLabel28.setText(this.hari+", April, tahun "+this.tahun);
-            case 5 -> jLabel28.setText(this.hari+", Mei, tahun "+this.tahun);
-            case 6 -> jLabel28.setText(this.hari+", Juni, tahun "+this.tahun);
-            case 7 -> jLabel28.setText(this.hari+", Juli, tahun "+this.tahun);
-            case 8 -> jLabel28.setText(this.hari+", Agustus, tahun "+this.tahun);
-            case 9 -> jLabel28.setText(this.hari+", September, tahun "+this.tahun);
-            case 10 -> jLabel28.setText(this.hari+", Oktober, tahun "+this.tahun);
-            case 11 -> jLabel28.setText(this.hari+", November, tahun "+this.tahun);
-            case 12 -> jLabel28.setText(this.hari+", Desember, tahun "+this.tahun);
-        }
+    public void setTanggalBadanKeuangan(int hari, int bulan, int tahun) {
+        LocalDate date = LocalDate.of(tahun, bulan, hari);
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("d MMMM, 'tahun' yyyy", new Locale("id")));
+        jLabel28.setText(formattedDate);
     }
 
     public int getHari() {

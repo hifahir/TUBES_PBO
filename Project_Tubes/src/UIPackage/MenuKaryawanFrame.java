@@ -10,7 +10,10 @@ import BackendSystemPackage.VerifikasiSystem;
 import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 
 /**
@@ -104,21 +107,10 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         this.verifikasiSystem = verifikasiSystem;
     }
     
-    public void setTanggalKaryawan(int hari, int bulan, int tahun){
-        switch (this.bulan){
-            case 1 -> jLabel2.setText(this.hari+", Januari, tahun "+tahun);
-            case 2 -> jLabel2.setText(this.hari+", Februari, tahun "+tahun);
-            case 3 -> jLabel2.setText(this.hari+", Maret, tahun "+tahun);
-            case 4 -> jLabel2.setText(this.hari+", April, tahun "+tahun);
-            case 5 -> jLabel2.setText(this.hari+", Mei, tahun "+tahun);
-            case 6 -> jLabel2.setText(this.hari+", Juni, tahun "+tahun);
-            case 7 -> jLabel2.setText(this.hari+", Juli, tahun "+tahun);
-            case 8 -> jLabel2.setText(this.hari+", Agustus, tahun "+tahun);
-            case 9 -> jLabel2.setText(this.hari+", September, tahun "+tahun);
-            case 10 -> jLabel2.setText(this.hari+", Oktober, tahun "+tahun);
-            case 11 -> jLabel2.setText(this.hari+", November, tahun "+tahun);
-            case 12 -> jLabel2.setText(this.hari+", Desember, tahun "+tahun);
-        }
+    public void setTanggalKaryawan(int hari, int bulan, int tahun) {
+        LocalDate date = LocalDate.of(tahun, bulan, hari);
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("d MMMM, 'tahun' yyyy", new Locale("id")));
+        jLabel2.setText(formattedDate);
     }
     
     public int getHari() {

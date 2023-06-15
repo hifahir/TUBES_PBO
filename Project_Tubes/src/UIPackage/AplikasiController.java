@@ -130,9 +130,6 @@ public class AplikasiController implements SimpanListener{
         } else if (opsi == 18){
             loginFrame.setTanggalText(menuBadanKeuanganFrame.getHari(), menuBadanKeuanganFrame.getBulan(), menuBadanKeuanganFrame.getTahun());
             menuBadanKeuanganFrame.setTanggalBadanKeuangan(menuBadanKeuanganFrame.getHari(), menuBadanKeuanganFrame.getBulan(), menuBadanKeuanganFrame.getTahun());
-            menuKaryawanFrame.setHari(menuBadanKeuanganFrame.getHari());
-            menuKaryawanFrame.setBulan(menuBadanKeuanganFrame.getHari());
-            menuKaryawanFrame.setTahun(menuBadanKeuanganFrame.getHari());
             menuKaryawanFrame.setTanggalKaryawan(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
         }
     }
@@ -152,9 +149,6 @@ public class AplikasiController implements SimpanListener{
         } else if (opsi == 18){
             loginFrame.setTanggalText(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
             menuKaryawanFrame.setTanggalKaryawan(menuKaryawanFrame.getHari(), menuKaryawanFrame.getBulan(), menuKaryawanFrame.getTahun());
-            menuBadanKeuanganFrame.setHari(menuKaryawanFrame.getHari());
-            menuBadanKeuanganFrame.setBulan(menuKaryawanFrame.getBulan());
-            menuBadanKeuanganFrame.setTahun(menuKaryawanFrame.getTahun());
             menuBadanKeuanganFrame.setTanggalBadanKeuangan(menuBadanKeuanganFrame.getHari(), menuBadanKeuanganFrame.getBulan(), menuBadanKeuanganFrame.getTahun());
         }
     }
