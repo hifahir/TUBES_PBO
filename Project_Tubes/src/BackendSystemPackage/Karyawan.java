@@ -4,6 +4,7 @@
  */
 package BackendSystemPackage;
 
+import DBPegawai.PegawaiDAO;
 import java.util.*;
 import javax.swing.JOptionPane;
 
@@ -25,6 +26,7 @@ public class Karyawan extends User{
     public int gajiWaktuItu;
     public int pajakWaktuItu;
     public int lemburWaktuItu;
+    private PegawaiDAO dao;
 
     public String getPassword() {
         return password;
@@ -54,6 +56,7 @@ public class Karyawan extends User{
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
         this.pajak = 0.05;
+        this.dao = new PegawaiDAO();
     }
 
     public void setBisaLembur(boolean bisaLembur) {

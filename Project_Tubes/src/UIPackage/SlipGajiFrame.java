@@ -5,6 +5,7 @@
 package UIPackage;
 
 import BackendSystemPackage.VerifikasiSystem;
+import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,10 +20,12 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
      */
     private SimpanListener simpan;
     private VerifikasiSystem verifikasiSystem;
+    private PegawaiDAO dao;
     
     public SlipGajiFrame() {
         initComponents();
         jButton1.addActionListener(this);
+        this.dao = new PegawaiDAO();
     }
     
     @Override
