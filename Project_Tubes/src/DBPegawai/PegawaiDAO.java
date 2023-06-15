@@ -207,4 +207,41 @@ public class PegawaiDAO implements DAOInterface{
         }
         return 0; // Default value if no result is found or an error occurs
     }
+    
+    @Override
+    public int getLemburWaktuItu(Karyawan karyawan, int hari, int bulan, int tahun) {
+        String sql = "SELECT lemburWaktuItu FROM transaksilembur WHERE haribulantahun = ? AND username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            String key = hari + "-" + bulan + "-" + tahun;
+            statement.setString(1, key);
+            statement.setString(2, karyawan.getUsername());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("lemburWaktuItu");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    @Override
+    public int getPajakWaktuItu(Karyawan karyawan, int hari, int bulan, int tahun) {
+        String sql = "SELECT pajakWaktuItu FROM transaksilembur WHERE haribulantahun = ? AND username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            String key = hari + "-" + bulan + "-" + tahun;
+            statement.setString(1, key);
+            statement.setString(2, karyawan.getUsername());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("pajakWaktuItu");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }
