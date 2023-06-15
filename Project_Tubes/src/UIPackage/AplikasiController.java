@@ -53,6 +53,9 @@ public class AplikasiController implements SimpanListener{
 
     public void setKaryawanList(ArrayList<Karyawan> karyawanList) {
         this.karyawanList = karyawanList;
+        for (Karyawan karyawan : karyawanList) {
+            karyawan.setDao(dao);
+        }
     }
 
     public void setDao(PegawaiDAO dao) {
@@ -68,9 +71,6 @@ public class AplikasiController implements SimpanListener{
         loginFrame.setLocationRelativeTo(null);
         
         badanKeuangan.setDao(dao);
-        for (Karyawan karyawan : karyawanList) {
-            karyawan.setDao(dao);
-        }
         
         loginBadanKeuanganFrame = new LoginBadanKeuanganFrame();
         loginBadanKeuanganFrame.setBadanKeuangan(badanKeuangan);
@@ -99,12 +99,12 @@ public class AplikasiController implements SimpanListener{
         menuKaryawanFrame.setHari(hari);
         menuKaryawanFrame.setBulan(bulan);
         menuKaryawanFrame.setTahun(tahun);
+        menuKaryawanFrame.setDao(dao);
         menuKaryawanFrame.addSimpanListener(this);
         menuKaryawanFrame.setVerifikasiSystem(verifikasiSystem);
         menuKaryawanFrame.setKaryawanList(karyawanList);
         menuKaryawanFrame.setKaryawan(karyawan);
         menuKaryawanFrame.setLocationRelativeTo(null);
-        menuKaryawanFrame.setDao(dao);
         
         loginFrame.setVisible(true);
     }

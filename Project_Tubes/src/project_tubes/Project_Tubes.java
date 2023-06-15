@@ -20,20 +20,11 @@ import DBPegawai.PegawaiDAO;
 public class Project_Tubes {
 
     public static void main(String[] args) {
-        
-        
-        // Username & Password akun BadanKeuangan
-        //BadanKeuangan bk = new BadanKeuangan("admin", "12345", 1000000000); 
-        
-        
-        
-        // Username & Password sistem Verifikasi
         PegawaiDAO dao = new PegawaiDAO();
         ArrayList<BadanKeuangan> bk = dao.getAllKeuangan();
         int saldo = bk.get(0).getSaldo();
 
         VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345",saldo);
-        // Username & Password Beberapa akun karyawan yang telah ada
         ArrayList<Karyawan> kw = dao.getAllKaryawan();
         
         //Bulan & tahun awal
