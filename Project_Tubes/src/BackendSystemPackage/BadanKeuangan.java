@@ -64,8 +64,8 @@ public class BadanKeuangan extends User {
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
         int gaji = karyawan.getGaji();
         String key = bulan + "-" + tahun;
+        boolean gajiDiberikanSebelumnya = dao.isBulanTahunExists(karyawan, key);
         if (saldo >= gaji) {
-            boolean gajiDiberikanSebelumnya = dao.isBulanTahunExists(karyawan, key);
             if (gajiDiberikanSebelumnya) {
                 JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
                         + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
