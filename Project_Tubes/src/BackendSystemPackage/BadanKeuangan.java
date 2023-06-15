@@ -59,39 +59,26 @@ public class BadanKeuangan extends User {
         int gaji = karyawan.getGaji();
         if (saldo >= gaji) {
             String key = bulan + "-" + tahun;
-            if (karyawan.getGajiWaktuItu() != null && karyawan.getGajiWaktuItu().containsKey(key)) {
+
+            boolean gajiDiberikanSebelumnya = dao.isGajiDiberikan(karyawan.getUsername(), key);
+            if (gajiDiberikanSebelumnya) {
                 JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
-                        + bulan + " tahun " + tahun + " untuk " + karyawan.username 
-                        + " sudah diberikan sebelumnya"
-                        ,"Error", JOptionPane.ERROR_MESSAGE);
+                        + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
+                        + " sudah diberikan sebelumnya",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 saldo -= gaji;
                 int pajak = karyawan.potonganPajak(gaji);
                 karyawan.tambahGaji(gaji - pajak);
-                if (karyawan.getGajiWaktuItu() == null) {
-                    karyawan.setGajiWaktuItu(new HashMap<>());
-                }
-                karyawan.getGajiWaktuItu().put(key, gaji - pajak);
-                if (karyawan.getPajakWaktuItu() == null) { // tambahan untuk membuat objek Map pajakWaktuItu jika belum ada
-                    karyawan.setPajakWaktuItu(new HashMap<>());
-                }
-                karyawan.getPajakWaktuItu().put(key, pajak); // tambahan untuk menyimpan nilai pajak pada objek Karyawan
-                JOptionPane.showMessageDialog(null, "Gaji sebesar Rp. " + (gaji - pajak) 
-                        + " dengan pajak Rp. " + pajak + " telah diberikan ke " + karyawan.username 
-                        + " pada bulan " + bulan + " tahun " 
-                        + tahun
-                        , "Informasi"
-                        , JOptionPane.INFORMATION_MESSAGE);
-                
             }
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 
-                    + karyawan.username + ". Saldo tidak mencukupi"
-                    ,"Error", JOptionPane.ERROR_MESSAGE);
+                    + karyawan.getUsername() + ". Saldo tidak mencukupi",
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         dao.insertGaji(karyawan, bulan, tahun);
-        dao.updateAdmin(this.keuangan);
-        
+        dao.updateAdmin(this.keuangan, gaji);
     }
 
     
@@ -104,44 +91,30 @@ public class BadanKeuangan extends User {
         String key = hari + "-" + bulan + "-" + tahun;
 
         if (saldo >= total) {
-            if (karyawan.getLemburWaktuItu() != null && karyawan.getLemburWaktuItu().containsKey(key)) {
-                JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal " 
-                        + hari + " bulan " + bulan + " tahun " + tahun + " untuk " + karyawan.username
-                        + " sudah diberikan sebelumnya"
-                        ,"Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                saldo -= total;
-                int pajak = karyawan.potonganPajak(total);
-                karyawan.tambahUpahLembur(total - pajak);
-                karyawan.upahLemburWaktuItu = total-pajak;
-                karyawan.tambahWaktuLemburDone(jamLembur);
-                karyawan.resetWaktuLembur();
+            
+            saldo -= total;
+            int pajak = karyawan.potonganPajak(total);
+            karyawan.tambahUpahLembur(total - pajak);
+            karyawan.upahLemburWaktuItu = total-pajak;
+            karyawan.tambahWaktuLemburDone(jamLembur);
+            karyawan.resetWaktuLembur();
 
-                if (karyawan.getLemburWaktuItu() == null) {
-                    karyawan.setLemburWaktuItu(new HashMap<>());
-                }
-                karyawan.getLemburWaktuItu().put(key, karyawan.upahLemburWaktuItu);
 
-                if (karyawan.getPajakWaktuItu() == null) {
-                    karyawan.setPajakWaktuItu(new HashMap<>());
-                }
-                karyawan.getPajakWaktuItu().put(key, pajak);
-
-                JOptionPane.showMessageDialog(null, "Upah uang lembur sebesar Rp. " 
-                        + (total - pajak) 
-                        + " dengan potongan pajak yang dibayarkan sebesar Rp. "
-                        + pajak + " telah diberikan ke " 
-                        + karyawan.username
-                        + " pada tanggal " + hari + " bulan " + bulan + " tahun " + tahun
-                        , "Informasi"
-                        , JOptionPane.INFORMATION_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(null, "Upah uang lembur sebesar Rp. " 
+                + (total - pajak) 
+                + " dengan potongan pajak yang dibayarkan sebesar Rp. "
+                + pajak + " telah diberikan ke " 
+                + karyawan.username
+                + " pada tanggal " + hari + " bulan " + bulan + " tahun " + tahun
+                , "Informasi"
+                , JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Upah lembur gagal diberikan kepada " 
                     + karyawan.username + ". Saldo tidak mencukupi"
                     ,"Error", JOptionPane.ERROR_MESSAGE);
         }
         dao.insertLembur(karyawan, hari, bulan, tahun);
+        dao.updateAdmin(this.keuangan, total);
     }
 
 }

@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/UIPackage/SimpanListener.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/UIPackage/LoginBadanKeuanganFrame.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/UIPackage/MenuBadanKeuanganFrame.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/DBPegawai/PegawaiDAO.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/UIPackage/AplikasiController.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/BackendSystemPackage/BadanKeuangan.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/DBPegawai/DBConnector.java</file>
-            <file>file:/C:/Users/putra/OneDrive/Documents/NetBeansProjects/testTubes/src/UIPackage/MenuKaryawanFrame.java</file>
+            <file>file:/C:/Users/RH/Documents/GitHub/TUBES_PBO/Project_Tubes/src/project_tubes/Project_Tubes.java</file>
+            <file>file:/C:/Users/RH/Documents/GitHub/TUBES_PBO/Project_Tubes/src/DBPegawai/DBConnector.java</file>
+            <file>file:/C:/Users/RH/Documents/GitHub/TUBES_PBO/Project_Tubes/src/DBPegawai/PegawaiDAO.java</file>
+            <file>file:/C:/Users/RH/Documents/GitHub/TUBES_PBO/Project_Tubes/src/DBPegawai/DAOInterface.java</file>
         </group>
     </open-files>
 </project-private>

@@ -22,9 +22,9 @@ public class Karyawan extends User{
     private double pajak;
     private int pajakTerbayarkan;
     public int upahLemburWaktuItu;
-    public Map<String, Integer> gajiWaktuItu;
-    public Map<String, Integer> pajakWaktuItu;
-    public Map<String, Integer> lemburWaktuItu;
+    public int gajiWaktuItu;
+    public int pajakWaktuItu;
+    public int lemburWaktuItu;
 
     public String getPassword() {
         return password;
@@ -79,30 +79,32 @@ public class Karyawan extends User{
     public boolean getbisaLembur() {
         return bisaLembur;
     }
-    
-    public Map<String, Integer> getGajiWaktuItu() {
-        return gajiWaktuItu;
-    }
-    
-    public void setGajiWaktuItu(Map<String, Integer> gajiWaktuItu) {
+
+    public void setGajiWaktuItu(int gajiWaktuItu) {
         this.gajiWaktuItu = gajiWaktuItu;
     }
-    
-    public Map<String, Integer> getPajakWaktuItu() {
-        return pajakWaktuItu;
-    }
-    
-    public void setPajakWaktuItu(Map<String, Integer> pajakWaktuItu) {
+
+    public void setPajakWaktuItu(int pajakWaktuItu) {
         this.pajakWaktuItu = pajakWaktuItu;
     }
 
-    public Map<String, Integer> getLemburWaktuItu() {
-        return lemburWaktuItu;
-    }
-
-    public void setLemburWaktuItu(Map<String, Integer> lemburWaktuItu) {
+    public void setLemburWaktuItu(int lemburWaktuItu) {
         this.lemburWaktuItu = lemburWaktuItu;
     }
+
+    public int getGajiWaktuItu() {
+        return gajiWaktuItu;
+    }
+
+    public int getPajakWaktuItu() {
+        return pajakWaktuItu;
+    }
+
+    public int getLemburWaktuItu() {
+        return lemburWaktuItu;
+    }
+    
+    
     
     public void inputWaktuLembur(int waktuLembur) {
         tambahWaktuLembur(waktuLembur); // tambahkan waktu lembur karyawan

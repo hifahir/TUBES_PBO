@@ -16,17 +16,21 @@ public class PegawaiDAO implements DAOInterface{
     ArrayList<Karyawan> listKaryawan;
     ArrayList<BadanKeuangan> listKeuangan;
     
-    public void updateAdmin(BadanKeuangan keuangan){
-        String sql;
-        sql = "UPDATE kotak SET saldo=? WHERE username=?";
-        try(PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)){
-            statement.setInt(1, keuangan.getSaldo());
+    public void updateAdmin(BadanKeuangan keuangan, int pengurangan) {
+        String sql = "UPDATE kotak SET saldo = saldo - ? WHERE username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setInt(1, pengurangan);
             statement.setString(2, keuangan.getUsername());
-        }
-        catch(SQLException e){
+            statement.executeUpdate();
+
+            // Update the saldo of the BadanKeuangan object
+            keuangan.setSaldo(keuangan.getSaldo() - pengurangan);
+        } catch (SQLException e) {
             System.out.println("Terjadi kesalahan: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public ArrayList<Karyawan> getAllKaryawan() {
@@ -61,28 +65,15 @@ public class PegawaiDAO implements DAOInterface{
         String sql = "INSERT INTO transaksigaji (gajiWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             // Mengambil data gaji dan pajak dari objek Karyawan
-            Map<String, Integer> gajiWaktuItu = karyawan.getGajiWaktuItu();
-            Map<String, Integer> pajakWaktuItu = karyawan.getPajakWaktuItu();
-
             String key = bulan + "-" + tahun;
+            
+            statement.setInt(1, karyawan.getGajiWaktuItu());
+            statement.setInt(2, karyawan.getPajakWaktuItu());
+            statement.setString(3, key);
+            statement.setString(4, karyawan.getUsername());
+            
+            statement.executeUpdate();
 
-            if (gajiWaktuItu.containsKey(key)) {
-                int gaji = gajiWaktuItu.get(key);
-                int pajak = pajakWaktuItu.get(key);
-
-                // Mengatur parameter pada pernyataan PreparedStatement
-                statement.setInt(1, gaji);
-                statement.setInt(2, pajak);
-                statement.setString(3, key);
-                statement.setString(4, karyawan.getUsername());
-
-                // Menjalankan pernyataan INSERT
-                statement.executeUpdate();
-            } else {
-                JOptionPane.showMessageDialog(null, "Data gaji untuk bulan " 
-                        + bulan + " tahun " + tahun + " tidak ditemukan"
-                    ,"Error", JOptionPane.ERROR_MESSAGE);
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,28 +83,14 @@ public class PegawaiDAO implements DAOInterface{
         String sql = "INSERT INTO transaksilembur (lemburWaktuItu, pajakWaktuItu, haribulantahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             // Mengambil data upah lembur dan pajak dari objek Karyawan
-            Map<String, Integer> lemburWaktuItu = karyawan.getLemburWaktuItu();
-            Map<String, Integer> pajakWaktuItu = karyawan.getPajakWaktuItu();
-
             String key = hari + "-" + bulan + "-" + tahun;
-
-            if (lemburWaktuItu.containsKey(key)) {
-                int upahLembur = lemburWaktuItu.get(key);
-                int pajak = pajakWaktuItu.get(key);
-
-                // Mengatur parameter pada pernyataan PreparedStatement
-                statement.setInt(1, upahLembur);
-                statement.setInt(2, pajak);
-                statement.setString(3, key);
-                statement.setString(4,karyawan.getUsername());
-
-                // Menjalankan pernyataan INSERT
-                statement.executeUpdate();
-            } else {
-                JOptionPane.showMessageDialog(null, "Data upah lembur untuk tanggal "
-                    + hari + " bulan " + bulan + " tahun " + tahun + " tidak ditemukan"
-                    ,"Error", JOptionPane.ERROR_MESSAGE);
-            }
+            
+            statement.setInt(1, karyawan.getLemburWaktuItu());
+            statement.setInt(2, karyawan.getPajakWaktuItu());
+            statement.setString(3, key);
+            statement.setString(4,karyawan.getUsername());
+            
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -143,5 +120,22 @@ public class PegawaiDAO implements DAOInterface{
         }
         return listKeuangan;
     }
+    
+    public boolean isGajiDiberikan(String username, String bulanTahun) {
+        String sql = "SELECT COUNT(*) FROM transaksigaji WHERE username = ? AND bulanTahun = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, username);
+            statement.setString(2, bulanTahun);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     
 }

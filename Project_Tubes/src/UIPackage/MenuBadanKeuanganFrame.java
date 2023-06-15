@@ -155,74 +155,71 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.simpan = simpan;
     }
     
-    private void printPembayaranGaji(Karyawan karyawan, int tahun) {
-        String keyPrefix = "-" + tahun;
-        Map<String, Integer> gajiWaktuItu = karyawan.getGajiWaktuItu();
-        Map<String, Integer> pajakWaktuItu = karyawan.getPajakWaktuItu();
-
-        if (gajiWaktuItu == null) {
-            jTextArea1.setText("Belum ada pembayaran gaji untuk karyawan " + karyawan.getUsername() + " pada tahun " + tahun);
-        } else {
-            TreeMap<Integer, String> sortedBulanMap = new TreeMap<>();
-
-            for (String key : gajiWaktuItu.keySet()) {
-                if (key.endsWith(keyPrefix)) {
-                    int bulan = Integer.parseInt(key.substring(0, key.indexOf("-")));
-                    sortedBulanMap.put(bulan, key);
-                }
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("Pembayaran gaji untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
-
-            for (Map.Entry<Integer, String> entry : sortedBulanMap.entrySet()) {
-                int bulan = entry.getKey();
-                String key = entry.getValue();
-
-                int gaji = gajiWaktuItu.get(key);
-                int pajak = pajakWaktuItu.get(key);
-
-                sb.append("Bulan ").append(bulan).append(": Gaji sebesar Rp. ").append(gaji);
-                sb.append(", dengan pajak Rp. ").append(pajak);
-                sb.append("\n");
-            }
-
-            jTextArea1.setText(sb.toString());
-        }
-    }
-
-    private void printPembayaranLembur(Karyawan karyawan, int tahun) {
-        String keyPrefix = "-" + tahun;
-        Map<String, Integer> lemburWaktuItu = karyawan.getLemburWaktuItu();
-
-        if (karyawan.getbisaLembur() && lemburWaktuItu != null) {
-            TreeMap<String, Integer> sortedLemburMap = new TreeMap<>();
-
-            for (String key : lemburWaktuItu.keySet()) {
-                if (key.endsWith(keyPrefix)) {
-                    sortedLemburMap.put(key, lemburWaktuItu.get(key));
-                }
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("Pembayaran lembur untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
-
-            for (Map.Entry<String, Integer> entry : sortedLemburMap.entrySet()) {
-                String key = entry.getKey();
-                int lembur = entry.getValue();
-
-                int hari = Integer.parseInt(key.substring(0, key.indexOf("-")));
-                int bulan = Integer.parseInt(key.substring(key.indexOf("-") + 1, key.lastIndexOf("-")));
-
-                sb.append("Hari ").append(hari).append(", Bulan ").append(bulan).append(": Lembur sebesar Rp. ").append(lembur);
-                sb.append("\n");
-            }
-
-            jTextArea1.setText(sb.toString());
-        } else {
-            jTextArea1.setText("Karyawan " + karyawan.getUsername() + " tidak memiliki data lembur pada tahun " + tahun);
-        }
-    }
+//    private void printPembayaranGaji(Karyawan karyawan, int tahun) {
+//        String keyPrefix = "-" + tahun;
+//
+//        if (gajiWaktuItu == null) {
+//            jTextArea1.setText("Belum ada pembayaran gaji untuk karyawan " + karyawan.getUsername() + " pada tahun " + tahun);
+//        } else {
+//            TreeMap<Integer, String> sortedBulanMap = new TreeMap<>();
+//
+//            for (String key : gajiWaktuItu.keySet()) {
+//                if (key.endsWith(keyPrefix)) {
+//                    int bulan = Integer.parseInt(key.substring(0, key.indexOf("-")));
+//                    sortedBulanMap.put(bulan, key);
+//                }
+//            }
+//
+//            StringBuilder sb = new StringBuilder();
+//            sb.append("Pembayaran gaji untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
+//
+//            for (Map.Entry<Integer, String> entry : sortedBulanMap.entrySet()) {
+//                int bulan = entry.getKey();
+//                String key = entry.getValue();
+//
+//                int gaji = gajiWaktuItu.get(key);
+//                int pajak = pajakWaktuItu.get(key);
+//
+//                sb.append("Bulan ").append(bulan).append(": Gaji sebesar Rp. ").append(gaji);
+//                sb.append(", dengan pajak Rp. ").append(pajak);
+//                sb.append("\n");
+//            }
+//
+//            jTextArea1.setText(sb.toString());
+//        }
+//    }
+//
+//    private void printPembayaranLembur(Karyawan karyawan, int tahun) {
+//        String keyPrefix = "-" + tahun;
+//
+//        if (karyawan.getbisaLembur() && lemburWaktuItu != null) {
+//            TreeMap<String, Integer> sortedLemburMap = new TreeMap<>();
+//
+//            for (String key : lemburWaktuItu.keySet()) {
+//                if (key.endsWith(keyPrefix)) {
+//                    sortedLemburMap.put(key, lemburWaktuItu.get(key));
+//                }
+//            }
+//
+//            StringBuilder sb = new StringBuilder();
+//            sb.append("Pembayaran lembur untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
+//
+//            for (Map.Entry<String, Integer> entry : sortedLemburMap.entrySet()) {
+//                String key = entry.getKey();
+//                int lembur = entry.getValue();
+//
+//                int hari = Integer.parseInt(key.substring(0, key.indexOf("-")));
+//                int bulan = Integer.parseInt(key.substring(key.indexOf("-") + 1, key.lastIndexOf("-")));
+//
+//                sb.append("Hari ").append(hari).append(", Bulan ").append(bulan).append(": Lembur sebesar Rp. ").append(lembur);
+//                sb.append("\n");
+//            }
+//
+//            jTextArea1.setText(sb.toString());
+//        } else {
+//            jTextArea1.setText("Karyawan " + karyawan.getUsername() + " tidak memiliki data lembur pada tahun " + tahun);
+//        }
+//    }
 
 
 
@@ -309,7 +306,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
             
             badanKeuangan.berikanGaji(karyawanDitemukan, getBulan(), getTahun());
-            updateSaldoLabel();
+            
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel13.setVisible(false);
@@ -437,8 +434,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 int tahun;
                 try {
                     tahun = Integer.parseInt(inputTahun);
-                    printPembayaranGaji(karyawanDitemukan, tahun);
-                    printPembayaranLembur(karyawanDitemukan, tahun);
+//                    printPembayaranGaji(karyawanDitemukan, tahun);
+//                    printPembayaranLembur(karyawanDitemukan, tahun);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
