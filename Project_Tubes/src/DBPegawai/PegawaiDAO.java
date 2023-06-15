@@ -243,5 +243,33 @@ public class PegawaiDAO implements DAOInterface{
         }
         return 0;
     }
+    
+    public ArrayList<Object[]> getTransaksiGajiByYear(int year) {
+        ArrayList<Object[]> transaksiGajiList = new ArrayList<>();
+        String sql = "SELECT * FROM transaksigaji WHERE YEAR(dateColumn) = ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setInt(1, year);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                // Assuming the columns in the transaksigaji table are of type String,
+                // modify the following line accordingly based on the actual column types
+                Object[] rowData = {
+                    resultSet.getString("column1"),
+                    resultSet.getString("column2"),
+                    resultSet.getString("column3"),
+                    resultSet.getString("column4")
+                };
+
+                transaksiGajiList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transaksiGajiList;
+    }
+
 
 }

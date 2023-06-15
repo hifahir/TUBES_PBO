@@ -14,8 +14,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -149,76 +148,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     public void addSimpanListener(SimpanListener simpan){
         this.simpan = simpan;
     }
-    
-//    private void printPembayaranGaji(Karyawan karyawan, int tahun) {
-//        String keyPrefix = "-" + tahun;
-//
-//        if (gajiWaktuItu == null) {
-//            jTextArea1.setText("Belum ada pembayaran gaji untuk karyawan " + karyawan.getUsername() + " pada tahun " + tahun);
-//        } else {
-//            TreeMap<Integer, String> sortedBulanMap = new TreeMap<>();
-//
-//            for (String key : gajiWaktuItu.keySet()) {
-//                if (key.endsWith(keyPrefix)) {
-//                    int bulan = Integer.parseInt(key.substring(0, key.indexOf("-")));
-//                    sortedBulanMap.put(bulan, key);
-//                }
-//            }
-//
-//            StringBuilder sb = new StringBuilder();
-//            sb.append("Pembayaran gaji untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
-//
-//            for (Map.Entry<Integer, String> entry : sortedBulanMap.entrySet()) {
-//                int bulan = entry.getKey();
-//                String key = entry.getValue();
-//
-//                int gaji = gajiWaktuItu.get(key);
-//                int pajak = pajakWaktuItu.get(key);
-//
-//                sb.append("Bulan ").append(bulan).append(": Gaji sebesar Rp. ").append(gaji);
-//                sb.append(", dengan pajak Rp. ").append(pajak);
-//                sb.append("\n");
-//            }
-//
-//            jTextArea1.setText(sb.toString());
-//        }
-//    }
-//
-//    private void printPembayaranLembur(Karyawan karyawan, int tahun) {
-//        String keyPrefix = "-" + tahun;
-//
-//        if (karyawan.getbisaLembur() && lemburWaktuItu != null) {
-//            TreeMap<String, Integer> sortedLemburMap = new TreeMap<>();
-//
-//            for (String key : lemburWaktuItu.keySet()) {
-//                if (key.endsWith(keyPrefix)) {
-//                    sortedLemburMap.put(key, lemburWaktuItu.get(key));
-//                }
-//            }
-//
-//            StringBuilder sb = new StringBuilder();
-//            sb.append("Pembayaran lembur untuk karyawan ").append(karyawan.getUsername()).append(" pada tahun ").append(tahun).append(":").append("\n");
-//
-//            for (Map.Entry<String, Integer> entry : sortedLemburMap.entrySet()) {
-//                String key = entry.getKey();
-//                int lembur = entry.getValue();
-//
-//                int hari = Integer.parseInt(key.substring(0, key.indexOf("-")));
-//                int bulan = Integer.parseInt(key.substring(key.indexOf("-") + 1, key.lastIndexOf("-")));
-//
-//                sb.append("Hari ").append(hari).append(", Bulan ").append(bulan).append(": Lembur sebesar Rp. ").append(lembur);
-//                sb.append("\n");
-//            }
-//
-//            jTextArea1.setText(sb.toString());
-//        } else {
-//            jTextArea1.setText("Karyawan " + karyawan.getUsername() + " tidak memiliki data lembur pada tahun " + tahun);
-//        }
-//    }
-
-
-
-
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -439,8 +368,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 int tahun;
                 try {
                     tahun = Integer.parseInt(inputTahun);
-//                    printPembayaranGaji(karyawanDitemukan, tahun);
-//                    printPembayaranLembur(karyawanDitemukan, tahun);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -541,8 +468,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel24 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jButton17 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jButton19 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         jLabel20.setText("jLabel20");
 
@@ -626,7 +554,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
         tab1Layout.setVerticalGroup(
             tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -888,11 +816,22 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jLabel24.setText("Tahun:");
 
-        jButton17.setText("Cetak");
+        jButton17.setText("Cetak Gaji");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jButton19.setText("Cetak Lembur");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout tab5Layout = new javax.swing.GroupLayout(tab5);
         tab5.setLayout(tab5Layout);
@@ -901,12 +840,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             .addGroup(tab5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(tab5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
                         .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
@@ -925,21 +858,27 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(tab5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)))
                 .addGap(3, 3, 3)
-                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton16)
+                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton15)
-                    .addComponent(jButton17))
+                    .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(tab5Layout.createSequentialGroup()
                 .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab5Layout.createSequentialGroup()
                         .addGap(159, 159, 159)
                         .addComponent(jLabel5))
-                    .addGroup(tab5Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tab5Layout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addComponent(jLabel23)))
@@ -978,11 +917,17 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton17))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab5Layout.createSequentialGroup()
+                        .addComponent(jButton17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton19)
+                        .addGap(72, 72, 72))))
         );
 
         jTabbedPane1.addTab("tab5", tab5);
@@ -1038,6 +983,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1075,9 +1021,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
