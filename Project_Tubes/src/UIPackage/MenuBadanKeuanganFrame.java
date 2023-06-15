@@ -43,7 +43,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.bulan = bulan;
         this.tahun = tahun;
         this.dao = new PegawaiDAO();
-        setTanggal(hari, bulan, tahun);
+        setTanggalBadanKeuangan(hari, bulan, tahun);
         
         jButton1.addActionListener(this);
         jButton2.addActionListener(this);
@@ -90,7 +90,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.hari = hari;
     }
     
-    public void setTanggal(int hari, int bulan, int tahun){
+    public void setTanggalBadanKeuangan(int hari, int bulan, int tahun){
         switch (this.bulan){
             case 1 -> jLabel28.setText(this.hari+", Januari, tahun "+this.tahun);
             case 2 -> jLabel28.setText(this.hari+", Februari, tahun "+this.tahun);

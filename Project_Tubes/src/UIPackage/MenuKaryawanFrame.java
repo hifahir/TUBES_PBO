@@ -39,7 +39,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         this.bulan = bulan;
         this.tahun = tahun;
         this.dao = new PegawaiDAO();
-        setTanggal(hari, bulan, tahun);
+        setTanggalKaryawan(hari, bulan, tahun);
         
         jLabel1.setVisible(false);
         jLabel3.setVisible(false);
@@ -116,7 +116,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         this.verifikasiSystem = verifikasiSystem;
     }
     
-    public void setTanggal(int hari, int bulan, int tahun){
+    public void setTanggalKaryawan(int hari, int bulan, int tahun){
         switch (this.bulan){
             case 1 -> jLabel2.setText(this.hari+", Januari, tahun "+this.tahun);
             case 2 -> jLabel2.setText(this.hari+", Februari, tahun "+this.tahun);
