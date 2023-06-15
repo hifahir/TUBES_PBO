@@ -115,19 +115,8 @@ public class Karyawan extends User{
         this.waktuLembur = waktuLembur;
     }
     
-    public void inputWaktuLembur(int waktuLembur) {
-        ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-        
-        Karyawan karyawanDitemukan = null;
-            
-        for (Karyawan karyawan : karyawanList){
-            if (username.equals(karyawan.getUsername())) {
-                karyawanDitemukan = karyawan;
-                break;
-            }
-        }
-        
-        dao.updateWaktuLembur(karyawanDitemukan, upahLembur);
+    public void inputWaktuLembur(Karyawan karyawan, int waktuLembur) {
+        dao.updateWaktuLembur(karyawan, upahLembur);
         JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
     }
     
