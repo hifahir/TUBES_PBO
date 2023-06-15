@@ -275,6 +275,32 @@ public class PegawaiDAO implements DAOInterface{
         return transaksiGajiList;
     }
 
+    public ArrayList<Object[]> getTransaksiLemburByYear(String year) {
+        ArrayList<Object[]> transaksiLemburList = new ArrayList<>();
+        String sql = "SELECT * FROM transaksilembur WHERE hariBulanTahun LIKE ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%-%-" + year);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                // Assuming the columns in the transaksilembur table are of type String,
+                // modify the following line accordingly based on the actual column types
+                Object[] rowData = {
+                    resultSet.getString("lemburWaktuItu"),
+                    resultSet.getString("pajakWaktuItu"),
+                    resultSet.getString("haribulantahun"),
+                    resultSet.getString("username")
+                };
+
+                transaksiLemburList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transaksiLemburList;
+    }
 
 
 }

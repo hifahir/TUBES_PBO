@@ -65,6 +65,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton16.addActionListener(this);
         jButton17.addActionListener(this);
         jButton18.addActionListener(this);
+        jButton19.addActionListener(this);
         
         jLabel13.setVisible(false);
         jLabel14.setVisible(false);
@@ -364,13 +365,42 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 DefaultTableModel tableModel = new DefaultTableModel();
 
                 // Add columns to the table model
-                tableModel.addColumn("Column 1");
-                tableModel.addColumn("Column 2");
-                tableModel.addColumn("Column 3");
-                tableModel.addColumn("Column 4");
+                tableModel.addColumn("Gaji");
+                tableModel.addColumn("Pajak");
+                tableModel.addColumn("Tanggal");
+                tableModel.addColumn("Karyawan");
 
                 // Populate rows in the table model with data from the transaksiGajiList
                 for (Object[] rowData : transaksiGajiList) {
+                    tableModel.addRow(rowData);
+                }
+
+                // Set the table model for jTable1
+                jTable1.setModel(tableModel);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if (e.getSource() == jButton19){
+            String inputTahun = jTextField8.getText();
+            int tahun;
+
+            try {
+
+                // Retrieve data from the transaksigaji table based on the year
+                ArrayList<Object[]> transaksiLemburList = dao.getTransaksiLemburByYear(inputTahun);
+
+                // Create a DefaultTableModel to hold the table data
+                DefaultTableModel tableModel = new DefaultTableModel();
+
+                // Add columns to the table model
+                tableModel.addColumn("Upah Lembur");
+                tableModel.addColumn("Pajak");
+                tableModel.addColumn("Tanggal");
+                tableModel.addColumn("Karyawan");
+
+                // Populate rows in the table model with data from the transaksiGajiList
+                for (Object[] rowData : transaksiLemburList) {
                     tableModel.addRow(rowData);
                 }
 
