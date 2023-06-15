@@ -30,7 +30,7 @@ public class Project_Tubes {
         // Username & Password sistem Verifikasi
         PegawaiDAO dao = new PegawaiDAO();
         ArrayList<BadanKeuangan> bk = dao.getAllKeuangan();
-        int saldo = bk.get(3).getSaldo();
+        int saldo = bk.get(0).getSaldo();
 
         VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345",saldo);
         // Username & Password Beberapa akun karyawan yang telah ada
