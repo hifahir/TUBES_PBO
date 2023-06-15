@@ -185,7 +185,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton7){
-            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             String inputHari = jTextField10.getText();
             String inputBulan = jTextField3.getText();
             String inputTahun = jTextField4.getText();
