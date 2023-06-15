@@ -42,6 +42,7 @@ public class Project_Tubes {
         }
         
         for (Karyawan karyawan : kw) {
+            karyawan.setDao(dao);
             aplikasiController.setKaryawan(karyawan);
         }
         

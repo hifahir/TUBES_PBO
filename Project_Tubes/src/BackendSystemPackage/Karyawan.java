@@ -26,7 +26,6 @@ public class Karyawan extends User{
     public int gajiWaktuItu;
     public int pajakWaktuItu;
     public int lemburWaktuItu;
-    private Karyawan krw;
     private PegawaiDAO dao;
 
     public String getPassword() {
@@ -49,6 +48,10 @@ public class Karyawan extends User{
         this.password = password;
     }
     
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+    
     public Karyawan(String username, String password, String jabatan){
         super(username, password);
         this.jabatan = jabatan;
@@ -58,7 +61,6 @@ public class Karyawan extends User{
         this.bisaLembur = jabatan.equals("Staff");
         this.pajak = 0.05;
         this.dao = new PegawaiDAO();
-        this.krw = new Karyawan();
     }
 
     public void setBisaLembur(boolean bisaLembur) {
@@ -109,16 +111,14 @@ public class Karyawan extends User{
         return lemburWaktuItu;
     }
 
-    public void setDao(PegawaiDAO dao) {
-        this.dao = dao;
-    }
+    
 
     public void setWaktuLembur(int waktuLembur) {
         this.waktuLembur = waktuLembur;
     }
     
     public void inputWaktuLembur(Karyawan karyawan, int waktuLembur) {
-        dao.updateWaktuLembur(krw, waktuLembur);
+        dao.updateWaktuLembur(karyawan, waktuLembur);
         JOptionPane.showMessageDialog(null, "Waktu lembur telah ditambahkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
     }
     

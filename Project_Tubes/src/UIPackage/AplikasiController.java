@@ -87,8 +87,8 @@ public class AplikasiController implements SimpanListener{
         menuKaryawanFrame.setTahun(tahun);
         menuKaryawanFrame.setDao(dao);
         menuKaryawanFrame.addSimpanListener(this);
-        menuKaryawanFrame.setVerifikasiSystem(verifikasiSystem);
         menuKaryawanFrame.setKaryawan(karyawan);
+        menuKaryawanFrame.setVerifikasiSystem(verifikasiSystem);
         menuKaryawanFrame.setLocationRelativeTo(null);
         
         loginFrame.setVisible(true);
