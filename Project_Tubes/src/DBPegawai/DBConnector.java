@@ -28,6 +28,7 @@ public class DBConnector {
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Terjadi Kesalahan Koneksi MySQL: " + 
                                     e.getMessage());
+                e.printStackTrace();
             }
         }
         return connection;
