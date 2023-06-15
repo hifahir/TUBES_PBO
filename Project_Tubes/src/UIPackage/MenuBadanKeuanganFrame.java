@@ -366,7 +366,11 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
 
             if (karyawanDitemukan != null) {
-                badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun());
+                int jamLembur = dao.getWaktuLembur(karyawan);
+                int hargaLembur = 150000;
+                int total = jamLembur * hargaLembur;
+                int pajak = karyawan.potonganPajak(total);
+                badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun(), total, pajak);
             } else {
                 JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
             }

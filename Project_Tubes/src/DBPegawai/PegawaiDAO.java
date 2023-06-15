@@ -198,7 +198,7 @@ public class PegawaiDAO implements DAOInterface{
             statement.setString(1, karyawan.getUsername());
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt(karyawan.getWaktuLembur());
+                    return resultSet.getInt("waktuLembur"); // Retrieve the value from the "waktuLembur" column
                 }
             }
         } catch (SQLException e) {
@@ -206,6 +206,4 @@ public class PegawaiDAO implements DAOInterface{
         }
         return 0; // Default value if no result is found or an error occurs
     }
-
-
 }

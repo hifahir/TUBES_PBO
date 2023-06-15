@@ -95,10 +95,7 @@ public class BadanKeuangan extends User {
     
     // Untuk mengurus upah lembur
 
-    public void berikanUangLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
-        int jamLembur = dao.getWaktuLembur(karyawan);
-        int hargaLembur = 150000;
-        int total = jamLembur * hargaLembur;
+    public void berikanUangLembur(Karyawan karyawan, int hari, int bulan, int tahun, int harga, int pajak) {
         BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);
 
         String key = hari + "-" + bulan + "-" + tahun;
@@ -113,16 +110,15 @@ public class BadanKeuangan extends User {
                     "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             if (bisaLembur){
-                if (saldo >= total) {
-                    saldo -= total;
-                    int pajak = karyawan.potonganPajak(total);
+                if (saldo >= harga) {
+                    saldo -= harga;
 
                     dao.insertLembur(karyawan, hari, bulan, tahun);
-                    dao.updateAdmin(badanKeuangan, total);
+                    dao.updateAdmin(badanKeuangan, harga);
                     dao.updateWaktuLembur(karyawan, 0);
 
                     JOptionPane.showMessageDialog(null, "Upah uang lembur sebesar Rp. " 
-                            + (total - pajak) 
+                            + (harga - pajak) 
                             + " dengan potongan pajak yang dibayarkan sebesar Rp. "
                             + pajak + " telah diberikan ke " 
                             + karyawan.getUsername()
