@@ -62,9 +62,10 @@ public class BadanKeuangan extends User {
     }
 
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
-        BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0); // Assuming there's only one BadanKeuangan object in the list
         int gaji = karyawan.getGaji();
         int pajak = karyawan.potonganPajak(gaji);
+        BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);
+        
         String key = bulan + "-" + tahun;
 
         if (saldo >= gaji) {
@@ -73,6 +74,12 @@ public class BadanKeuangan extends User {
 
             dao.insertGaji(karyawan, bulan, tahun, gaji, pajak);
             dao.updateAdmin(badanKeuangan, gaji);
+            JOptionPane.showMessageDialog(null, "Gaji sebesar Rp. " + (gaji - pajak) 
+                        + " dengan pajak Rp. " + pajak + " telah diberikan ke " + karyawan.username 
+                        + " pada bulan " + bulan + " tahun " 
+                        + tahun
+                        , "Informasi"
+                        , JOptionPane.INFORMATION_MESSAGE);
 
         } else {
             JOptionPane.showMessageDialog(null, "Gaji gagal diberikan kepada " 

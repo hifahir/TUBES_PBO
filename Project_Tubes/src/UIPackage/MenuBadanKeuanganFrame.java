@@ -299,6 +299,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         }else if (e.getSource() == jButton10){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
+            
             String username = jTextField2.getText();
             Karyawan karyawanDitemukan = null;
             
@@ -312,8 +313,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             int bulanGaji = getBulan();
             int tahunGaji = getTahun();
             
-            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji);
-            
+            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji);   
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel13.setVisible(false);
