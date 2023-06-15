@@ -52,6 +52,7 @@ public class Project_Tubes {
         aplikasiController.setKaryawanList(kw);
         aplikasiController.setVerifikasiSystem(vs);
         aplikasiController.showDefaultView(hari, bulan, tahun);
+        aplikasiController.setDao(dao);
         
     }
 }

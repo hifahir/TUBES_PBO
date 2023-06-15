@@ -52,10 +52,14 @@ public class AplikasiController implements SimpanListener{
     }
 
     public void setKaryawanList(ArrayList<Karyawan> karyawanList) {
-        
         this.karyawanList = karyawanList;
- 
     }
+
+    public void setDao(PegawaiDAO dao) {
+        this.dao = dao;
+    }
+    
+    
     
     public void showDefaultView(int hari, int bulan, int tahun){
         loginFrame = new LoginFrame();
