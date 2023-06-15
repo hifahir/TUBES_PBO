@@ -14,5 +14,5 @@ public interface SimpanListener {
     public void simpanOpsiMenuBadanKeuangan(int opsi);
     public void simpanOpsiVerifikasi(int opsi);
     public void simpanOpsiMenuKaryawan(int opsi);
-    public void updateSaldo();
+    //public void updateSaldo();
 }

@@ -262,7 +262,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 
                 jLabel10.setText("Jabatan                : "+jabatan);
                 jLabel11.setText("Gaji dari jabatan : Rp. "+String.format("%.2f",gaji));
-                simpan.updateSaldo();
+                //simpan.updateSaldo();
             }else{
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }

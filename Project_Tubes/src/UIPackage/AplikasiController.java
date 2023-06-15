@@ -54,8 +54,7 @@ public class AplikasiController implements SimpanListener{
     public void setKaryawanList(ArrayList<Karyawan> karyawanList) {
         
         this.karyawanList = karyawanList;
-        this.karyawanList = dao.getAllKaryawan();
-        
+ 
     }
     
     public void showDefaultView(int hari, int bulan, int tahun){
@@ -158,9 +157,9 @@ public class AplikasiController implements SimpanListener{
         }
     }
     
-    public void updateSaldo(){
-        dao.updateAdmin(this.badanKeuangan);
-        this.menuBadanKeuanganFrame.getjLabel8().setText(String.valueOf(this.badanKeuangan.getSaldo()));
-    }
+//    public void updateSaldo(){
+//        dao.updateAdmin(this.badanKeuangan);
+//        this.menuBadanKeuanganFrame.getjLabel8().setText(String.valueOf(this.badanKeuangan.getSaldo()));
+//    }
     
 }
