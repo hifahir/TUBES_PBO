@@ -21,9 +21,8 @@ public class Project_Tubes {
     public static void main(String[] args) {
         PegawaiDAO dao = new PegawaiDAO();
         ArrayList<BadanKeuangan> bk = dao.getAllKeuangan();
-        int saldo = bk.get(0).getSaldo();
 
-        VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345",saldo);
+        VerifikasiSystem vs = new VerifikasiSystem("verifikasi","12345");
         ArrayList<Karyawan> kw = dao.getAllKaryawan();
         
         //Bulan & tahun awal

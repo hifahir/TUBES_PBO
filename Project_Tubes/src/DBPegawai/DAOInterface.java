@@ -4,7 +4,6 @@ import BackendSystemPackage.Karyawan;
 import BackendSystemPackage.BadanKeuangan;
 import java.util.ArrayList;
 public interface DAOInterface {
-    public void updateAdmin(BadanKeuangan keuangan, int pengurangan);
     public ArrayList<Karyawan> getAllKaryawan();
     public ArrayList<BadanKeuangan> getAllKeuangan();
     public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak);

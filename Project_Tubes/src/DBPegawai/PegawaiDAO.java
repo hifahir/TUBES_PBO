@@ -15,20 +15,6 @@ import javax.swing.JOptionPane;
 public class PegawaiDAO implements DAOInterface{
     ArrayList<Karyawan> listKaryawan;
     ArrayList<BadanKeuangan> listKeuangan;
-    
-    public void updateAdmin(BadanKeuangan keuangan, int pengurangan) {
-        String sql = "UPDATE badan_keuangan SET saldo = saldo - ? WHERE username = ?";
-        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setInt(1, pengurangan);
-            statement.setString(2, keuangan.getUsername());
-            statement.executeUpdate();
-
-            // Update the saldo of the BadanKeuangan object
-            keuangan.setSaldo(keuangan.getSaldo() - pengurangan);
-        } catch (SQLException e) {
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
-        }
-    }
 
     @Override
     public ArrayList<Karyawan> getAllKaryawan() {
@@ -124,7 +110,6 @@ public class PegawaiDAO implements DAOInterface{
                 BadanKeuangan keuangan = new BadanKeuangan();
                 keuangan.setUsername(result.getString(1));
                 keuangan.setPassword(result.getString(2));
-                keuangan.setSaldo(result.getInt(3));
                 listKeuangan.add(keuangan);
             }
             statement.close();

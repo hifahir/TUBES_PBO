@@ -27,8 +27,8 @@ public class VerifikasiSystem extends BadanKeuangan{
         return verifikasiAda;
     }
     
-    public VerifikasiSystem(String username, String password, int saldo) {
-        super(username, password, saldo);
+    public VerifikasiSystem(String username, String password) {
+        super(username, password);
         this.dao = new PegawaiDAO();
     }
 

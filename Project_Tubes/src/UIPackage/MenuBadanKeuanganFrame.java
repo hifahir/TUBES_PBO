@@ -47,7 +47,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.dao = new PegawaiDAO();
         setTanggalBadanKeuangan(hari, bulan, tahun);
         
-        jButton1.addActionListener(this);
         jButton2.addActionListener(this);
         jButton3.addActionListener(this);
         jButton4.addActionListener(this);
@@ -75,10 +74,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel17.setVisible(false);
         jButton13.setVisible(false);
         jButton14.setVisible(false);
-    }
-
-    public JLabel getjLabel8() {
-        return jLabel8;
     }
     
     public void setBulan(int bulan) {
@@ -115,16 +110,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         this.dao = dao;
     }
     
-    
-    
     public void setBadanKeuangan(BadanKeuangan badanKeuangan) {
         this.badanKeuangan = badanKeuangan;
         jLabel7.setText("Selamat datang, "+badanKeuangan.getUsername()+"!");
-        jLabel8.setText("Rp. "+String.valueOf(badanKeuangan.getSaldo()));
-    }
-    
-    private void updateSaldoLabel() {
-        jLabel8.setText("Rp. " + String.valueOf(badanKeuangan.getSaldo()));
     }
     
     public void setAplikasiController(AplikasiController aplikasiController) {
@@ -153,9 +141,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == jButton1) {
-            jTabbedPane1.setSelectedComponent(tab1); 
-        } else if (e.getSource() == jButton2) {
+        if (e.getSource() == jButton2) {
             jTabbedPane1.setSelectedComponent(tab2); 
         } else if (e.getSource() == jButton3) {
             jTabbedPane1.setSelectedComponent(tab3); 
@@ -235,7 +221,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             int tahunGaji = getTahun();
             
             badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji); 
-            updateSaldoLabel();
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel13.setVisible(false);
@@ -293,7 +278,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 int total = jamLembur * hargaLembur;
                 int pajak = karyawan.potonganPajak(total);
                 badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun(), total, pajak);
-                updateSaldoLabel();
             } else {
                 JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -444,7 +428,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jLabel20 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -454,9 +437,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel7 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        tab1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         tab2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -518,8 +498,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
-        jButton1.setText("Lihat Saldo");
-
         jButton2.setText("Melihat data karyawan");
 
         jButton3.setText("Transfer Gaji");
@@ -545,7 +523,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -561,9 +538,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel28)
-                .addGap(31, 31, 31)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addGap(72, 72, 72)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
@@ -579,33 +554,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, -1));
-
-        jLabel1.setText("Saldo Badan Keuangan saat ini:");
-
-        jLabel8.setText("jLabel8");
-
-        javax.swing.GroupLayout tab1Layout = new javax.swing.GroupLayout(tab1);
-        tab1.setLayout(tab1Layout);
-        tab1Layout.setHorizontalGroup(
-            tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tab1Layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(225, Short.MAX_VALUE))
-        );
-        tab1Layout.setVerticalGroup(
-            tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tab1Layout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel8)
-                .addContainerGap(213, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab1", tab1);
 
         jLabel2.setText("DATA KARYAWAN:");
 
@@ -1012,7 +960,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1031,7 +978,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1057,7 +1003,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1074,7 +1019,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private javax.swing.JPanel tab1;
     private javax.swing.JPanel tab2;
     private javax.swing.JPanel tab3;
     private javax.swing.JPanel tab4;
