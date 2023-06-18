@@ -123,10 +123,7 @@ public class AplikasiController implements SimpanListener{
         } else if (opsi == 15){
             slipGajiFrame.setSlipGaji();
             slipGajiFrame.setVisible(true);
-        } else if (opsi == 16){
-            slipGajiFrame.setSlipLembur();
-            slipGajiFrame.setVisible(true);
-        } else if (opsi == 18){
+        }else if (opsi == 18){
             int h = menuBadanKeuanganFrame.getHari();
             int b = menuBadanKeuanganFrame.getBulan();
             int t = menuBadanKeuanganFrame.getTahun();

@@ -41,7 +41,7 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
     
     public void setSlipGaji(){
         int bulan = verifikasiSystem.getBulan();
-        int potonganPajak = (int) (verifikasiSystem.getPajak() * verifikasiSystem.getGaji());
+        int potonganPajak = (int) (verifikasiSystem.getPajak() * (verifikasiSystem.getGaji()+verifikasiSystem.getLembur()));
         jLabel2.setText("Nama: "+verifikasiSystem.getNama());
         switch (bulan){
             case 1 -> jLabel3.setText("Tanggal: Januari, tahun "+verifikasiSystem.getTahun());
@@ -58,37 +58,13 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
             case 12 -> jLabel3.setText("Tanggal: Desember, tahun "+verifikasiSystem.getTahun());
         }
         jLabel4.setText("Gaji: "+String.valueOf(verifikasiSystem.getGaji()));
+        jLabel6.setText("Upah Lembur: "+String.valueOf(verifikasiSystem.getLembur()));
         jLabel5.setText("Potongan pajak: "+String.valueOf(potonganPajak));
-    }
-    
-    public void setSlipLembur(){
-        int bulan = verifikasiSystem.getBulan();;
-        jLabel2.setText("Nama: "+verifikasiSystem.getNama());
-        jLabel1.setText("SLIP LEMBUR KARYAWAN");
-        switch (bulan){
-            case 1 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Januari, tahun "+verifikasiSystem.getTahun());
-            case 2 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Februari, tahun "+verifikasiSystem.getTahun());
-            case 3 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Maret, tahun "+verifikasiSystem.getTahun());
-            case 4 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" April, tahun "+verifikasiSystem.getTahun());
-            case 5 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Mei, tahun "+verifikasiSystem.getTahun());
-            case 6 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Juni, tahun "+verifikasiSystem.getTahun());
-            case 7 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Juli, tahun "+verifikasiSystem.getTahun());
-            case 8 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Agustus, tahun "+verifikasiSystem.getTahun());
-            case 9 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" September, tahun "+verifikasiSystem.getTahun());
-            case 10 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Oktober, tahun "+verifikasiSystem.getTahun());
-            case 11 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" November, tahun "+verifikasiSystem.getTahun());
-            case 12 -> jLabel3.setText("Tanggal: "+verifikasiSystem.getHari()+" Desember, tahun "+verifikasiSystem.getTahun());
-        }
-        jLabel4.setText("Upah Lembur: "+String.valueOf(verifikasiSystem.getLembur()));
-        jLabel5.setText("Potongan pajak: "+String.valueOf(verifikasiSystem.getPajak()));
     }
     
     public void addSimpanListener(SimpanListener simpan){
         this.simpan = simpan;
     }
-    
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,6 +81,7 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +97,8 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
 
         jLabel5.setText("jLabel5");
 
+        jLabel6.setText("jLabel6");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,18 +106,20 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(162, 162, 162)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(178, 178, 178)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,11 +133,13 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jButton1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -204,6 +187,7 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 
     

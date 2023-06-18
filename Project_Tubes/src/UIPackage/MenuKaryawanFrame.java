@@ -54,7 +54,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jButton4.addActionListener(this);
         jButton5.addActionListener(this);
         jButton6.addActionListener(this);
-        jButton7.addActionListener(this);
         jButton8.addActionListener(this);
         jButton18.addActionListener(this);
     }
@@ -170,28 +169,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                 JOptionPane.showMessageDialog(this, "Cetak tidak berhasil, pastikan inputan ada, berupa integer dan bulan nilainya 1-12",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else if (e.getSource() == jButton7){
-            String inputHari = jTextField10.getText();
-            String inputBulan = jTextField3.getText();
-            String inputTahun = jTextField4.getText();
-            
-            if (dao.isBisaLembur(karyawanDitemukan)){
-                if (username != null && inputBulan != null && inputTahun != null){
-                    int hariParse = Integer.parseInt(inputHari);
-                    int bulanParse = Integer.parseInt(inputBulan);
-                    int tahunParse = Integer.parseInt(inputTahun);
-                    verifikasiSystem.verifikasiLembur(karyawanDitemukan, hariParse, bulanParse, tahunParse);
-                    if(verifikasiSystem.isVerifikasiAda()){
-                        simpan.simpanOpsiMenuBadanKeuangan(16);
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(this, "Cetak tidak berhasil, pastikan inputan ada, berupa integer dan bulan nilainya 1-12",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "Akun ini tidak terkualifikasi untuk lembur",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-            }
         }else if (e.getSource() == jButton18){
             String inputHari = jTextField9.getText();
             String inputBulan = jTextField11.getText();
@@ -251,7 +228,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jLabel16 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
         tab4 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -392,8 +368,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
 
         jLabel16.setText("Tahun:");
 
-        jButton7.setText("Cetak Slip Lembur");
-
         javax.swing.GroupLayout tab2Layout = new javax.swing.GroupLayout(tab2);
         tab2.setLayout(tab2Layout);
         tab2Layout.setHorizontalGroup(
@@ -422,13 +396,11 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                                             .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(0, 0, Short.MAX_VALUE)))))))
                     .addGroup(tab2Layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jButton8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton7))
-                    .addGroup(tab2Layout.createSequentialGroup()
                         .addGap(190, 190, 190)
-                        .addComponent(jLabel23)))
+                        .addComponent(jLabel23))
+                    .addGroup(tab2Layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jButton8)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tab2Layout.setVerticalGroup(
@@ -452,11 +424,9 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
-                .addGap(38, 38, 38)
-                .addGroup(tab2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8)
-                    .addComponent(jButton7))
-                .addGap(0, 152, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jButton8)
+                .addGap(0, 155, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab2", tab2);
@@ -571,7 +541,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

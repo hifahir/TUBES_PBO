@@ -51,7 +51,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton1.addActionListener(this);
         jButton2.addActionListener(this);
         jButton3.addActionListener(this);
-        jButton4.addActionListener(this);
         jButton5.addActionListener(this);
         jButton6.addActionListener(this);
         jButton7.addActionListener(this);
@@ -59,11 +58,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton9.addActionListener(this);
         jButton10.addActionListener(this);
         jButton11.addActionListener(this);
-        jButton12.addActionListener(this);
-        jButton13.addActionListener(this);
-        jButton14.addActionListener(this);
         jButton15.addActionListener(this);
-        jButton16.addActionListener(this);
         jButton17.addActionListener(this);
         jButton18.addActionListener(this);
         editGaji.addActionListener(this);
@@ -75,10 +70,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel14.setVisible(false);
         jButton10.setVisible(false);
         jButton11.setVisible(false);
-        jLabel16.setVisible(false);
-        jLabel17.setVisible(false);
-        jButton13.setVisible(false);
-        jButton14.setVisible(false);
         editGaji.setVisible(false);
         editWaktuLembur.setVisible(false);
         konfirmasiDataButton.setVisible(false);
@@ -197,8 +188,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             jTabbedPane1.setSelectedComponent(tab2); 
         } else if (e.getSource() == jButton3) {
             jTabbedPane1.setSelectedComponent(tab3); 
-        } else if (e.getSource() == jButton4) {
-            jTabbedPane1.setSelectedComponent(tab4); 
         } else if (e.getSource() == jButton5) {
             jTabbedPane1.setSelectedComponent(tab5); 
         } else if (e.getSource() == jButton6) {
@@ -340,8 +329,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
         }else if (e.getSource() == jButton10){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-            
-            
             String username = jTextField2.getText();
             Karyawan karyawanDitemukan = null;
             
@@ -355,73 +342,20 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             int bulanGaji = getBulan();
             int tahunGaji = getTahun();
             
-            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji); 
+            int totalHargaLembur = 0;
+            if(dao.isBisaLembur(karyawanDitemukan)){
+                int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
+                int hargaLembur = 150000;
+                totalHargaLembur = jamLembur * hargaLembur;
+            }
+            
+            badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji, karyawanDitemukan.getGaji(), totalHargaLembur); 
         }else if (e.getSource() == jButton11){
             JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             jLabel13.setVisible(false);
             jLabel14.setVisible(false);
             jButton10.setVisible(false);
             jButton11.setVisible(false);
-        }else if (e.getSource() == jButton12){
-            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-            
-            String username = jTextField3.getText();
-            boolean ditemukan = false;
-            Karyawan karyawanDitemukan = null;
-            
-            for (Karyawan karyawan : karyawanList){
-                if (username.equals(karyawan.getUsername())) {
-                    karyawanDitemukan = karyawan;
-                    ditemukan = true;
-                    break;
-                }
-            }
-            
-            if (ditemukan){
-                int jamLembur = karyawanDitemukan.getWaktuLembur();
-                int hargaLembur = 150000;
-                int total = jamLembur * hargaLembur;
-                if (karyawanDitemukan.getbisaLembur() && jamLembur != 0){
-                    jLabel16.setText("Waktu yang diajukan adalah: "+jamLembur+" jam.");
-                    jLabel17.setText("Yang harus dibayar adalah: Rp. "+total+". Bayar?");
-                    jLabel16.setVisible(true);
-                    jLabel17.setVisible(true);
-                    jButton13.setVisible(true);
-                    jButton14.setVisible(true);
-                }else{
-                    JOptionPane.showMessageDialog(this, "Karyawan tidak memenuhi persyaratan lembur", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if (e.getSource() == jButton13) {
-            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-
-            String username = jTextField3.getText();
-            Karyawan karyawanDitemukan = null;
-
-            for (Karyawan karyawan : karyawanList) {
-                if (username.equals(karyawan.getUsername())) {
-                    karyawanDitemukan = karyawan;
-                    break;
-                }
-            }
-
-            if (karyawanDitemukan != null) {
-                int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
-                int hargaLembur = 150000;
-                int total = jamLembur * hargaLembur;
-                int pajak = karyawan.potonganPajak(total);
-                badanKeuangan.berikanUangLembur(karyawanDitemukan, getHari(), getBulan(), getTahun(), total, pajak);
-            } else {
-                JOptionPane.showMessageDialog(null, "Karyawan tidak dapat menerima uang lembur", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }else if (e.getSource() == jButton14){
-            JOptionPane.showMessageDialog(this, "Pembayaran dibatalkan", "Informasi", JOptionPane.INFORMATION_MESSAGE);
-            jLabel16.setVisible(false);
-            jLabel17.setVisible(false);
-            jButton13.setVisible(false);
-            jButton14.setVisible(false);
         }else if (e.getSource() == jButton15){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
@@ -446,32 +380,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 JOptionPane.showMessageDialog(this, "Cetak tidak berhasil, pastikan inputan ada, berupa integer dan bulan nilainya 1-12",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else if (e.getSource() == jButton16){
-            ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
-            
-            String username = jTextField4.getText();
-            String inputHari = jTextField5.getText();
-            String inputBulan = jTextField6.getText();
-            String inputTahun = jTextField7.getText();
-            Karyawan karyawanDitemukan = null;
-            
-            for (Karyawan karyawan : karyawanList){
-                if (username.equals(karyawan.getUsername())) {
-                    karyawanDitemukan = karyawan;
-                    break;
-                }
-            }
-            
-            if (username != null && inputBulan != null && inputTahun != null){
-                int hariParse = Integer.parseInt(inputHari);
-                int bulanParse = Integer.parseInt(inputBulan);
-                int tahunParse = Integer.parseInt(inputTahun);
-                verifikasiSystem.verifikasiLembur(karyawanDitemukan, hariParse, bulanParse, tahunParse);
-                simpan.simpanOpsiMenuBadanKeuangan(16);
-            }else{
-                JOptionPane.showMessageDialog(this, "Cetak tidak berhasil, pastikan inputan ada, berupa integer dan bulan nilainya 1-12",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
         }else if (e.getSource() == jButton17) {
             String inputTahun = jTextField8.getText();
             int tahun;
@@ -479,19 +387,20 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             try {
 
                 // Retrieve data from the transaksigaji table based on the year
-                ArrayList<Object[]> transaksiGajiList = dao.getTransaksiGajiByYear(inputTahun);
+                ArrayList<Object[]> transaksiList = dao.getTransaksiByYear(inputTahun);
 
                 // Create a DefaultTableModel to hold the table data
                 DefaultTableModel tableModel = new DefaultTableModel();
 
                 // Add columns to the table model
+                tableModel.addColumn("Karyawan");
                 tableModel.addColumn("Gaji");
+                tableModel.addColumn("Upah Lembur");
                 tableModel.addColumn("Pajak");
                 tableModel.addColumn("Tanggal");
-                tableModel.addColumn("Karyawan");
 
                 // Populate rows in the table model with data from the transaksiGajiList
-                for (Object[] rowData : transaksiGajiList) {
+                for (Object[] rowData : transaksiList) {
                     tableModel.addRow(rowData);
                 }
 
@@ -536,7 +445,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -574,15 +482,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel14 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
-        tab4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton12 = new javax.swing.JButton();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
         tab6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -603,7 +502,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jTextField6 = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
@@ -622,9 +520,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jButton2.setText("Pengaturan Data karyawan");
 
-        jButton3.setText("Transfer Gaji");
-
-        jButton4.setText("Transfer Upah Lembur");
+        jButton3.setText("Transfer Pembayaran");
 
         jButton5.setText("Percetakan");
 
@@ -649,12 +545,11 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -670,17 +565,15 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, -1));
 
         jLabel1.setText("Informasi Data Gaji Bulan Ini");
 
@@ -713,17 +606,17 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
+                        .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tab1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
                                 .addComponent(kalkulasiButton))
-                            .addComponent(jScrollPane3)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(tab1Layout.createSequentialGroup()
                         .addGap(196, 196, 196)
-                        .addComponent(jLabel1)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         tab1Layout.setVerticalGroup(
             tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -827,7 +720,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jTabbedPane1.addTab("tab2", tab2);
 
-        jLabel3.setText("Transfer Gaji");
+        jLabel3.setText("Transfer Pembayaran");
 
         jLabel12.setText("Username Karyawan: ");
 
@@ -889,67 +782,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         );
 
         jTabbedPane1.addTab("tab3", tab3);
-
-        jLabel4.setText("Transfer Upah Lembur");
-
-        jLabel15.setText("Username Karyawan:");
-
-        jButton12.setText("Submit");
-
-        jLabel16.setText("jLabel16");
-
-        jLabel17.setText("jLabel17");
-
-        jButton13.setText("Ya");
-
-        jButton14.setText("Tidak");
-
-        javax.swing.GroupLayout tab4Layout = new javax.swing.GroupLayout(tab4);
-        tab4.setLayout(tab4Layout);
-        tab4Layout.setHorizontalGroup(
-            tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tab4Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(tab4Layout.createSequentialGroup()
-                        .addComponent(jButton13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton14))
-                    .addGroup(tab4Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addGroup(tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(tab4Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton12))))
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(103, Short.MAX_VALUE))
-        );
-        tab4Layout.setVerticalGroup(
-            tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tab4Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel4)
-                .addGap(37, 37, 37)
-                .addGroup(tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton12))
-                .addGap(29, 29, 29)
-                .addComponent(jLabel16)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel17)
-                .addGap(32, 32, 32)
-                .addGroup(tab4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton13)
-                    .addComponent(jButton14))
-                .addContainerGap(185, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab4", tab4);
 
         jLabel6.setText("Setting Waktu");
 
@@ -1022,8 +854,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jLabel22.setText("Tahun:");
 
-        jButton16.setText("Cetak Slip Lembur");
-
         jLabel23.setText("Cetak Histori Tahunan");
 
         jLabel24.setText("Tahun:");
@@ -1048,42 +878,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         tab5Layout.setHorizontalGroup(
             tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
-                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
-                                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
-                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(tab5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)))
-                .addGap(3, 3, 3)
-                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton15)
-                    .addComponent(jButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(tab5Layout.createSequentialGroup()
                 .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab5Layout.createSequentialGroup()
                         .addGap(159, 159, 159)
@@ -1092,6 +886,42 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                         .addGap(123, 123, 123)
                         .addComponent(jLabel23)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(tab5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tab5Layout.createSequentialGroup()
+                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
+                                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
+                                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab5Layout.createSequentialGroup()
+                                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(tab5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)))
+                        .addGap(3, 3, 3)
+                        .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton15)
+                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(30, 30, 30))
         );
         tab5Layout.setVerticalGroup(
             tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1118,23 +948,17 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                             .addComponent(jLabel22)))
                     .addGroup(tab5Layout.createSequentialGroup()
                         .addGap(65, 65, 65)
-                        .addComponent(jButton15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton16)))
+                        .addComponent(jButton15)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(tab5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(tab5Layout.createSequentialGroup()
-                        .addComponent(jButton17)
-                        .addGap(72, 72, 72))))
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton17))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab5", tab5);
@@ -1210,16 +1034,11 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -1231,9 +1050,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1248,7 +1064,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1265,7 +1080,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
@@ -1279,7 +1093,6 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JPanel tab1;
     private javax.swing.JPanel tab2;
     private javax.swing.JPanel tab3;
-    private javax.swing.JPanel tab4;
     private javax.swing.JPanel tab5;
     private javax.swing.JPanel tab6;
     // End of variables declaration//GEN-END:variables

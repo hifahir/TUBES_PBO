@@ -85,6 +85,24 @@ public class PegawaiDAO implements DAOInterface{
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public void updateStatus(Karyawan karyawan, int bulan, int tahun) {
+        String sql = "UPDATE datagaji SET statusPembayaran = ? WHERE dataBulanTahun = ? AND username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            String key = bulan + "-" + tahun;
+
+            statement.setBoolean(1, true);
+            statement.setString(2, key);
+            statement.setString(3, karyawan.getUsername());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     
     @Override
@@ -106,15 +124,16 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
-    public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak) {
-        String sql = "INSERT INTO transaksigaji (gajiWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
+    public void insertTransaksi(Karyawan karyawan, int bulan, int tahun, int gaji, int lembur, int pajak) {
+        String sql = "INSERT INTO transaksigaji (gajiWaktuItu, lemburWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             String key = bulan + "-" + tahun;
 
             statement.setInt(1, gaji);
-            statement.setInt(2, pajak);
-            statement.setString(3, key);
-            statement.setString(4, karyawan.getUsername());
+            statement.setInt(2, lembur);
+            statement.setInt(3, pajak);
+            statement.setString(4, key);
+            statement.setString(5, karyawan.getUsername());
 
             statement.executeUpdate();
 
@@ -122,25 +141,6 @@ public class PegawaiDAO implements DAOInterface{
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun, int harga, int pajak) {
-        String sql = "INSERT INTO transaksilembur (lemburWaktuItu, pajakWaktuItu, haribulantahun, username) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            // Mengambil data upah lembur dan pajak dari objek Karyawan
-            String key = hari + "-" + bulan + "-" + tahun;
-
-            statement.setInt(1, harga); // Use the 'harga' parameter
-            statement.setInt(2, pajak); // Use the 'pajak' parameter
-            statement.setString(3, key);
-            statement.setString(4, karyawan.getUsername());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     
     @Override
     public void updateWaktuLembur(Karyawan karyawan, int jamLembur) {
@@ -214,24 +214,6 @@ public class PegawaiDAO implements DAOInterface{
     }
 
     @Override
-    public boolean isHariBulanTahunExists(Karyawan karyawan, String haribulanTahun) {
-        String sql = "SELECT COUNT(*) FROM transaksilembur WHERE username = ? AND haribulantahun = ?";
-        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, karyawan.getUsername());
-            statement.setString(2, haribulanTahun);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
-                    return count > 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
     public boolean isBisaLembur(Karyawan karyawan) {
         String sql = "SELECT COUNT(*) FROM karyawan WHERE username = ? AND bisalembur = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
@@ -266,10 +248,10 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
-    public int getLemburWaktuItu(Karyawan karyawan, int hari, int bulan, int tahun) {
-        String sql = "SELECT lemburWaktuItu FROM transaksilembur WHERE haribulantahun = ? AND username = ?";
+    public int getLemburWaktuItu(Karyawan karyawan, int bulan, int tahun) {
+        String sql = "SELECT lemburWaktuItu FROM transaksigaji WHERE bulanTahun = ? AND username = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            String key = hari + "-" + bulan + "-" + tahun;
+            String key = bulan + "-" + tahun;
             statement.setString(1, key);
             statement.setString(2, karyawan.getUsername());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -284,10 +266,10 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
-    public int getPajakWaktuItu(Karyawan karyawan, int hari, int bulan, int tahun) {
-        String sql = "SELECT pajakWaktuItu FROM transaksilembur WHERE haribulantahun = ? AND username = ?";
+    public int getPajakWaktuItu(Karyawan karyawan, int bulan, int tahun) {
+        String sql = "SELECT pajakWaktuItu FROM transaksigaji WHERE bulanTahun = ? AND username = ?";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            String key = hari + "-" + bulan + "-" + tahun;
+            String key = bulan + "-" + tahun;
             statement.setString(1, key);
             statement.setString(2, karyawan.getUsername());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -333,7 +315,7 @@ public class PegawaiDAO implements DAOInterface{
         return dataGajiList;
     }
     
-    public ArrayList<Object[]> getTransaksiGajiByYear(String bulanTahun) {
+    public ArrayList<Object[]> getTransaksiByYear(String bulanTahun) {
         ArrayList<Object[]> transaksiGajiList = new ArrayList<>();
         String sql = "SELECT * FROM transaksigaji WHERE bulanTahun LIKE ?";
 
@@ -349,10 +331,11 @@ public class PegawaiDAO implements DAOInterface{
                 // Assuming the columns in the transaksigaji table are of type String,
                 // modify the following line accordingly based on the actual column types
                 Object[] rowData = {
+                    resultSet.getString("username"),
                     resultSet.getString("gajiWaktuItu"),
+                    resultSet.getString("lemburWaktuItu"),
                     resultSet.getString("pajakWaktuItu"),
-                    resultSet.getString("bulanTahun"),
-                    resultSet.getString("username")
+                    resultSet.getString("bulanTahun")
                 };
 
                 transaksiGajiList.add(rowData);
@@ -362,33 +345,6 @@ public class PegawaiDAO implements DAOInterface{
         }
 
         return transaksiGajiList;
-    }
-
-    public ArrayList<Object[]> getTransaksiLemburByYear(String year) {
-        ArrayList<Object[]> transaksiLemburList = new ArrayList<>();
-        String sql = "SELECT * FROM transaksilembur WHERE hariBulanTahun LIKE ?";
-
-        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
-            statement.setString(1, "%-%-" + year);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                // Assuming the columns in the transaksilembur table are of type String,
-                // modify the following line accordingly based on the actual column types
-                Object[] rowData = {
-                    resultSet.getString("lemburWaktuItu"),
-                    resultSet.getString("pajakWaktuItu"),
-                    resultSet.getString("haribulantahun"),
-                    resultSet.getString("username")
-                };
-
-                transaksiLemburList.add(rowData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return transaksiLemburList;
     }
     
     public int getTotalGajiFromdatagaji() {
@@ -424,4 +380,6 @@ public class PegawaiDAO implements DAOInterface{
 
         return totalLembur;
     }
+    
+    
 }

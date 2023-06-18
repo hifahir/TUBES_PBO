@@ -36,8 +36,6 @@ public class VerifikasiSystem extends BadanKeuangan{
         this.dao = dao;
     }
     
-    
-    
     public void verifikasiGaji(Karyawan karyawan, int bulan, int tahun) {
         String key = bulan + "-" + tahun;
         boolean bulanTahunExists = dao.isBulanTahunExists(karyawan, key);
@@ -47,46 +45,17 @@ public class VerifikasiSystem extends BadanKeuangan{
             this.bulan = bulan;
             this.tahun = tahun;
             gaji = karyawan.getGaji();
-            pajak = karyawan.getPajak();
+            lembur = dao.getLemburWaktuItu(karyawan, bulan, tahun);
+            pajak = dao.getPajakWaktuItu(karyawan, bulan, tahun);
             verifikasiAda = true;
         } else {
-            JOptionPane.showMessageDialog(null, "Gaji pada bulan " 
+            JOptionPane.showMessageDialog(null, "Pembayaran pada bulan " 
                     + bulan + " tahun " + tahun + " untuk " + karyawan.getUsername()
-                    + " tidak ada/belum dibayarkan!",
+                    + " tidak ada",
                     "Error", JOptionPane.ERROR_MESSAGE);
             verifikasiAda = false;
         }
     }
-    
-    public void verifikasiLembur(Karyawan karyawan, int hari, int bulan, int tahun) {
-        String key = hari + "-" + bulan + "-" + tahun;
-
-        boolean lemburDiberikanSebelumnya = dao.isHariBulanTahunExists(karyawan, key);
-        boolean bisaLembur = dao.isBisaLembur(karyawan);
-        if (bisaLembur){
-            if (lemburDiberikanSebelumnya) {
-                nama = karyawan.getUsername();
-                this.hari = hari;
-                this.bulan = bulan;
-                this.tahun = tahun;
-                lembur = dao.getLemburWaktuItu(karyawan, hari, bulan, tahun);
-                pajak = dao.getPajakWaktuItu(karyawan, hari, bulan, tahun);
-                verifikasiAda = true;
-            } else {
-                JOptionPane.showMessageDialog(null, "Upah lembur pada tanggal "
-                        + hari + " " + bulan + " " + tahun + " untuk " + karyawan.getUsername()
-                        + " tidak ada/belum dibayarkan!",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                verifikasiAda = false;
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Karyawan tidak bisa lembur",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            verifikasiAda = false;
-        }
-        
-    }
-
 
     public String getNama() {
         return nama;
