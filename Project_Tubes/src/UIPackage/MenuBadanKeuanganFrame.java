@@ -67,6 +67,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         kalkulasiButton.addActionListener(this);
         
         jLabel13.setVisible(false);
+        jLabel4.setVisible(false);
         jLabel14.setVisible(false);
         jButton10.setVisible(false);
         jButton11.setVisible(false);
@@ -335,6 +336,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 }
                 jLabel4.setText("Upah lembur yang perlu dibayarkan adalah sebesar Rp. "+totalHargaLembur);
                 jLabel14.setText("Bayar?");
+                jLabel4.setVisible(true);
                 jLabel13.setVisible(true);
                 jLabel14.setVisible(true);
                 jButton10.setVisible(true);

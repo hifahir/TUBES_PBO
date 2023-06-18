@@ -155,6 +155,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
             }
+            jTabbedPane1.setSelectedComponent(tab2);
         }  else if (e.getSource() == jButton4) {
             jTabbedPane1.setSelectedComponent(tab4); 
         } else if (e.getSource() == jButton6){
