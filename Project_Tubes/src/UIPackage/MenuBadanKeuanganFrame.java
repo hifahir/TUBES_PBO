@@ -168,6 +168,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 tableModel.addColumn("Gaji");
                 tableModel.addColumn("Lembur");
                 tableModel.addColumn("Pajak");
+                tableModel.addColumn("Status Pembayaran");
 
                 // Populate rows in the table model with data from the transaksiGajiList
                 for (Object[] rowData : dataGaji) {

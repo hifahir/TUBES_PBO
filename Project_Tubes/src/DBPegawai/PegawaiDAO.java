@@ -321,6 +321,7 @@ public class PegawaiDAO implements DAOInterface{
                     resultSet.getInt("gaji"),
                     resultSet.getInt("lembur"),
                     resultSet.getInt("pajak"),
+                    resultSet.getBoolean("statusPembayaran")
                 };
 
                 dataGajiList.add(rowData);
