@@ -378,6 +378,63 @@ public class PegawaiDAO implements DAOInterface{
         }
         return transaksiGajiList;
     }
+    
+    public int getTotalGajiUserTahunItu(String bulanTahun, String username) {
+        int totalGaji = 0;
+        String sql = "SELECT SUM(gajiWaktuItu) AS totalGaji FROM transaksigaji WHERE bulanTahun LIKE ? AND username = ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%-" + bulanTahun);
+            statement.setString(2, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                totalGaji = resultSet.getInt("totalGaji");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalGaji;
+    }
+
+    public int getTotalLemburUserTahunItu(String bulanTahun, String username) {
+        int totalLembur = 0;
+        String sql = "SELECT SUM(lemburWaktuItu) AS totalLembur FROM transaksigaji WHERE bulanTahun LIKE ? AND username = ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%-" + bulanTahun);
+            statement.setString(2, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                totalLembur = resultSet.getInt("totalLembur");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalLembur;
+    }
+    
+    public int getTotalPajakUserTahunItu(String bulanTahun, String username) {
+        int totalPajak = 0;
+        String sql = "SELECT SUM(pajakWaktuItu) AS totalPajak FROM transaksigaji WHERE bulanTahun LIKE ? AND username = ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%-" + bulanTahun);
+            statement.setString(2, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                totalPajak = resultSet.getInt("totalPajak");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalPajak;
+    }
 
     
     public int getTotalGajiFromdatagaji(String dataBulanTahun) {
@@ -435,5 +492,8 @@ public class PegawaiDAO implements DAOInterface{
 
         return statusPembayaran;
     }
+    
+    
+    
 
 }

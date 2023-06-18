@@ -57,6 +57,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jButton6.addActionListener(this);
         jButton8.addActionListener(this);
         jButton18.addActionListener(this);
+        kalkulasiButton.addActionListener(this);
     }
     
     public void setBulan(int bulan) {
@@ -157,7 +158,19 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
                 JOptionPane.showMessageDialog(null, "Error system", "Error", JOptionPane.ERROR_MESSAGE);
             }
             jTabbedPane1.setSelectedComponent(tab2);
-        }  else if (e.getSource() == jButton4) {
+        } else if (e.getSource() == kalkulasiButton){
+            int tahun = getTahun();
+            String tahunString = String.valueOf(tahun);
+            int totalGaji = dao.getTotalGajiUserTahunItu(tahunString, karyawanDitemukan.getUsername());
+            int totalLembur = dao.getTotalLemburUserTahunItu(tahunString, karyawanDitemukan.getUsername());
+            int totalPajak = dao.getTotalPajakUserTahunItu(tahunString, karyawanDitemukan.getUsername());
+            
+            String hasilText = "Total gaji: " + totalGaji + "\n"
+                    + "Total lembur: " + totalLembur + "\n"
+                    + "Total pajak yang telah dibayarkan: " + totalPajak;
+
+            hasilKalkulasi.setText(hasilText);
+        } else if (e.getSource() == jButton4) {
             jTabbedPane1.setSelectedComponent(tab4); 
         } else if (e.getSource() == jButton6){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
@@ -262,7 +275,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
         jLabel13 = new javax.swing.JLabel();
         kalkulasiButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        hasilKalkulasi = new javax.swing.JTextArea();
         tab4 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -403,7 +416,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
 
         jLabel16.setText("Tahun:");
 
-        jLabel12.setText("Data Gaji Anda");
+        jLabel12.setText("Data Gaji Tahunan Anda");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -422,9 +435,9 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
 
         kalkulasiButton.setText("Kalkulasi");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        hasilKalkulasi.setColumns(20);
+        hasilKalkulasi.setRows(5);
+        jScrollPane2.setViewportView(hasilKalkulasi);
 
         javax.swing.GroupLayout tab2Layout = new javax.swing.GroupLayout(tab2);
         tab2.setLayout(tab2Layout);
@@ -608,6 +621,7 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea hasilKalkulasi;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton2;
@@ -641,7 +655,6 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
