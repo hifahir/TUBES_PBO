@@ -47,7 +47,6 @@ public class BadanKeuangan extends User {
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
         int gaji = karyawan.getGaji();
         int pajak = karyawan.potonganPajak(gaji);
-        BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);
         
         String key = bulan + "-" + tahun;
         boolean gajiDiberikanSebelumnya = dao.isBulanTahunExists(karyawan, key);
