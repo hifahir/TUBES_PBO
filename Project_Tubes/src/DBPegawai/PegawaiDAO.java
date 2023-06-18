@@ -47,21 +47,62 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
-    public void insertDataGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int lembur, int pajak) {
-        String sql = "INSERT INTO datagaji (gaji, lembur, jabatan, pajak, username) VALUES (?, ?, ?, ?, ?)";
+    public void insertDataGaji(Karyawan karyawan, int bulan, int tahun, int hargaTotalLembur) {
+        String sql = "INSERT INTO datagaji (gaji, lembur, jabatan, pajak, dataBulanTahun, username) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             String key = bulan + "-" + tahun;
 
-            statement.setInt(1, gaji);
-            statement.setInt(2, lembur);
-            statement.setString(3, key);
-            statement.setString(4, karyawan.getUsername());
+            statement.setInt(1, karyawan.getGaji());
+            statement.setInt(2, hargaTotalLembur);
+            statement.setString(3, karyawan.getJabatan());
+            statement.setInt(4, karyawan.potonganPajak(karyawan.getGaji()+karyawan.getLemburWaktuItu()));
+            statement.setString(5, key);
+            statement.setString(6, karyawan.getUsername());
 
             statement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public void updateDataGaji(Karyawan karyawan, int bulan, int tahun, int hargaTotalLembur) {
+        String sql = "UPDATE datagaji SET gaji = ?, lembur = ?, jabatan = ?, pajak = ? WHERE dataBulanTahun = ? AND username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            String key = bulan + "-" + tahun;
+
+            statement.setInt(1, karyawan.getGaji());
+            statement.setInt(2, hargaTotalLembur);
+            statement.setString(3, karyawan.getJabatan());
+            statement.setInt(4, karyawan.potonganPajak(karyawan.getGaji() + hargaTotalLembur));
+            statement.setString(5, key);
+            statement.setString(6, karyawan.getUsername());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    @Override
+    public boolean dataGajiBulanTahun(Karyawan karyawan, String dataBulanTahun) {
+        String sql = "SELECT COUNT(*) FROM datagaji WHERE username = ? AND dataBulanTahun = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, karyawan.getUsername());
+            statement.setString(2, dataBulanTahun);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     
     @Override

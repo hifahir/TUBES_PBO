@@ -44,7 +44,6 @@ public class BadanKeuangan extends User {
         this.dao = dao;
     }
     
-
     public void berikanGaji(Karyawan karyawan, int bulan, int tahun) {
         int gaji = karyawan.getGaji();
         int pajak = karyawan.potonganPajak(gaji);
@@ -70,7 +69,6 @@ public class BadanKeuangan extends User {
         
     }
     
-    // Untuk mengurus upah lembur
 
     public void berikanUangLembur(Karyawan karyawan, int hari, int bulan, int tahun, int harga, int pajak) {
         BadanKeuangan badanKeuangan = dao.getAllKeuangan().get(0);

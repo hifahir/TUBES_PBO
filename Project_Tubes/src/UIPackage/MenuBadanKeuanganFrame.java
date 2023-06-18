@@ -224,11 +224,34 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
         } else if (e.getSource() == konfirmasiDataButton){
             int confirmation = JOptionPane.showConfirmDialog(this, "Apakah Anda ingin mengkonfirmasi data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+            
+            String username = jTextField1.getText();
+            List<Karyawan> karyawanList = dao.getAllKaryawan();
+            Karyawan karyawanDitemukan = null;
+            
+            for (Karyawan karyawan : karyawanList){
+                if (username.equals(karyawan.getUsername())) {
+                    karyawanDitemukan = karyawan;
+                    break;
+                }
+            }
+            
+            int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
+            int hargaLembur = 150000;
+            int totalHargaLembur = jamLembur * hargaLembur;
     
             if (confirmation == JOptionPane.YES_OPTION) {
-                // User clicked "Yes"
-                // Perform the desired action
-                // ...
+                String key = getBulan()+"-"+getTahun();
+                if (dao.dataGajiBulanTahun(karyawanDitemukan, key)){
+                    int confirmation2 = JOptionPane.showConfirmDialog(this, "Data ini ada. Update?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                    if (confirmation == JOptionPane.YES_OPTION){
+                        dao.updateDataGaji(karyawanDitemukan, getBulan(), getTahun(), totalHargaLembur);
+                    }else{
+                        dispose();
+                    }
+                }else{
+                    dao.insertDataGaji(karyawanDitemukan, getBulan(), getTahun(), totalHargaLembur);
+                }
             } else {
                 dispose();
             }
