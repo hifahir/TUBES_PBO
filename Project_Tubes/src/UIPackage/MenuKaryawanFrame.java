@@ -130,31 +130,26 @@ public class MenuKaryawanFrame extends javax.swing.JFrame implements ActionListe
             jTabbedPane1.setSelectedComponent(tab1); 
         } else if (e.getSource() == jButton2) {
             String bulanTahun = getBulan()+"-"+getTahun();
-            try {
-                // Retrieve data from the transaksigaji table based on the year
-                ArrayList<Object[]> transaksiList = dao.getTransaksiByYearAndUsername(bulanTahun, karyawanDitemukan.getUsername());
+            // Retrieve data from the transaksigaji table based on the year
+            ArrayList<Object[]> transaksiList = dao.getTransaksiByYearAndUsername(bulanTahun, karyawanDitemukan.getUsername());
 
-                // Create a DefaultTableModel to hold the table data
-                DefaultTableModel tableModel = new DefaultTableModel();
+            // Create a DefaultTableModel to hold the table data
+            DefaultTableModel tableModel = new DefaultTableModel();
 
-                // Add columns to the table model
-                tableModel.addColumn("Karyawan");
-                tableModel.addColumn("Gaji");
-                tableModel.addColumn("Upah Lembur");
-                tableModel.addColumn("Pajak");
-                tableModel.addColumn("Tanggal");
+            // Add columns to the table model
+            tableModel.addColumn("Karyawan");
+            tableModel.addColumn("Gaji");
+            tableModel.addColumn("Upah Lembur");
+            tableModel.addColumn("Pajak");
+            tableModel.addColumn("Tanggal");
 
-                // Populate rows in the table model with data from the transaksiGajiList
-                for (Object[] rowData : transaksiList) {
-                    tableModel.addRow(rowData);
-                }
-
-                // Set the table model for jTable1
-                jTable1.setModel(tableModel);
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+            // Populate rows in the table model with data from the transaksiGajiList
+            for (Object[] rowData : transaksiList) {
+                tableModel.addRow(rowData);
             }
+
+            // Set the table model for jTable1
+            jTable1.setModel(tableModel);
             jTabbedPane1.setSelectedComponent(tab2);
         }  else if (e.getSource() == jButton4) {
             jTabbedPane1.setSelectedComponent(tab4); 
