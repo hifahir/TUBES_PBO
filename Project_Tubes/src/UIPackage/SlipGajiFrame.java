@@ -41,7 +41,6 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
     
     public void setSlipGaji(){
         int bulan = verifikasiSystem.getBulan();
-        int potonganPajak = (int) (verifikasiSystem.getPajak() * (verifikasiSystem.getGaji()+verifikasiSystem.getLembur()));
         jLabel2.setText("Nama: "+verifikasiSystem.getNama());
         switch (bulan){
             case 1 -> jLabel3.setText("Tanggal: Januari, tahun "+verifikasiSystem.getTahun());
@@ -59,7 +58,7 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
         }
         jLabel4.setText("Gaji: "+String.valueOf(verifikasiSystem.getGaji()));
         jLabel6.setText("Upah Lembur: "+String.valueOf(verifikasiSystem.getLembur()));
-        jLabel5.setText("Potongan pajak: "+String.valueOf(potonganPajak));
+        jLabel5.setText("Potongan pajak: "+String.valueOf(verifikasiSystem.getPajak()));
     }
     
     public void addSimpanListener(SimpanListener simpan){
@@ -113,13 +112,12 @@ public class SlipGajiFrame extends javax.swing.JFrame implements ActionListener 
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
