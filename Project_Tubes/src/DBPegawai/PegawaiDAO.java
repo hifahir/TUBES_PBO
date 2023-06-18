@@ -48,7 +48,7 @@ public class PegawaiDAO implements DAOInterface{
     
     @Override
     public void insertDataGaji(Karyawan karyawan, int bulan, int tahun, int hargaTotalLembur) {
-        String sql = "INSERT INTO datagaji (gaji, lembur, jabatan, pajak, dataBulanTahun, username) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO datagaji (gaji, lembur, jabatan, pajak, dataBulanTahun, statusPembayaran, username) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             String key = bulan + "-" + tahun;
 
@@ -57,7 +57,8 @@ public class PegawaiDAO implements DAOInterface{
             statement.setString(3, karyawan.getJabatan());
             statement.setInt(4, karyawan.potonganPajak(karyawan.getGaji()+karyawan.getLemburWaktuItu()));
             statement.setString(5, key);
-            statement.setString(6, karyawan.getUsername());
+            statement.setBoolean(6, false);
+            statement.setString(7, karyawan.getUsername());
 
             statement.executeUpdate();
 
