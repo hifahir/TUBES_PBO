@@ -11,6 +11,7 @@ import DBPegawai.DAOInterface;
 import DBPegawai.PegawaiDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -77,6 +78,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel17.setVisible(false);
         jButton13.setVisible(false);
         jButton14.setVisible(false);
+        editGaji.setVisible(false);
+        editWaktuLembur.setVisible(false);
+        konfirmasiDataButton.setVisible(false);
     }
     
     public void setBulan(int bulan) {
@@ -176,11 +180,21 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             if (ditemukan){
                 String jabatan = karyawanDitemukan.getJabatan();
                 double gaji = karyawanDitemukan.getGaji();
+                DecimalFormat decimalFormat = new DecimalFormat("#");
+                String formattedGaji = decimalFormat.format(gaji);
                 int waktuLembur = karyawanDitemukan.getWaktuLembur();
                 
                 jLabel10.setText("Jabatan                : "+jabatan);
-                gajiPokokInfo.setText(String.valueOf(gaji));
-                lemburInfo.setText(String.valueOf(waktuLembur));
+                gajiPokokInfo.setText(formattedGaji);
+                if (karyawanDitemukan.getbisaLembur()){
+                    lemburInfo.setText(String.valueOf(waktuLembur));
+                    editWaktuLembur.setVisible(true);
+                }else{
+                    lemburInfo.setText("Tidak terkualifikasi lembur.");
+                }
+                
+                editGaji.setVisible(true);
+                konfirmasiDataButton.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
