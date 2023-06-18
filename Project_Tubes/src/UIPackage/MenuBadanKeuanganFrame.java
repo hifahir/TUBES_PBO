@@ -150,6 +150,33 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButton1){
             jTabbedPane1.setSelectedComponent(tab1);
+            try {
+                String dataBulanTahun = getBulan()+"-"+getTahun();
+                // Retrieve data from the transaksigaji table based on the year
+                ArrayList<Object[]> dataGaji = dao.getDataGajiBulanIni(dataBulanTahun);
+
+                // Create a DefaultTableModel to hold the table data
+                DefaultTableModel tableModel = new DefaultTableModel();
+
+                // Add columns to the table model
+                tableModel.addColumn("Karyawan");
+                tableModel.addColumn("Jabatan");
+                tableModel.addColumn("Tanggal");
+                tableModel.addColumn("Gaji");
+                tableModel.addColumn("Lembur");
+                tableModel.addColumn("Pajak");
+
+                // Populate rows in the table model with data from the transaksiGajiList
+                for (Object[] rowData : dataGaji) {
+                    tableModel.addRow(rowData);
+                }
+
+                // Set the table model for jTable1
+                jTable2.setModel(tableModel);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (e.getSource() == jButton2) {
             jTabbedPane1.setSelectedComponent(tab2); 
         } else if (e.getSource() == jButton3) {
@@ -502,6 +529,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         tab1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         tab2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -630,15 +660,43 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, -1));
 
+        jLabel1.setText("Informasi Data Gaji");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable2);
+
         javax.swing.GroupLayout tab1Layout = new javax.swing.GroupLayout(tab1);
         tab1.setLayout(tab1Layout);
         tab1Layout.setHorizontalGroup(
             tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGroup(tab1Layout.createSequentialGroup()
+                .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tab1Layout.createSequentialGroup()
+                        .addGap(209, 209, 209)
+                        .addComponent(jLabel1))
+                    .addGroup(tab1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         tab1Layout.setVerticalGroup(
             tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGroup(tab1Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel1)
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab6", tab1);
@@ -1102,6 +1160,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1129,9 +1188,11 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;

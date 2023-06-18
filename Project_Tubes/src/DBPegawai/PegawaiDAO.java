@@ -301,6 +301,37 @@ public class PegawaiDAO implements DAOInterface{
         return 0;
     }
     
+    public ArrayList<Object[]> getDataGajiBulanIni(String dataBulanTahun) {
+        ArrayList<Object[]> dataGajiList = new ArrayList<>();
+        String sql = "SELECT * FROM datagaji WHERE dataBulanTahun LIKE ?";
+        
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%" + dataBulanTahun);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String username = resultSet.getString("username");
+
+                // Assuming the columns in the datagaji table are of type int, int, String, int, String, String,
+                // modify the following line accordingly based on the actual column types
+                Object[] rowData = {
+                    resultSet.getString("username"),
+                    resultSet.getString("jabatan"),
+                    resultSet.getString("dataBulanTahun"),
+                    resultSet.getInt("gaji"),
+                    resultSet.getInt("lembur"),
+                    resultSet.getInt("pajak"),
+                };
+
+                dataGajiList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dataGajiList;
+    }
+    
     public ArrayList<Object[]> getTransaksiGajiByYear(String bulanTahun) {
         ArrayList<Object[]> transaksiGajiList = new ArrayList<>();
         String sql = "SELECT * FROM transaksigaji WHERE bulanTahun LIKE ?";
