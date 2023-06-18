@@ -389,6 +389,38 @@ public class PegawaiDAO implements DAOInterface{
 
         return transaksiLemburList;
     }
+    
+    public int getTotalGajiFromdatagaji() {
+        int totalGaji = 0;
+        String sql = "SELECT SUM(gaji) AS total FROM datagaji";
 
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
 
+            if (resultSet.next()) {
+                totalGaji = resultSet.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalGaji;
+    }
+    
+    public int getTotalLemburFromdatagaji() {
+        int totalLembur = 0;
+        String sql = "SELECT SUM(lembur) AS total FROM datagaji";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                totalLembur = resultSet.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return totalLembur;
+    }
 }

@@ -69,6 +69,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         editGaji.addActionListener(this);
         editWaktuLembur.addActionListener(this);
         konfirmasiDataButton.addActionListener(this);
+        kalkulasiButton.addActionListener(this);
         
         jLabel13.setVisible(false);
         jLabel14.setVisible(false);
@@ -81,6 +82,35 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         editGaji.setVisible(false);
         editWaktuLembur.setVisible(false);
         konfirmasiDataButton.setVisible(false);
+        hasilKalkulasi.setVisible(false);
+        
+        try {
+            String dataBulanTahun = getBulan()+"-"+getTahun();
+            // Retrieve data from the transaksigaji table based on the year
+            ArrayList<Object[]> dataGaji = dao.getDataGajiBulanIni(dataBulanTahun);
+
+            // Create a DefaultTableModel to hold the table data
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            // Add columns to the table model
+            tableModel.addColumn("Karyawan");
+            tableModel.addColumn("Jabatan");
+            tableModel.addColumn("Tanggal");
+            tableModel.addColumn("Gaji");
+            tableModel.addColumn("Lembur");
+            tableModel.addColumn("Pajak");
+
+            // Populate rows in the table model with data from the transaksiGajiList
+            for (Object[] rowData : dataGaji) {
+                tableModel.addRow(rowData);
+            }
+
+            // Set the table model for jTable1
+            jTable2.setModel(tableModel);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void setBulan(int bulan) {
@@ -150,33 +180,17 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButton1){
             jTabbedPane1.setSelectedComponent(tab1);
-            try {
-                String dataBulanTahun = getBulan()+"-"+getTahun();
-                // Retrieve data from the transaksigaji table based on the year
-                ArrayList<Object[]> dataGaji = dao.getDataGajiBulanIni(dataBulanTahun);
+        } else if (e.getSource() == kalkulasiButton){
+            int totalGaji = dao.getTotalGajiFromdatagaji();
+            int totalLembur = dao.getTotalLemburFromdatagaji();
+            int totalPengeluaran = totalGaji + totalLembur;
+            
+            String hasilText = "Total gaji bulan ini: " + totalGaji + "\n"
+                    + "Total lembur bulan ini: " + totalLembur + "\n"
+                    + "Total pengeluaran bulan ini: " + totalPengeluaran;
 
-                // Create a DefaultTableModel to hold the table data
-                DefaultTableModel tableModel = new DefaultTableModel();
-
-                // Add columns to the table model
-                tableModel.addColumn("Karyawan");
-                tableModel.addColumn("Jabatan");
-                tableModel.addColumn("Tanggal");
-                tableModel.addColumn("Gaji");
-                tableModel.addColumn("Lembur");
-                tableModel.addColumn("Pajak");
-
-                // Populate rows in the table model with data from the transaksiGajiList
-                for (Object[] rowData : dataGaji) {
-                    tableModel.addRow(rowData);
-                }
-
-                // Set the table model for jTable1
-                jTable2.setModel(tableModel);
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            hasilKalkulasi.setText(hasilText);
+            hasilKalkulasi.setVisible(true);
         } else if (e.getSource() == jButton2) {
             jTabbedPane1.setSelectedComponent(tab2); 
         } else if (e.getSource() == jButton3) {
@@ -532,6 +546,10 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        kalkulasiButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        hasilKalkulasi = new javax.swing.JTextArea();
         tab2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -660,7 +678,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, -1));
 
-        jLabel1.setText("Informasi Data Gaji");
+        jLabel1.setText("Informasi Data Gaji Bulan Ini");
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -675,6 +693,14 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         ));
         jScrollPane1.setViewportView(jTable2);
 
+        jLabel8.setText("Kalkulasikan total pembayaran bulan ini:");
+
+        kalkulasiButton.setText("Kalkulasi");
+
+        hasilKalkulasi.setColumns(20);
+        hasilKalkulasi.setRows(5);
+        jScrollPane3.setViewportView(hasilKalkulasi);
+
         javax.swing.GroupLayout tab1Layout = new javax.swing.GroupLayout(tab1);
         tab1.setLayout(tab1Layout);
         tab1Layout.setHorizontalGroup(
@@ -682,21 +708,33 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             .addGroup(tab1Layout.createSequentialGroup()
                 .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tab1Layout.createSequentialGroup()
-                        .addGap(209, 209, 209)
-                        .addComponent(jLabel1))
-                    .addGroup(tab1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(tab1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(kalkulasiButton))
+                            .addComponent(jScrollPane3)))
+                    .addGroup(tab1Layout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addComponent(jLabel1)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         tab1Layout.setVerticalGroup(
             tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(tab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(kalkulasiButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab6", tab1);
@@ -1141,6 +1179,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton editGaji;
     private javax.swing.JButton editWaktuLembur;
     private javax.swing.JTextField gajiPokokInfo;
+    private javax.swing.JTextArea hasilKalkulasi;
     private javax.swing.JLabel infoLembur;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1186,10 +1225,12 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -1204,6 +1245,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton kalkulasiButton;
     private javax.swing.JButton konfirmasiDataButton;
     private javax.swing.JTextField lemburInfo;
     private javax.swing.JPanel tab1;
