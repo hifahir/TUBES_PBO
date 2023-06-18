@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public interface DAOInterface {
     public ArrayList<Karyawan> getAllKaryawan();
     public ArrayList<BadanKeuangan> getAllKeuangan();
+    public void updateGaji(Karyawan karyawan, int gaji);
     public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak);
     public void insertLembur(Karyawan karyawan, int hari, int bulan, int tahun, int harga, int pajak);
     public int getLemburWaktuItu(Karyawan karyawan, int hari, int bulan, int tahun);

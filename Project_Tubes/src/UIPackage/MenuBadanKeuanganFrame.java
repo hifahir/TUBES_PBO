@@ -65,6 +65,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton16.addActionListener(this);
         jButton17.addActionListener(this);
         jButton18.addActionListener(this);
+        editGaji.addActionListener(this);
         
         jLabel13.setVisible(false);
         jLabel14.setVisible(false);
@@ -173,12 +174,27 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             if (ditemukan){
                 String jabatan = karyawanDitemukan.getJabatan();
                 double gaji = karyawanDitemukan.getGaji();
+                int waktuLembur = karyawanDitemukan.getWaktuLembur();
                 
                 jLabel10.setText("Jabatan                : "+jabatan);
-                jLabel11.setText("Gaji dari jabatan : Rp. "+String.format("%.2f",gaji));
+                gajiPokokInfo.setText(String.valueOf(gaji));
+                lemburInfo.setText(String.valueOf(waktuLembur));
             }else{
                 JOptionPane.showMessageDialog(this, "Tidak ada Username tersebut.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        } else if (e.getSource() == editGaji){
+            String gajiPokokInfoText = gajiPokokInfo.getText();
+            String username = jTextField1.getText();
+            Karyawan karyawanDitemukan = null;
+            
+            for (Karyawan karyawan : karyawanList){
+                if (username.equals(karyawan.getUsername())) {
+                    karyawanDitemukan = karyawan;
+                    break;
+                }
+            }
+            
+            
         } else if (e.getSource() == jButton9){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
@@ -559,7 +575,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jButton8.setText("Submit");
 
-        jLabel10.setText("jLabel10");
+        jLabel10.setText("Jabatan:");
         jLabel10.setToolTipText("");
 
         jLabel11.setText("Gaji Pokok: Rp.");

@@ -52,10 +52,10 @@ public class Karyawan extends User{
         this.dao = dao;
     }
     
-    public Karyawan(String username, String password, String jabatan){
+    public Karyawan(String username, String password, String jabatan, int gaji){
         super(username, password);
         this.jabatan = jabatan;
-        setGaji(jabatan);
+        this.gaji = 0;
         this.gajiDidapatkan = 0;
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
@@ -145,23 +145,6 @@ public class Karyawan extends User{
 
     public int getWaktuLembur() {
         return waktuLembur;
-    }
-
-    
-    public void setGaji(String jabatan){
-        switch(jabatan){
-            case "Manager":
-                this.gaji = 9000000;
-                break;
-            case "Supervisor":
-                this.gaji = 10000000;
-                break;
-            case "Staff":
-                this.gaji = 7500000;
-                break;
-            default:
-                this.gaji = 0;
-        }
     }
     
     public int getGaji() {

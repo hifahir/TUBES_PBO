@@ -99,6 +99,21 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
+    public void updateGaji(Karyawan karyawan, int gaji) {
+        String sql = "UPDATE karyawan SET gaji = ? WHERE username = ?";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setInt(1, gaji);
+            statement.setString(2, karyawan.getUsername());
+            statement.executeUpdate();
+
+            // Update the saldo of the BadanKeuangan object
+            karyawan.setGaji(gaji);
+        } catch (SQLException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
+    }
+    
+    @Override
     public ArrayList<BadanKeuangan> getAllKeuangan(){
         listKeuangan = new ArrayList<>();
         Statement statement;
