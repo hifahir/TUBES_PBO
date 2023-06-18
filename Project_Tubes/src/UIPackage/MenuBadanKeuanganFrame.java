@@ -174,8 +174,9 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
             jTabbedPane1.setSelectedComponent(tab1);
         } else if (e.getSource() == kalkulasiButton){
-            int totalGaji = dao.getTotalGajiFromdatagaji();
-            int totalLembur = dao.getTotalLemburFromdatagaji();
+            String dataBulanTahun = getBulan()+"-"+getTahun();
+            int totalGaji = dao.getTotalGajiFromdatagaji(dataBulanTahun);
+            int totalLembur = dao.getTotalLemburFromdatagaji(dataBulanTahun);
             int totalPengeluaran = totalGaji + totalLembur;
             
             String hasilText = "Total gaji bulan ini: " + totalGaji + "\n"
@@ -289,11 +290,15 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             if (confirmation == JOptionPane.YES_OPTION) {
                 String key = getBulan()+"-"+getTahun();
                 if (dao.dataGajiBulanTahun(karyawanDitemukan, key)){
-                    int confirmation2 = JOptionPane.showConfirmDialog(this, "Data ini ada. Update?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
-                    if (confirmation == JOptionPane.YES_OPTION){
-                        dao.updateDataGaji(karyawanDitemukan, getBulan(), getTahun(), totalHargaLembur);
+                    if (dao.getStatusPembayaran(karyawanDitemukan.getUsername())){
+                        JOptionPane.showMessageDialog(this, "Pembayaran telah dilakukan. Tidak bisa lagi melakukan update", "Informasi", JOptionPane.INFORMATION_MESSAGE);
                     }else{
-                        dispose();
+                        int confirmation2 = JOptionPane.showConfirmDialog(this, "Data ini ada. Update?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+                        if (confirmation == JOptionPane.YES_OPTION){
+                            dao.updateDataGaji(karyawanDitemukan, getBulan(), getTahun(), totalHargaLembur);
+                        }else{
+                            dispose();
+                        }
                     }
                 }else{
                     dao.insertDataGaji(karyawanDitemukan, getBulan(), getTahun(), totalHargaLembur);
@@ -394,10 +399,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
         }else if (e.getSource() == jButton17) {
             String inputTahun = jTextField8.getText();
-            int tahun;
 
             try {
-
                 // Retrieve data from the transaksigaji table based on the year
                 ArrayList<Object[]> transaksiList = dao.getTransaksiByYear(inputTahun);
 
@@ -420,7 +423,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 jTable1.setModel(tableModel);
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sistem Bermasalah", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }else if (e.getSource() == jButton18){
             String inputHari = jTextField9.getText();

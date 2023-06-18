@@ -344,19 +344,52 @@ public class PegawaiDAO implements DAOInterface{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return transaksiGajiList;
     }
     
-    public int getTotalGajiFromdatagaji() {
-        int totalGaji = 0;
-        String sql = "SELECT SUM(gaji) AS total FROM datagaji";
+    public ArrayList<Object[]> getTransaksiByYearAndUsername(String bulanTahun, String username) {
+        ArrayList<Object[]> transaksiGajiList = new ArrayList<>();
+        String sql = "SELECT * FROM transaksigaji WHERE bulanTahun LIKE ? AND username = ?";
 
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%-" + bulanTahun);
+            statement.setString(2, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String bulanTahunValue = resultSet.getString("bulanTahun");
+                String[] parts = bulanTahunValue.split("-");
+                String tahun = parts[1];
+
+                // Assuming the columns in the transaksigaji table are of type String,
+                // modify the following line accordingly based on the actual column types
+                Object[] rowData = {
+                    resultSet.getString("username"),
+                    resultSet.getString("gajiWaktuItu"),
+                    resultSet.getString("lemburWaktuItu"),
+                    resultSet.getString("pajakWaktuItu"),
+                    resultSet.getString("bulanTahun")
+                };
+
+                transaksiGajiList.add(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transaksiGajiList;
+    }
+
+    
+    public int getTotalGajiFromdatagaji(String dataBulanTahun) {
+        int totalGaji = 0;
+        String sql = "SELECT SUM(gaji) AS totalGaji FROM datagaji WHERE dataBulanTahun LIKE ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%" + dataBulanTahun);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                totalGaji = resultSet.getInt("total");
+                totalGaji = resultSet.getInt("totalGaji");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -364,16 +397,18 @@ public class PegawaiDAO implements DAOInterface{
 
         return totalGaji;
     }
+
     
-    public int getTotalLemburFromdatagaji() {
+    public int getTotalLemburFromdatagaji(String dataBulanTahun) {
         int totalLembur = 0;
-        String sql = "SELECT SUM(lembur) AS total FROM datagaji";
+        String sql = "SELECT SUM(lembur) AS totalLembur FROM datagaji WHERE dataBulanTahun LIKE ?";
 
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, "%" + dataBulanTahun);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                totalLembur = resultSet.getInt("total");
+                totalLembur = resultSet.getInt("totalLembur");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -381,6 +416,24 @@ public class PegawaiDAO implements DAOInterface{
 
         return totalLembur;
     }
+
     
-    
+    public boolean getStatusPembayaran(String username) {
+        boolean statusPembayaran = false;
+        String sql = "SELECT statusPembayaran FROM datagaji WHERE username = ?";
+
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                statusPembayaran = resultSet.getBoolean("statusPembayaran");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return statusPembayaran;
+    }
+
 }
