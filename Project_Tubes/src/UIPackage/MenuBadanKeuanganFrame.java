@@ -325,6 +325,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                     int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
                     int hargaLembur = 150000;
                     totalHargaLembur = jamLembur * hargaLembur;
+                }else{
+                    totalHargaLembur = 0;
                 }
                 jLabel4.setText("Upah lembur yang perlu dibayarkan adalah sebesar Rp. "+totalHargaLembur);
                 jLabel14.setText("Bayar?");
@@ -355,6 +357,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
                 int hargaLembur = 150000;
                 totalHargaLembur = jamLembur * hargaLembur;
+            }else{
+                totalHargaLembur = 0;
             }
             
             badanKeuangan.berikanGaji(karyawanDitemukan, bulanGaji, tahunGaji, karyawanDitemukan.getGaji(), totalHargaLembur); 

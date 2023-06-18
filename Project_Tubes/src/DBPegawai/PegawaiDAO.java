@@ -125,7 +125,7 @@ public class PegawaiDAO implements DAOInterface{
     
     @Override
     public void insertTransaksi(Karyawan karyawan, int bulan, int tahun, int gaji, int lembur, int pajak) {
-        String sql = "INSERT INTO transaksigaji (gajiWaktuItu, lemburWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO transaksigaji (gajiWaktuItu, lemburWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
             String key = bulan + "-" + tahun;
 
