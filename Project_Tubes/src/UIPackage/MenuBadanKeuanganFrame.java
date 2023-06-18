@@ -84,33 +84,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         konfirmasiDataButton.setVisible(false);
         hasilKalkulasi.setVisible(false);
         
-        try {
-            String dataBulanTahun = getBulan()+"-"+getTahun();
-            // Retrieve data from the transaksigaji table based on the year
-            ArrayList<Object[]> dataGaji = dao.getDataGajiBulanIni(dataBulanTahun);
-
-            // Create a DefaultTableModel to hold the table data
-            DefaultTableModel tableModel = new DefaultTableModel();
-
-            // Add columns to the table model
-            tableModel.addColumn("Karyawan");
-            tableModel.addColumn("Jabatan");
-            tableModel.addColumn("Tanggal");
-            tableModel.addColumn("Gaji");
-            tableModel.addColumn("Lembur");
-            tableModel.addColumn("Pajak");
-
-            // Populate rows in the table model with data from the transaksiGajiList
-            for (Object[] rowData : dataGaji) {
-                tableModel.addRow(rowData);
-            }
-
-            // Set the table model for jTable1
-            jTable2.setModel(tableModel);
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        jTabbedPane1.setSelectedComponent(mainMenu);
     }
     
     public void setBulan(int bulan) {
@@ -179,6 +153,33 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButton1){
+            try {
+                String dataBulanTahun = getBulan()+"-"+getTahun();
+                // Retrieve data from the transaksigaji table based on the year
+                ArrayList<Object[]> dataGaji = dao.getDataGajiBulanIni(dataBulanTahun);
+
+                // Create a DefaultTableModel to hold the table data
+                DefaultTableModel tableModel = new DefaultTableModel();
+
+                // Add columns to the table model
+                tableModel.addColumn("Karyawan");
+                tableModel.addColumn("Jabatan");
+                tableModel.addColumn("Tanggal");
+                tableModel.addColumn("Gaji");
+                tableModel.addColumn("Lembur");
+                tableModel.addColumn("Pajak");
+
+                // Populate rows in the table model with data from the transaksiGajiList
+                for (Object[] rowData : dataGaji) {
+                    tableModel.addRow(rowData);
+                }
+
+                // Set the table model for jTable1
+                jTable2.setModel(tableModel);
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Tahun harus berupa integer!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             jTabbedPane1.setSelectedComponent(tab1);
         } else if (e.getSource() == kalkulasiButton){
             int totalGaji = dao.getTotalGajiFromdatagaji();
@@ -187,7 +188,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             
             String hasilText = "Total gaji bulan ini: " + totalGaji + "\n"
                     + "Total lembur bulan ini: " + totalLembur + "\n"
-                    + "Total pengeluaran bulan ini: " + totalPengeluaran;
+                    + "Total yang harus dibayarkan: " + totalPengeluaran;
 
             hasilKalkulasi.setText(hasilText);
             hasilKalkulasi.setVisible(true);
@@ -253,7 +254,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
             
             try{
-                dao.updateGaji(karyawan, Integer.parseInt(gajiPokokInfoText));
+                dao.updateGaji(karyawanDitemukan, Integer.parseInt(gajiPokokInfoText));
                 JOptionPane.showMessageDialog(this, "Update gaji karyawan berhasil!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             }catch (NumberFormatException n){
                 JOptionPane.showMessageDialog(this, "Update dibatalkan. Nilai gaji tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -272,7 +273,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             }
             
             try{
-                dao.updateWaktuLembur(karyawan, Integer.parseInt(waktuLembur));
+                dao.updateWaktuLembur(karyawanDitemukan, Integer.parseInt(waktuLembur));
                 JOptionPane.showMessageDialog(this, "Update waktu lembur karyawan berhasil!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             }catch (NumberFormatException n){
                 JOptionPane.showMessageDialog(this, "Update dibatalkan. Nilai lembur tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -608,6 +609,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton17 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        mainMenu = new javax.swing.JPanel();
+        jLabel29 = new javax.swing.JLabel();
 
         jLabel20.setText("jLabel20");
 
@@ -1135,6 +1138,28 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jTabbedPane1.addTab("tab5", tab5);
 
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel29.setText("Pilih Menu");
+
+        javax.swing.GroupLayout mainMenuLayout = new javax.swing.GroupLayout(mainMenu);
+        mainMenu.setLayout(mainMenuLayout);
+        mainMenuLayout.setHorizontalGroup(
+            mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainMenuLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel29)
+                .addContainerGap(392, Short.MAX_VALUE))
+        );
+        mainMenuLayout.setVerticalGroup(
+            mainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainMenuLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel29)
+                .addContainerGap(395, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab7", mainMenu);
+
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, -36, 540, 490));
 
         pack();
@@ -1220,6 +1245,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1248,6 +1274,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JButton kalkulasiButton;
     private javax.swing.JButton konfirmasiDataButton;
     private javax.swing.JTextField lemburInfo;
+    private javax.swing.JPanel mainMenu;
     private javax.swing.JPanel tab1;
     private javax.swing.JPanel tab2;
     private javax.swing.JPanel tab3;
