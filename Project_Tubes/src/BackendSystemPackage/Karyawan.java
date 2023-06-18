@@ -15,9 +15,7 @@ import javax.swing.JOptionPane;
 public class Karyawan extends User{
     private int gaji;
     private String jabatan;
-    private int gajiDidapatkan;
     private int waktuLembur;
-    private int waktuLemburDone;
     private boolean bisaLembur;
     private int upahLembur;
     private double pajak;
@@ -56,7 +54,6 @@ public class Karyawan extends User{
         super(username, password);
         this.jabatan = jabatan;
         this.gaji = 0;
-        this.gajiDidapatkan = 0;
         this.waktuLembur = 0;
         this.bisaLembur = jabatan.equals("Staff");
         this.pajak = 0.05;
@@ -122,14 +119,6 @@ public class Karyawan extends User{
     public void resetWaktuLembur(){
         this.waktuLembur = 0;
     }
-
-    public int getWaktuLemburDone() {
-        return waktuLemburDone;
-    }
-    
-    public void tambahWaktuLemburDone(int waktuLemburDone){
-        this.waktuLemburDone += waktuLemburDone;
-    }
     
     public void tambahUpahLembur(int upahLembur){
         this.upahLembur += upahLembur;
@@ -139,24 +128,12 @@ public class Karyawan extends User{
         return upahLembur;
     }
 
-    public int getGajiDidapatkan() {
-        return gajiDidapatkan;
-    }
-
     public int getWaktuLembur() {
         return waktuLembur;
     }
     
     public int getGaji() {
         return gaji;
-    }
-    
-    public void tambahGaji(int tambahanGaji){
-        this.gajiDidapatkan += tambahanGaji;
-    }
-    
-    public int getgajiDidapatkan(){
-        return gajiDidapatkan;
     }
 
     public double getPajak() {

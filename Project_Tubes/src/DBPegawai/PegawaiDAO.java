@@ -47,6 +47,24 @@ public class PegawaiDAO implements DAOInterface{
     }
     
     @Override
+    public void insertDataGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int lembur, int pajak) {
+        String sql = "INSERT INTO datagaji (gaji, lembur, jabatan, pajak, username) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
+            String key = bulan + "-" + tahun;
+
+            statement.setInt(1, gaji);
+            statement.setInt(2, lembur);
+            statement.setString(3, key);
+            statement.setString(4, karyawan.getUsername());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
     public void insertGaji(Karyawan karyawan, int bulan, int tahun, int gaji, int pajak) {
         String sql = "INSERT INTO transaksigaji (gajiWaktuItu, pajakWaktuItu, bulanTahun, username) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = DBConnector.getConnection().prepareStatement(sql)) {
@@ -91,7 +109,6 @@ public class PegawaiDAO implements DAOInterface{
             statement.setString(2, karyawan.getUsername());
             statement.executeUpdate();
 
-            // Update the saldo of the BadanKeuangan object
             karyawan.setWaktuLembur(jamLembur);
         } catch (SQLException e) {
             System.out.println("Terjadi kesalahan: " + e.getMessage());
@@ -106,7 +123,6 @@ public class PegawaiDAO implements DAOInterface{
             statement.setString(2, karyawan.getUsername());
             statement.executeUpdate();
 
-            // Update the saldo of the BadanKeuangan object
             karyawan.setGaji(gaji);
         } catch (SQLException e) {
             System.out.println("Terjadi kesalahan: " + e.getMessage());

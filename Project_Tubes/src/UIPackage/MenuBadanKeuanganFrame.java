@@ -66,6 +66,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jButton17.addActionListener(this);
         jButton18.addActionListener(this);
         editGaji.addActionListener(this);
+        editWaktuLembur.addActionListener(this);
+        konfirmasiDataButton.addActionListener(this);
         
         jLabel13.setVisible(false);
         jLabel14.setVisible(false);
@@ -185,6 +187,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         } else if (e.getSource() == editGaji){
             String gajiPokokInfoText = gajiPokokInfo.getText();
             String username = jTextField1.getText();
+            List<Karyawan> karyawanList = dao.getAllKaryawan();
             Karyawan karyawanDitemukan = null;
             
             for (Karyawan karyawan : karyawanList){
@@ -194,7 +197,41 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                 }
             }
             
+            try{
+                dao.updateGaji(karyawan, Integer.parseInt(gajiPokokInfoText));
+                JOptionPane.showMessageDialog(this, "Update gaji karyawan berhasil!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            }catch (NumberFormatException n){
+                JOptionPane.showMessageDialog(this, "Update dibatalkan. Nilai gaji tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == editWaktuLembur){
+            String waktuLembur = lemburInfo.getText();
+            String username = jTextField1.getText();
+            List<Karyawan> karyawanList = dao.getAllKaryawan();
+            Karyawan karyawanDitemukan = null;
             
+            for (Karyawan karyawan : karyawanList){
+                if (username.equals(karyawan.getUsername())) {
+                    karyawanDitemukan = karyawan;
+                    break;
+                }
+            }
+            
+            try{
+                dao.updateWaktuLembur(karyawan, Integer.parseInt(waktuLembur));
+                JOptionPane.showMessageDialog(this, "Update waktu lembur karyawan berhasil!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            }catch (NumberFormatException n){
+                JOptionPane.showMessageDialog(this, "Update dibatalkan. Nilai lembur tidak valid.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == konfirmasiDataButton){
+            int confirmation = JOptionPane.showConfirmDialog(this, "Apakah Anda ingin mengkonfirmasi data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+    
+            if (confirmation == JOptionPane.YES_OPTION) {
+                // User clicked "Yes"
+                // Perform the desired action
+                // ...
+            } else {
+                dispose();
+            }
         } else if (e.getSource() == jButton9){
             ArrayList<Karyawan> karyawanList = dao.getAllKaryawan();
             
