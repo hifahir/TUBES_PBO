@@ -326,7 +326,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                     int hargaLembur = 150000;
                     totalHargaLembur = jamLembur * hargaLembur;
                 }
-                jLabel4.setText("Upah lembur yang perlu dibayarkan adalah sebesar Rp. "+String.format("%.2f",totalHargaLembur));
+                jLabel4.setText("Upah lembur yang perlu dibayarkan adalah sebesar Rp. "+totalHargaLembur);
                 jLabel14.setText("Bayar?");
                 jLabel13.setVisible(true);
                 jLabel14.setVisible(true);
