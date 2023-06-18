@@ -319,6 +319,14 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
             if (ditemukan){
                 double gaji = karyawanDitemukan.getGaji();
                 jLabel13.setText("Gaji yang perlu dibayarkan adalah sebesar Rp. "+String.format("%.2f",gaji));
+                
+                int totalHargaLembur = 0;
+                if(dao.isBisaLembur(karyawanDitemukan)){
+                    int jamLembur = dao.getWaktuLembur(karyawanDitemukan);
+                    int hargaLembur = 150000;
+                    totalHargaLembur = jamLembur * hargaLembur;
+                }
+                jLabel4.setText("Upah lembur yang perlu dibayarkan adalah sebesar Rp. "+String.format("%.2f",totalHargaLembur));
                 jLabel14.setText("Bayar?");
                 jLabel13.setVisible(true);
                 jLabel14.setVisible(true);
@@ -482,6 +490,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
         jLabel14 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         tab6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -734,6 +743,8 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
 
         jButton11.setText("Tidak");
 
+        jLabel4.setText("jLabel4");
+
         javax.swing.GroupLayout tab3Layout = new javax.swing.GroupLayout(tab3);
         tab3.setLayout(tab3Layout);
         tab3Layout.setHorizontalGroup(
@@ -752,12 +763,13 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
                                 .addComponent(jButton9))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(tab3Layout.createSequentialGroup()
                                 .addComponent(jButton10)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton11))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         tab3Layout.setVerticalGroup(
@@ -772,13 +784,15 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
                     .addComponent(jButton9))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
                 .addGroup(tab3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton10)
                     .addComponent(jButton11))
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab3", tab3);
@@ -1064,6 +1078,7 @@ public class MenuBadanKeuanganFrame extends javax.swing.JFrame implements Action
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
